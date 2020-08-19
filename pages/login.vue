@@ -29,10 +29,11 @@ export default class LoginPage extends Vue {
   mail: string = "";
   pass: string = "";
 
-   login() {
-    auth.signInWithEmailAndPassword(this.mail, this.pass)
-      .then(user => this.$router.push('/'))
-      .catch(e => alert(e.message))
+  login() {
+    auth
+      .signInWithEmailAndPassword(this.mail, this.pass)
+      .then((user) => this.$router.push("/"))
+      .catch((e) => alert(e.message));
   }
 }
 </script>
