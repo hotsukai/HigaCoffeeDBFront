@@ -1,36 +1,34 @@
 <template>
   <div class="container">
-    <div>
-      <Logo />
-      <h1 class="title">
-        HiGaDBAPP
-      </h1>
-      <div class="links">
-        <a
-          href="https://nuxtjs.org/"
-          target="_blank"
-          rel="noopener noreferrer"
-          class="button--green"
-        >
-          Documentation
-        </a>
-        <a
-          href="https://github.com/nuxt/nuxt.js"
-          target="_blank"
-          rel="noopener noreferrer"
-          class="button--grey"
-        >
-          GitHub
-        </a>
-      </div>
+    <h1>トップページ</h1>
+    <div v-if="isLogin">
+      <p>ログイン中</p>
+      <button @click="logout">ログアウト</button>
     </div>
   </div>
 </template>
 
 <script lang="ts">
-import Vue from 'vue'
+import { Vue, Component } from "vue-property-decorator";
+import { auth } from "../plugins/firebase";
+@Component({
+  layout: 'default',
+  components: {
+  }
+})
 
-export default Vue.extend({})
+export default class IndexPage extends Vue {
+  isLogin: boolean = false;
+  async mounted() {
+    await auth.onAuthStateChanged(
+      (user) => (this.isLogin = user ? true : false)
+    );
+  }
+  async logout() {
+    await auth.signOut();
+    this.$router.push("/login");
+  }
+}
 </script>
 
 <style>
@@ -44,16 +42,8 @@ export default Vue.extend({})
 }
 
 .title {
-  font-family:
-    'Quicksand',
-    'Source Sans Pro',
-    -apple-system,
-    BlinkMacSystemFont,
-    'Segoe UI',
-    Roboto,
-    'Helvetica Neue',
-    Arial,
-    sans-serif;
+  font-family: "Quicksand", "Source Sans Pro", -apple-system, BlinkMacSystemFont,
+    "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
   display: block;
   font-weight: 300;
   font-size: 100px;
