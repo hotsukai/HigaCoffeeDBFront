@@ -25,7 +25,7 @@ export default class LogginButton extends Vue {
   }
   async logout() {
     await firebase.auth().signOut();
-    this.$router.push("/login");
+    this.$router.push("/");
   }
 }
 </script>
