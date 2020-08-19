@@ -1,7 +1,13 @@
 <template>
-<div>
-  <p>お名前:{{name}}</p>
-  <img :src="photoURL"/>
+  <div>
+    <div>
+      <img :src="photoURL" />
+      <p>お名前:{{name}}</p>
+    </div>
+    <div>
+      <p>あなたが書いたレビュー</p>
+      <p>あなたあてのコーヒー</p>
+    </div>
   </div>
 </template>
 
@@ -12,8 +18,7 @@ import { User } from "firebase";
 @Component({})
 export default class MypagePage extends Vue {
   private name: string | null = "初期の名前";
-  private photoURL: string | null =
-    "";
+  private photoURL: string | null = "";
 
   created() {
     const user: User | null = firebase.auth().currentUser;
