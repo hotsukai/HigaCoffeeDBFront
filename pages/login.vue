@@ -22,7 +22,7 @@ export default class LoginPage extends Vue {
     firebase.auth().onAuthStateChanged((user) => {
       if (user) {
         this.$router.push("/");
-        alert("ログインしています");
+        alert("すでにログインしています");
 
       } else {
       }

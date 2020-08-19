@@ -26,11 +26,12 @@
 
 <script lang="ts">
 import { Vue, Component } from "vue-property-decorator";
+import LoginButton from './LoginButton.vue'
 @Component({
   layout: "default",
   components: {},
 })
-export default class IndexPage extends Vue {}
+export default class HeaderComponents extends Vue {}
 </script>
 
 <style>

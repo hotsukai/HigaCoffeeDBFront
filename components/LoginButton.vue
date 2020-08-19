@@ -16,7 +16,7 @@ import firebase from "@/plugins/firebase";
   layout: "default",
   components: {},
 })
-export default class LogginButton extends Vue {
+export default class LoginButtonComponent extends Vue {
   isLogin: boolean = false;
   async mounted() {
     await firebase
