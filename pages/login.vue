@@ -20,17 +20,18 @@
 
 <script lang="ts">
 import { Vue, Component } from "vue-property-decorator";
-import { auth } from "../plugins/firebase";
+import  firebase  from "../plugins/firebase";
 @Component({
   layout: "default",
   components: {},
 })
+
 export default class LoginPage extends Vue {
-  mail: string = "";
+mail: string = "";
   pass: string = "";
 
   login() {
-    auth
+    firebase.auth()
       .signInWithEmailAndPassword(this.mail, this.pass)
       .then((user) => this.$router.push("/"))
       .catch((e) => alert(e.message));
