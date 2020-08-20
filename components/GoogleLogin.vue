@@ -7,6 +7,7 @@ import { Component, Vue } from 'vue-property-decorator'
 import firebase from "../plugins/firebase"
 
 const googleProvider = new firebase.auth.GoogleAuthProvider()
+@Component
 export default class GoogleLogin extends Vue {
   public signInWithGoogleRedirect () {
     firebase.auth().signInWithRedirect(googleProvider);
