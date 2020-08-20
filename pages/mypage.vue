@@ -1,12 +1,16 @@
 <template>
   <div>
+    <h1 class="title">{{name}}のマイページ</h1>
     <div>
       <img :src="photoURL" />
       <p>お名前:{{name}}</p>
     </div>
     <div>
-      <p>あなたが書いたレビュー</p>
-      <p>あなたあてのコーヒー</p>
+      <p class="subtitle">あなたが書いたレビュー</p>
+        <!-- TODO -->
+        <p>まだレビューがありません</p>
+      <p class="subtitle">レビューを書く</p>
+      <ReviewForm/>
     </div>
   </div>
 </template>
