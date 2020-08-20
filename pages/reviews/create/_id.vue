@@ -1,6 +1,6 @@
 <template>
   <form>
-    <p>〇〇のコーヒーについて</p>
+    <p>id:{{$route.params.id}}のコーヒーについて</p>
     <div>
       <!-- TODO -->
       <p>苦さについて</p>
@@ -48,15 +48,16 @@
       <p>コーヒーについての感想を教えてください。また、既定のレシピ通りに出来なかった場合はその旨を記してください（例：お湯を入れすぎた、抽出時間長すぎた）</p>
       <input v-model="feeling" />
     </div>
+    <!-- TODO　firebaseのロジック追加 -->
     <button type="submit" v-bind:disabled="!isValid">送信!!</button>
     <!-- TODOどの誤りかを詳しく出力 -->
-    <p v-show="!isValid" class="error-message">入力に不備があります</p>
+    <p v-show="!isValid" class="is-danger">入力に不備があります</p>
   </form>
 </template>
 
 <script lang="ts">
 import { Vue, Component } from "vue-property-decorator";
-import firebase from "../plugins/firebase";
+import firebase from "../../../plugins/firebase";
 @Component
 export default class ReviewForm extends Vue {
   bitterness: number = -1;
@@ -64,6 +65,7 @@ export default class ReviewForm extends Vue {
   situation: number = -1;
   repeat: number = -1;
   feeling: string = "";
+
 
   get isValid(): boolean {
     return (
@@ -74,7 +76,9 @@ export default class ReviewForm extends Vue {
     );
   }
 }
+
+//TODO このコーヒーのレビューを書く権利があるかを取得
 </script>
 
-<style>
+<style >
 </style>
