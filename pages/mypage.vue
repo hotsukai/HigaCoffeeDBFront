@@ -7,10 +7,13 @@
     </div>
     <div>
       <p class="subtitle">あなたが書いたレビュー</p>
-        <!-- TODO -->
-        <p>まだレビューがありません</p>
+      <!-- TODO -->
+      <p>まだレビューがありません</p>
       <p class="subtitle">レビューを書く</p>
-      <ReviewForm/>
+      <div v-for="coffee in testCoffees">
+        <CoffeeCard :coffee="coffee"/>
+      </div>
+      <ReviewForm />
     </div>
   </div>
 </template>
@@ -19,10 +22,16 @@
 import { Vue, Component } from "vue-property-decorator";
 import firebase from "../plugins/firebase";
 import { User } from "firebase";
+
 @Component({})
 export default class MypagePage extends Vue {
   private name: string | null = "初期の名前";
   private photoURL: string | null = "";
+  testCoffees = [
+    { name: "深煎マンデリン(レンタルサービス)", id: 123 },
+    { name: "浅煎りマンデリン(レンタルサービス)", id: 124 },
+    { name: "深煎ブラジル(レンタルサービス)", id: 125 },
+  ];
 
   created() {
     const user: User | null = firebase.auth().currentUser;
