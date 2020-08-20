@@ -34,5 +34,8 @@ import LoginButton from './LoginButton.vue'
 export default class HeaderComponents extends Vue {}
 </script>
 
-<style>
+<style scoped>
+.navbar-menu{
+  background-color:darkgoldenrod;
+}
 </style>
