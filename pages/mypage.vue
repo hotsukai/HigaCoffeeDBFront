@@ -13,7 +13,6 @@
       <div v-for="coffee in testCoffees">
         <CoffeeCard :coffee="coffee"/>
       </div>
-      <ReviewForm />
     </div>
   </div>
 </template>
