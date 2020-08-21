@@ -49,15 +49,17 @@
       <input v-model="feeling" />
     </div>
     <!-- TODO　firebaseのロジック追加 -->
-    <button type="submit" v-bind:disabled="!isValid">送信!!</button>
+    <button @click="sendReview" v-bind:disabled="!isValid">送信!!</button>
     <!-- TODOどの誤りかを詳しく出力 -->
     <p v-show="!isValid" class="is-danger">入力に不備があります</p>
+    <!-- <div>{{bitterness}},{{strongness}},{{situation}},{{repeat}},{{feeling}}</div> -->
   </form>
 </template>
 
 <script lang="ts">
 import { Vue, Component } from "vue-property-decorator";
 import firebase from "../../../plugins/firebase";
+var db = firebase.firestore();
 @Component
 export default class ReviewForm extends Vue {
   bitterness: number = -1;
@@ -66,7 +68,6 @@ export default class ReviewForm extends Vue {
   repeat: number = -1;
   feeling: string = "";
 
-
   get isValid(): boolean {
     return (
       this.bitterness !== -1 &&
@@ -74,6 +75,26 @@ export default class ReviewForm extends Vue {
       this.situation !== -1 &&
       this.repeat !== -1
     );
+  }
+
+  sendReview(): void {
+    console.log("bitterness", this.bitterness);
+    db.collection("reviews")
+      .add({
+        bitterness: this.bitterness,
+        strongness: this.strongness,
+        situation: this.situation,
+        repeat: this.repeat,
+        feeling: this.feeling,
+        // user_id: firebase.auth().currentUser.uid
+      })
+      .then(function (docRef: { id: any }) {
+        console.log("hoge");
+        console.log("Document written with ID: ", docRef.id);
+      })
+      .catch(function (error: any) {
+        console.error("Error adding document: ", error);
+      });
   }
 }
 
