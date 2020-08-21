@@ -4,7 +4,7 @@
       <div class="navbar-menu">
         <div class="navbar-start">
           <nuxt-link to="/" class="navbar-item">トップへ</nuxt-link>
-            <nuxt-link to="./mypage" class="navbar-item">マイページ</nuxt-link>
+            <nuxt-link to="/mypage" class="navbar-item">マイページ</nuxt-link>
           <a class="navbar-item">レビューを見る</a>
           <a class="navbar-item">データを見る</a>
           <a class="navbar-item">レビューを書く</a>
