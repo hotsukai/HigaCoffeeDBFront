@@ -67,6 +67,7 @@ export default class ReviewForm extends Vue {
   situation: number = -1;
   repeat: number = -1;
   feeling: string = "";
+  user=firebase.auth().currentUser
 
   get isValid(): boolean {
     return (
@@ -78,6 +79,7 @@ export default class ReviewForm extends Vue {
   }
 
   sendReview(): void {
+    if (this.user!==null){
     console.log("bitterness", this.bitterness);
     db.collection("reviews")
       .add({
@@ -86,7 +88,7 @@ export default class ReviewForm extends Vue {
         situation: this.situation,
         repeat: this.repeat,
         feeling: this.feeling,
-        // user_id: firebase.auth().currentUser.uid
+        user_id: this.user.uid
       })
       .then(function (docRef: { id: any }) {
         console.log("hoge");
@@ -95,6 +97,9 @@ export default class ReviewForm extends Vue {
       .catch(function (error: any) {
         console.error("Error adding document: ", error);
       });
+  }else{
+    alert("ログインしてください")
+  }
   }
 }
 
