@@ -3,7 +3,6 @@
     <h1 class="title">トップページ</h1>
     <div v-if="isLogin">
       <p>ログイン中</p>
-      <button @click="logout">ログアウト</button>
     </div>
     <div v-else>
       <p>ログインしていません</p>
