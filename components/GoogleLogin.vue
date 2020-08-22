@@ -15,8 +15,7 @@ export default class GoogleLogin extends Vue {
       .set({
         uid: user.uid,
         name: user.displayName,
-        reviews:[]
-        // user_id: firebase.auth().currentUser.uid
+        reviews:[]//TODO:新規ログインのたびに初期化されてしまう。
       })
       .then(function () {
         console.log("add user data ");
@@ -34,6 +33,7 @@ export default class GoogleLogin extends Vue {
         var user = result.user;
         console.log(user);
         this.sendUser(user);
+        this.$router.push("mypage")
       });
   }
 }

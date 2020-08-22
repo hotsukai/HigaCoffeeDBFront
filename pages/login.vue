@@ -3,7 +3,7 @@
     <h1>ログイン</h1>
     <div class="field">
       <p class="control">
-        <!-- TODO　合言葉入力フォーム -->
+        <!-- TODO: 合言葉入力フォーム -->
         <GoogleLogin/>
       </p>
     </div>
@@ -22,7 +22,6 @@ export default class LoginPage extends Vue {
     firebase.auth().onAuthStateChanged((user) => {
       if (user) {
         this.$router.push("/");
-        // alert("すでにログインしています");
       } else {
       }
     });
