@@ -5,39 +5,39 @@
       <p>苦さについて</p>
       <p>焙煎度合は一旦忘れて、「あなたがどう感じたか」を記してください。</p>
       <label>酸っぱい</label>
-      <input name="bitterness" v-model="bitterness" type="radio" value="1" />
-      <input name="bitterness" v-model="bitterness" type="radio" value="2" />
-      <input name="bitterness" v-model="bitterness" type="radio" value="3" />
-      <input name="bitterness" v-model="bitterness" type="radio" value="4" />
+      <input name="bitterness" v-model.number="bitterness" type="radio" value="1" />
+      <input name="bitterness" v-model.number="bitterness" type="radio" value="2" />
+      <input name="bitterness" v-model.number="bitterness" type="radio" value="3" />
+      <input name="bitterness" v-model.number="bitterness" type="radio" value="4" />
       <label>苦い</label>
     </div>
     <div>
       <p>濃さについて</p>
       <p>抽出時間は一旦忘れて、「あなたがどう感じたか」を記してください。</p>
       <label>薄い</label>
-      <input name="strongness" v-model="strongness" type="radio" value="1" />
-      <input name="strongness" v-model="strongness" type="radio" value="2" />
-      <input name="strongness" v-model="strongness" type="radio" value="3" />
-      <input name="strongness" v-model="strongness" type="radio" value="4" />
+      <input name="strongness" v-model.number="strongness" type="radio" value="1" />
+      <input name="strongness" v-model.number="strongness" type="radio" value="2" />
+      <input name="strongness" v-model.number="strongness" type="radio" value="3" />
+      <input name="strongness" v-model.number="strongness" type="radio" value="4" />
       <label>濃い</label>
     </div>
     <div>
       <p>役割について</p>
       <p>「どういう時におすすめか」という観点で選んでください。</p>
       <label>リラックス</label>
-      <input name="situation" v-model="situation" type="radio" value="1" />
-      <input name="situation" v-model="situation" type="radio" value="2" />
-      <input name="situation" v-model="situation" type="radio" value="3" />
-      <input name="situation" v-model="situation" type="radio" value="4" />
+      <input name="situation" v-model.number="situation" type="radio" value="1" />
+      <input name="situation" v-model.number="situation" type="radio" value="2" />
+      <input name="situation" v-model.number="situation" type="radio" value="3" />
+      <input name="situation" v-model.number="situation" type="radio" value="4" />
       <label>眠気覚まし</label>
     </div>
     <div>
       <p>また飲みたい??</p>
       <p>ご遠慮なく！</p>
       <label>飲みたくない</label>
-      <input name="repeat" v-model="repeat" type="radio" value="1" />
-      <input name="repeat" v-model="repeat" type="radio" value="2" />
-      <input name="repeat" v-model="repeat" type="radio" value="3" />
+      <input name="repeat" v-model.number="repeat" type="radio" value="1" />
+      <input name="repeat" v-model.number="repeat" type="radio" value="2" />
+      <input name="repeat" v-model.number="repeat" type="radio" value="3" />
       <label>また飲みたい!!</label>
     </div>
     <div>
@@ -45,7 +45,7 @@
       <p>コーヒーについての感想を教えてください。また、既定のレシピ通りに出来なかった場合はその旨を記してください（例：お湯を入れすぎた、抽出時間長すぎた）</p>
       <input v-model="feeling" />
     </div>
-    <button @click="sendReview" v-bind:disabled="!isValid">送信0!!</button>
+    <button @click="sendReview" v-bind:disabled="!isValid">送信!!</button>
     <!-- TODO:どの誤りかを詳しく出力 -->
     <p v-show="!isValid" class="is-danger">入力に不備があります</p>
   </form>
@@ -82,7 +82,7 @@ export default class ReviewForm extends Vue {
         .doc(this.user.uid)
         .update({
           reviews: firebase.firestore.FieldValue.arrayUnion(
-            this.$route.params.id
+            parseInt(this.$route.params.id)
           ),
         });
       console.debug(
@@ -110,7 +110,7 @@ export default class ReviewForm extends Vue {
           repeat: this.repeat,
           feeling: this.feeling,
           user_id: this.user.uid,
-          coffee_id: this.$route.params.id,
+          coffee_id: parseInt(this.$route.params.id),
         })
         .then(() => {
           console.debug("レビューを投稿しました");
@@ -124,7 +124,6 @@ export default class ReviewForm extends Vue {
     }
   }
 
-  //　この関数の中に?bitterness=2&strongness=4&situation=3&repeat=1の原因がある
   async sendReview() {
     console.debug("sendReviewに入りました", this.$route.params.id);
     await this.addReview();
@@ -133,7 +132,7 @@ export default class ReviewForm extends Vue {
   }
 }
 //TODO:すでにこのコーヒーにレビューがある場合エラーを吐く。
-// TODO: 投稿後に?bitterness=2&strongness=4&situation=1&repeat=3みたいなとこに推移してしまう。ログイン情報がなくなる
+// TODO: 投稿後に?bitterness=2&strongness=4&situation=1&repeat=3みたいなパラメータがつく..?
 //TODO: このコーヒーのレビューを書く権利があるかを取得
 </script>
 
