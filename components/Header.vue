@@ -4,17 +4,15 @@
       <div class="navbar-menu">
         <div class="navbar-start">
           <nuxt-link to="/" class="navbar-item">トップへ</nuxt-link>
-            <nuxt-link to="/mypage" class="navbar-item">マイページ</nuxt-link>
-          <a class="navbar-item">レビューを見る</a>
           <a class="navbar-item">データを見る</a>
-          <a class="navbar-item">レビューを書く</a>
+          <!--TODO: データページ作成-->
         </div>
         <div class="navbar-end">
           <div class="navbar-item">
+            <nuxt-link to="/mypage" class="navbar-item">マイページ</nuxt-link>
+            <a class="navbar-item">レビューを書く</a>
+            <a class="navbar-item">コーヒーを淹れる</a>
             <div class="buttons">
-              <a class="button is-primary">
-                <strong>登録</strong>
-              </a>
               <LoginButton />
             </div>
           </div>
@@ -26,7 +24,7 @@
 
 <script lang="ts">
 import { Vue, Component } from "vue-property-decorator";
-import LoginButton from './LoginButton.vue'
+import LoginButton from "./LoginButton.vue";
 @Component({
   layout: "default",
   components: {},
@@ -35,7 +33,7 @@ export default class HeaderComponents extends Vue {}
 </script>
 
 <style scoped>
-.navbar-menu{
-  background-color:darkgoldenrod;
+.navbar-menu {
+  background-color: darkgoldenrod;
 }
 </style>
