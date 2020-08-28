@@ -24,7 +24,6 @@
 
 <script lang="ts">
 import { Vue, Component } from "vue-property-decorator";
-import LoginButton from "./LoginButton.vue";
 @Component({
   layout: "default",
   components: {},

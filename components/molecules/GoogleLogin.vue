@@ -4,7 +4,7 @@
 
 <script lang="ts">
 import { Component, Vue } from "vue-property-decorator";
-import firebase from "../plugins/firebase";
+import firebase from "../../plugins/firebase";
 
 const googleProvider = new firebase.auth.GoogleAuthProvider();
 var db = firebase.firestore();

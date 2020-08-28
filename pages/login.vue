@@ -13,7 +13,6 @@
 <script lang="ts">
 import { Vue, Component } from "vue-property-decorator";
 import firebase from "../plugins/firebase";
-import GoogleLogin from '../components/GoogleLogin.vue'
 
 @Component
 
