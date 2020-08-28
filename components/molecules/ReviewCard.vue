@@ -15,7 +15,7 @@
 
 <script lang="ts">
 import { Vue, Component, Prop } from "vue-property-decorator";
-import firebase from "../plugins/firebase";
+import firebase from "../../plugins/firebase";
 
 var db = firebase.firestore();
 @Component
