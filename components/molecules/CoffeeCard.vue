@@ -24,7 +24,7 @@ export default{
   props: ["coffee"],
 
   computed:{ fullPath:function() {
-    return "reviews/create/"+this.coffee.id
+    return "/reviews/create/"+this.coffee.id
   }}
 }
 </script>
