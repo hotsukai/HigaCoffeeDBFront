@@ -2,11 +2,17 @@
   <div class="card">
     <div class="card-content">
       <p class="title">
-        <slot name="title">{{coffee.name}}</slot>
+        {{coffee.bean_id}}
       </p>
       <p class="subtitle">
-        <slot name="id">{{coffee.id}}</slot>
+        {{coffee.id}}
       </p>
+      <ul>
+        <li>:{{coffee.extractionTime}}</li>
+        <li>焙煎時間:{{coffee.extractionTime}}min</li>
+        <li>粉の量:{{coffee.powderAmount}}g</li>
+        <li>水の量  :{{coffee.waterAmount}}ml</li>
+      </ul>
     </div>
     <footer class="card-footer">
       <p class="card-footer-item">

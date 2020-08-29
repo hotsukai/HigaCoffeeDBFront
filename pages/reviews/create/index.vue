@@ -9,14 +9,16 @@
 <script>
 import firebase from "@/plugins/firebase";
 import { User } from "firebase";
-const currentUser = firebase.auth().currentUser;
 
 export default {
   async asyncData() {
+    const currentUser = firebase.auth().currentUser;
     const db = firebase.firestore();
     const coffeesArray = [];
-    console.debug(currentUser.uid)
+    console.debug(currentUser);
+    console.debug(currentUser.uid);
     await db
+      .collection("coffees")
       .where("user_id", "==", currentUser.uid)
       .get()
       .then(function (querySnapshot) {
