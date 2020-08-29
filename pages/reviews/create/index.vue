@@ -15,9 +15,9 @@ export default {
   async asyncData() {
     const db = firebase.firestore();
     const coffeesArray = [];
+    console.debug(currentUser.uid)
     await db
-      .collection("coffees")
-      .where("user_id", "==", "DtzgYFCTfEPc6fqAsQTJ6ELCwnP2")
+      .where("user_id", "==", currentUser.uid)
       .get()
       .then(function (querySnapshot) {
         querySnapshot.forEach(function (doc) {
