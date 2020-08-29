@@ -1,17 +1,12 @@
 <template>
   <div class="card">
     <div class="card-content">
-      <p class="title">
-        {{coffee.bean_id}}
-      </p>
-      <p class="subtitle">
-        {{coffee.id}}
-      </p>
+      <p class="title">{{beanData.name}}{{beanData.roast}}</p>
+      <p class="subtitle">ID; {{coffee.id}}</p>
       <ul>
-        <li>:{{coffee.extractionTime}}</li>
-        <li>焙煎時間:{{coffee.extractionTime}}min</li>
+        <li>蒸らし時間:{{coffee.extractionTime}}min</li>
         <li>粉の量:{{coffee.powderAmount}}g</li>
-        <li>水の量  :{{coffee.waterAmount}}ml</li>
+        <li>水の量 :{{coffee.waterAmount}}ml</li>
       </ul>
     </div>
     <footer class="card-footer">
@@ -26,13 +21,39 @@
 </template>
 
 <script>
-export default{
-  props: ["coffee"],
+import firebase from "@/plugins/firebase";
+const db = firebase.firestore();
 
-  computed:{ fullPath:function() {
-    return "/reviews/create/"+this.coffee.id
-  }}
-}
+export default {
+  props: ["coffee"],
+  data() {
+    return {
+      beanData: {},
+    };
+  },
+  async mounted() {
+    let beanData;
+    await db
+      .collection("beans")
+      .doc(this.coffee.bean_id)
+      .get()
+      .then((doc) => {
+        if (doc.exists) {
+          // console.debug("bean data:", doc.data());
+          this.beanData = doc.data();
+        } else {
+          // console.log("豆のデータが見つかりませんでした。");
+        }
+      });
+    // console.debug("beandata", beanData);
+  },
+
+  computed: {
+    fullPath: function () {
+      return "/reviews/create/" + this.coffee.id;
+    },
+  },
+};
 </script>
 
 <style>
