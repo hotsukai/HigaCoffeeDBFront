@@ -1,26 +1,43 @@
 <template>
   <div>
-      <h1 class="title">あなたあてのコーヒー</h1>
+    <h1 class="title">あなたあてのコーヒー</h1>
     <CoffeeCards :coffees="coffees" />
   </div>
 </template>
 
 
-<script lang="ts">
-import { Vue, Component } from "vue-property-decorator";
-import firebase from "../../../plugins/firebase";
+<script>
+import firebase from "@/plugins/firebase";
 import { User } from "firebase";
+const currentUser = firebase.auth().currentUser;
 
-@Component({})
-export default class MypagePage extends Vue {
-  private name: string | null = "初期の名前";
-  private photoURL: string | null = "";
-  coffees = [
-    { name: "深煎マンデリン(レンタルサービス)", id: 123 },
-    { name: "浅煎りマンデリン(レンタルサービス)", id: 124 },
-    { name: "深煎ブラジル(レンタルサービス)", id: 125 },
-  ];
-}
+export default {
+  async asyncData() {
+    const db = firebase.firestore();
+    const coffeesArray = [];
+    await db
+      .collection("coffees")
+      .where("user_id", "==", "DtzgYFCTfEPc6fqAsQTJ6ELCwnP2")
+      .get()
+      .then(function (querySnapshot) {
+        querySnapshot.forEach(function (doc) {
+          console.debug(doc.id, " => ", doc.data());
+          coffeesArray.push(doc.data());
+        });
+      });
+    console.debug("coffeeArray", coffeesArray);
+    return { coffees: coffeesArray };
+  },
+
+  data() {
+    return {
+      name: "",
+      user_id: "",
+      photoURL: "",
+      coffees: [],
+    };
+  },
+};
 </script>
 
 <style>
