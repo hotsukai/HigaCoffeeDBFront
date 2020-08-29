@@ -32,20 +32,16 @@ export default {
     };
   },
   async mounted() {
-    let beanData;
     await db
       .collection("beans")
       .doc(this.coffee.bean_id)
       .get()
       .then((doc) => {
         if (doc.exists) {
-          // console.debug("bean data:", doc.data());
+          console.debug("bean data:", doc.data());
           this.beanData = doc.data();
-        } else {
-          // console.log("豆のデータが見つかりませんでした。");
         }
       });
-    // console.debug("beandata", beanData);
   },
 
   computed: {
