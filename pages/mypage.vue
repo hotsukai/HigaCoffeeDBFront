@@ -6,11 +6,9 @@
       <p>お名前:{{name}}</p>
     </div>
     <div>
-      <p class="subtitle">あなたが書いたレビュー</p>
+      <p class="subtitle" v-show="false">あなたが書いたレビュー</p>
       <!-- TODO: 動的に書き分ける -->
       <p>まだレビューがありません</p>
-      <p class="subtitle">レビューを書く</p>
-      <CoffeeCards :coffees="coffees" />
     </div>
   </div>
 </template>
@@ -24,11 +22,7 @@ import { User } from "firebase";
 export default class MypagePage extends Vue {
   private name: string | null = "初期の名前";
   private photoURL: string | null = "";
-  coffees = [
-    { name: "深煎マンデリン(レンタルサービス)", id: 123 },
-    { name: "浅煎りマンデリン(レンタルサービス)", id: 124 },
-    { name: "深煎ブラジル(レンタルサービス)", id: 125 },
-  ];
+
 
   created() {
     const user: User | null = firebase.auth().currentUser;
