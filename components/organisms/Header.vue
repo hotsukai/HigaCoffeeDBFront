@@ -11,7 +11,7 @@
           <div class="navbar-item">
             <nuxt-link to="/mypage" class="navbar-item">マイページ</nuxt-link>
             <nuxt-link to="/reviews/create" class="navbar-item">レビューを書く</nuxt-link>
-            <a class="navbar-item">コーヒーを淹れる</a>
+            <nuxt-link to="/coffees/create" class="navbar-item">コーヒーを淹れる</nuxt-link>
             <div class="buttons">
               <LoginButton />
             </div>
