@@ -3,6 +3,7 @@ import 'firebase/auth'
 import 'firebase/firestore'
 
 // SDKを使用するためのConfig情報
+// TODO: dotenv
 const firebaseConfig = {
     apiKey: "AIzaSyDYlHpVlwkHdbjVGLBuSkmBCRnPM5Gwnfk",
     authDomain: "higadbapp.firebaseapp.com",
