@@ -20,14 +20,15 @@ import { Vue, Component } from "vue-property-decorator";
 import firebase from "@/plugins/firebase";
 const db = firebase.firestore();
 
-
 export default {
-  data() {return{
-    inputSecretWord:"",
-    secretWord:""}
+  data() {
+    return {
+      inputSecretWord: "",
+      secretWord: "",
+    };
   },
 
- async mounted() {
+  async mounted() {
     firebase.auth().onAuthStateChanged((user) => {
       if (user) {
         this.$router.push("/");
@@ -48,10 +49,8 @@ export default {
 
   computed: {
     isSecretWordCorrect() {
-
-      return this.secretWord===this.inputSecretWord
+      return this.secretWord === this.inputSecretWord;
     },
-  }
-}
-
+  },
+};
 </script>
