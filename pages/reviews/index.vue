@@ -5,6 +5,7 @@
   </div>
 </template>
 
+// TODO最新n件を表示する。
 <script lang="ts">
 import { Vue, Component } from "vue-property-decorator";
 import firebase from "../../plugins/firebase";
