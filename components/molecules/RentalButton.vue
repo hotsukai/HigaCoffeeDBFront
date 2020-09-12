@@ -13,83 +13,109 @@ console.debug("before export :", currentUser.uid);
 
 export default {
   data() {
-    return {
-      // TODO:コーヒーのデータを正しいものに
-      coffees: [
-        {
-          bean_id: 1,
-          extractionTime: 3,
-          isReviewExist: false,
-          powderAmount: 8.2,
-          user_id: currentUser.uid,
-          waterAmount: 150,
-          extractionMethod_id: 1,
-        },
-        {
-          bean_id: 1,
-          extractionTime: 3,
-          isReviewExist: false,
-          powderAmount: 12.5,
-          user_id: currentUser.uid,
-          waterAmount: 150,
-        },
-        {
-          bean_id: 1,
-          extractionTime: 5,
-          isReviewExist: false,
-          powderAmount: 8.2,
-          user_id: currentUser.uid,
-          waterAmount: 150,
-        },
-        {
-          bean_id: 1,
-          extractionTime: 5,
-          isReviewExist: false,
-          powderAmount: 12.5,
-          user_id: currentUser.uid,
-          waterAmount: 150,
-        },
-        {
-          bean_id: 2,
-          extractionTime: 3,
-          isReviewExist: false,
-          powderAmount: 8.2,
-          user_id: currentUser.uid,
-          waterAmount: 150,
-        },
-        {
-          bean_id: 2,
-          extractionTime: 3,
-          isReviewExist: false,
-          powderAmount: 12.5,
-          user_id: currentUser.uid,
-          waterAmount: 150,
-        },
-        {
-          bean_id: 2,
-          extractionTime: 5,
-          isReviewExist: false,
-          powderAmount: 8.2,
-          user_id: currentUser.uid,
-          waterAmount: 150,
-        },
-        {
-          bean_id: 2,
-          extractionTime: 5,
-          isReviewExist: false,
-          powderAmount: 12.5,
-          user_id: currentUser.uid,
-          waterAmount: 150,
-        },
-      ],
-    };
+    if (currentUser != null) {
+      return {
+        // TODO:コーヒーのデータを正しいものに
+        coffees: [
+          {
+            bean_id: 1,
+            extractionTime: 3,
+            isReviewExist: false,
+            powderAmount: 8.2,
+            user_id: currentUser.uid,
+            waterAmount: 150,
+            mesh: "設定されていません",
+            waterTemperature: -1,
+            extractionMethod_id: 1,
+          },
+          {
+            bean_id: 1,
+            extractionTime: 3,
+            isReviewExist: false,
+            powderAmount: 12.5,
+            user_id: currentUser.uid,
+            waterAmount: 150,
+            mesh: "設定されていません",
+            waterTemperature: -1,
+            extractionMethod_id: 1,
+          },
+          {
+            bean_id: 1,
+            extractionTime: 5,
+            isReviewExist: false,
+            powderAmount: 8.2,
+            user_id: currentUser.uid,
+            waterAmount: 150,
+            mesh: "設定されていません",
+            waterTemperature: -1,
+            extractionMethod_id: 1,
+          },
+          {
+            bean_id: 1,
+            extractionTime: 5,
+            isReviewExist: false,
+            powderAmount: 12.5,
+            user_id: currentUser.uid,
+            waterAmount: 150,
+            mesh: "設定されていません",
+            waterTemperature: -1,
+            extractionMethod_id: 1,
+          },
+          {
+            bean_id: 2,
+            extractionTime: 3,
+            isReviewExist: false,
+            powderAmount: 8.2,
+            user_id: currentUser.uid,
+            waterAmount: 150,
+            mesh: "設定されていません",
+            waterTemperature: -1,
+            extractionMethod_id: 1,
+          },
+          {
+            bean_id: 2,
+            extractionTime: 3,
+            isReviewExist: false,
+            powderAmount: 12.5,
+            user_id: currentUser.uid,
+            waterAmount: 150,
+            mesh: "設定されていません",
+            waterTemperature: -1,
+            extractionMethod_id: 1,
+          },
+          {
+            bean_id: 2,
+            extractionTime: 5,
+            isReviewExist: false,
+            powderAmount: 8.2,
+            user_id: currentUser.uid,
+            waterAmount: 150,
+            mesh: "設定されていません",
+            waterTemperature: -1,
+            extractionMethod_id: 1,
+          },
+          {
+            bean_id: 2,
+            extractionTime: 5,
+            isReviewExist: false,
+            powderAmount: 12.5,
+            user_id: currentUser.uid,
+            waterAmount: 150,
+            mesh: "設定されていません",
+            waterTemperature: -1,
+            extractionMethod_id: 1,
+          },
+        ],
+      };
+    }
   },
   methods: {
     addRentalCoffees() {
       this.coffees.forEach((coffee) => {
-       var  generatedId = db.collection("coffees").doc().id;
-        console.debug("gId:",generatedId)
-        db.collection("coffees").doc(generatedId)
+        var generatedId = db.collection("coffees").doc().id;
+        console.debug("gId:", generatedId);
+        db.collection("coffees")
+          .doc(generatedId)
           .set({
             id: generatedId,
             bean_id: coffee.bean_id,
