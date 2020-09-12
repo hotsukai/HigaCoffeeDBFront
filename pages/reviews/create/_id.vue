@@ -1,6 +1,6 @@
 <template>
   <div>
-    <p>id:{{$route.params.id}}のコーヒーについて</p>
+    <p>ID:{{coffeeId}}のコーヒーについて</p>
     <ReviewForm :coffeeId="coffeeId"></ReviewForm>
   </div>
 </template>
