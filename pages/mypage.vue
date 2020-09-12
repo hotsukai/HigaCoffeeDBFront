@@ -5,6 +5,7 @@
       <img :src="photoURL" />
       <p>お名前:{{name}}</p>
     </div>
+    <RentalButton/>
     <div>
       <p class="subtitle" v-show="false">あなたが書いたレビュー</p>
       <!-- TODO: 動的に書き分ける -->
