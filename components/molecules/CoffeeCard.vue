@@ -1,12 +1,18 @@
 <template>
+<!-- TODO:削除する方法を作る。 -->
   <div class="card">
     <div class="card-content">
-      <p class="title">{{beanData.name}}{{beanData.roast}}</p>
-      <p class="subtitle">ID; {{coffee.id}}</p>
+      <p class="title">{{beanData.name}}</p>
+
+      <p class="subtitle">ID: {{coffee.id}}</p>
       <ul>
-        <li>蒸らし時間:{{coffee.extractionTime}}min</li>
-        <li>粉の量:{{coffee.powderAmount}}g</li>
-        <li>水の量 :{{coffee.waterAmount}}ml</li>
+        <!-- TODO: すべてコンポーネントにする -->
+        <li>蒸らし時間 : {{coffee.extractionTime}}min</li>
+        <li>粉の量 : {{coffee.powderAmount}}g</li>
+        <li>水の量  : {{coffee.waterAmount}}ml</li>
+        <li>メッシュ : {{coffee.mesh}}</li>
+        <li>湯温 : <WaterTemperature :wt="coffee.WaterTemperature"/></li>
+        <li>抽出方法 : <Method :em="coffee.extractionMethod_id"/></li>
       </ul>
     </div>
     <footer class="card-footer">
@@ -20,6 +26,12 @@
   </div>
 </template>
 
+<style  scoped>
+.card {
+  margin-bottom:1em;
+}
+</style>
+
 <script>
 import firebase from "@/plugins/firebase";
 const db = firebase.firestore();
@@ -28,17 +40,16 @@ export default {
   props: ["coffee"],
   data() {
     return {
-      beanData: {},
+      beanData:{}
     };
   },
   async mounted() {
     await db
       .collection("beans")
-      .doc(this.coffee.bean_id)
+      .doc(String(this.coffee.bean_id))
       .get()
       .then((doc) => {
         if (doc.exists) {
-          console.debug("bean data:", doc.data());
           this.beanData = doc.data();
         }
       });
