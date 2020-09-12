@@ -19,10 +19,10 @@ export default {
     await db
       .collection("coffees")
       .where("user_id", "==", currentUser.uid)
+      .where("isReviewExist","==",false)
       .get()
       .then(function (querySnapshot) {
         querySnapshot.forEach(function (doc) {
-          // console.debug(doc.id, " => ", doc.data());
           coffeesArray.push(doc.data());
         });
       });
