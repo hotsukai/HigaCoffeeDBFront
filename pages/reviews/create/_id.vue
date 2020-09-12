@@ -51,86 +51,65 @@
   </form>
 </template>
 
-<script lang="ts">
-import { Vue, Component } from "vue-property-decorator";
-import firebase from "../../../plugins/firebase";
+<script>
+import firebase from "@/plugins/firebase";
 var db = firebase.firestore();
-@Component
-export default class ReviewForm extends Vue {
+export default {
   // TODO:数字になってない
-  bitterness: number = -1;
-  strongness: number = -1;
-  situation: number = -1;
-  repeat: number = -1;
-  feeling: string = "";
-  user = firebase.auth().currentUser; //TODO: リロードすると得られない。
-
-  get isValid(): boolean {
-    return (
-      this.bitterness !== -1 &&
-      this.strongness !== -1 &&
-      this.situation !== -1 &&
-      this.repeat !== -1
-      // true
-    );
-  }
-
-  addCoffeeIdToUser() {
-    console.debug("addCoffeeIdToUserに入りました");
-    if (this.user !== null) {
-      db.collection("users")
-        .doc(this.user.uid)
-        .update({
-          reviews: firebase.firestore.FieldValue.arrayUnion(
-            parseInt(this.$route.params.id)
-          ),
-        });
-      console.debug(
-        "ユーザー情報にレビューを追加しました。",
-        this.$route.params.id
+  data() {
+    return {
+      bitterness: -1,
+      strongness: -1,
+      situation: -1,
+      repeat: -1,
+      feeling: "",
+      user: firebase.auth().currentUser, //TODO: リロードすると得られない。
+      coffeeId: "",
+    };
+  },
+  created() {
+    this.coffeeId = this.$route.params.id;
+  },
+  computed: {
+    isValid() {
+      return (
+        this.bitterness !== -1 &&
+        this.strongness !== -1 &&
+        this.situation !== -1 &&
+        this.repeat !== -1
       );
-    } else {
-      alert("ERROR2:ログインしてください");
-    }
-  }
+    },
+  },
 
-  goRoot() {
-    this.$router.push({ path: "/", params: {} });
-    console.debug("ルーターにRootをPushしました", this.$router);
-  }
-
-  addReview() {
-    if (this.user !== null) {
-      db.collection("reviews")
-        .doc(this.$route.params.id)
-        .set({
-          bitterness: this.bitterness,
-          strongness: this.strongness,
-          situation: this.situation,
-          repeat: this.repeat,
-          feeling: this.feeling,
-          user_id: this.user.uid,
-          coffee_id: parseInt(this.$route.params.id),
-        })
-        .then(() => {
-          console.debug("レビューを投稿しました");
-        })
-        .catch((error: any) => {
-          console.error("Error adding document: ", error);
-        });
-    } else {
-      alert("ERROR1:ログインしてください");
-      this.$router.push("login");
-    }
-  }
-
-  async sendReview() {
-    console.debug("sendReviewに入りました", this.$route.params.id);
-    await this.addReview();
-    await this.addCoffeeIdToUser();
-    await this.goRoot(); //TODO:ページ遷移しない
-  }
-}
+  methods: {
+    sendReview() {
+      console.debug("sendReviewに入りました", this.coffeeId);
+      if (this.user !== null) {
+        db.collection("reviews")
+          .doc(this.coffeeId)
+          .set({
+            bitterness: this.bitterness,
+            strongness: this.strongness,
+            situation: this.situation,
+            repeat: this.repeat,
+            feeling: this.feeling,
+            user_id: this.user.uid,
+            coffee_id: this.coffeeId,
+          })
+          .then(function () {
+            console.debug("レビューを投稿しました");
+          })
+          .catch(function (error) {
+            console.error("Error adding document: ", error);
+          });
+      } else {
+        alert("ERROR1:ログインしてください");
+        this.$router.push("login");
+      }
+      this.$router.push({ path: "/", params: {} });
+    },
+  },
+};
 //TODO:すでにこのコーヒーにレビューがある場合エラーを吐く。
 // TODO: 投稿後に?bitterness=2&strongness=4&situation=1&repeat=3みたいなパラメータがつく..?
 //TODO: このコーヒーのレビューを書く権利があるかを取得
