@@ -133,6 +133,8 @@ export default {
       });
       alert("レンタルサービスのコーヒーのレビューがかけるようになりました。");
       // TODO:レビューページへ
+      this.$router.push({ path: "/reviews/create", params: {} });
+
     },
   },
 };
