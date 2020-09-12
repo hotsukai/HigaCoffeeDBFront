@@ -55,7 +55,7 @@ import firebase from "@/plugins/firebase";
 var db = firebase.firestore();
 export default {
   // TODO:数字になってない
-  props:["coffeeId"],
+  props: ["coffeeId"],
   data() {
     return {
       bitterness: -1,
@@ -97,6 +97,20 @@ export default {
           })
           .then(function () {
             console.debug("レビューを投稿しました");
+          })
+          .catch(function (error) {
+            console.error("Error adding document: ", error);
+          });
+        db.collection("coffees")
+          .doc(this.coffeeId)
+          .set(
+            {
+              isReviewExist: true,
+            },
+            { merge: true }
+          )
+          .then(function () {
+            console.debug("コーヒーのレビューの有無を更新しました");
           })
           .catch(function (error) {
             console.error("Error adding document: ", error);
