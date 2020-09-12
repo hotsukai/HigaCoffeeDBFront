@@ -1,6 +1,6 @@
 <template>
   <div>
-    <div v-for="coffee in coffees">
+    <div v-for="coffee in coffees" v-bind:key="coffee.id">
       <CoffeeCard :coffee="coffee" />
     </div>
   </div>
@@ -11,6 +11,6 @@ export default {
   props: ["coffees"],
 };
 </script>
-      
-      <style>
+
+<style>
 </style>
