@@ -9,6 +9,7 @@
 import firebase from "@/plugins/firebase";
 const db = firebase.firestore();
 const currentUser = firebase.auth().currentUser;
+console.debug("before export :", currentUser.uid);
 
 export default {
   data() {
@@ -93,10 +94,12 @@ export default {
   },
   methods: {
     addRentalCoffees() {
-      this.coffees.forEach((coffee) =>
-        db
-          .collection("coffees")
-          .add({
+      this.coffees.forEach((coffee) => {
+       var  generatedId = db.collection("coffees").doc().id;
+        console.debug("gId:",generatedId)
+        db.collection("coffees").doc(generatedId)
+          .set({
+            id: generatedId,
             bean_id: coffee.bean_id,
             extractionTime: coffee.extractionTime,
             isReviewExist: coffee.isReviewExist,
@@ -109,8 +112,8 @@ export default {
           .catch(function (error) {
             alert("エラーが発生しました : ", error);
             console.log("ERROR : rental button ", error);
-          })
-      );
+          });
+      });
       alert("レンタルサービスのコーヒーのレビューがかけるようになりました。");
       // TODO:レビューページへ
     },
