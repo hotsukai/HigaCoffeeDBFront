@@ -26,12 +26,12 @@ export default {
   computed: {
     extractionMethod() {
       if (
-        this.unsafeExtractionMethod < 0 ||
-        this.unsafeExtractionMethod == null
+        this.unsafeExtractionMethod > 0 ||
+        this.unsafeExtractionMethod != null
       ) {
-        return "設定されていません";
-      } else {
         return this.unsafeExtractionMethod;
+      } else {
+        return "設定されていません";
       }
     },
   },
