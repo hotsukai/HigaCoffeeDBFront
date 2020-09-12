@@ -112,7 +112,6 @@ export default {
     addRentalCoffees() {
       this.coffees.forEach((coffee) => {
         var generatedId = db.collection("coffees").doc().id;
-        console.debug("gId:", generatedId);
         db.collection("coffees")
           .doc(generatedId)
           .set({
