@@ -1,33 +1,31 @@
 <template>
   <div>
     <h1 class="title">あなたあてのコーヒー</h1>
-    <CoffeeCards :coffees="coffees" />
+    <div v-show="isCoffeeExist">
+      <CoffeeCards :coffees="coffees" />
+    </div>
+    <div v-show="! isCoffeeExist">あなたあてのコーヒーがありません。</div>
   </div>
 </template>
 
 
 <script>
 import firebase from "@/plugins/firebase";
-import { User } from "firebase";
-
+const currentUser = firebase.auth().currentUser;
+const db = firebase.firestore();
 export default {
   async asyncData() {
-    const currentUser = firebase.auth().currentUser;
-    const db = firebase.firestore();
     const coffeesArray = [];
-    console.debug(currentUser);
-    console.debug(currentUser.uid);
     await db
       .collection("coffees")
       .where("user_id", "==", currentUser.uid)
       .get()
       .then(function (querySnapshot) {
         querySnapshot.forEach(function (doc) {
-          console.debug(doc.id, " => ", doc.data());
+          // console.debug(doc.id, " => ", doc.data());
           coffeesArray.push(doc.data());
         });
       });
-    console.debug("coffeeArray", coffeesArray);
     return { coffees: coffeesArray };
   },
 
@@ -38,6 +36,12 @@ export default {
       photoURL: "",
       coffees: [],
     };
+  },
+
+  computed: {
+    isCoffeeExist() {
+      return this.coffees.length > 0;
+    },
   },
 };
 </script>
