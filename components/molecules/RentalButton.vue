@@ -9,7 +9,6 @@
 import firebase from "@/plugins/firebase";
 const db = firebase.firestore();
 const currentUser = firebase.auth().currentUser;
-console.debug("before export :", currentUser.uid);
 
 export default {
   data() {
