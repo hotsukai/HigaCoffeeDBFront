@@ -13,15 +13,9 @@ export default {
     };
   },
   async mounted() {
-    await db
-      .collection("methods")
-      .doc(String(this.em))
-      .get()
-      .then((doc) => {
-        if (doc.exists) {
-          this.unsafeExtractionMethod = doc.data().name;
-        }
-      });
+    console.debug("eM plug : ", this.$extractionMethods[0]);
+    this.unsafeExtractionMethod = this.$extractionMethods[this.em - 1];
+    
   },
   computed: {
     extractionMethod() {
