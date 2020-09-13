@@ -7,6 +7,8 @@
     <div v-else>
       <p>ログインしていません</p>
     </div>
+    <div class="title">HiGaCoffeeとは</div>
+    <p>本文本文本文本文本文本文本文本文本文本文本文本文本文本文本文本文本文本文本文本文本文本文本文本文本文本文本文本文本文本文</p>
   </div>
 </template>
 
