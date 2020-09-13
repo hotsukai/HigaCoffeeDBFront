@@ -1,6 +1,6 @@
 <template>
   <div>
-    <button @click="addRentalCoffees()">レンタルサービス初回登録</button>
+    <button @click="addRentalCoffees()" class="button">レンタルサービス初回登録</button>
     <p>レンタルサービスに申込後、上記のボタンを押すことでアプリケーションにコーヒーが登録されます。</p>
   </div>
 </template>
