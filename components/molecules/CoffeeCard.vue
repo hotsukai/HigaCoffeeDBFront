@@ -29,8 +29,10 @@
     <footer class="card-footer">
       <p class="card-footer-item">
         <span>
-          このコーヒーの
-          <nuxt-link :to="fullPath">レビューを書く</nuxt-link>
+          <nuxt-link :to="fullPath" class="button is-primary">レビューを書く</nuxt-link>
+        </span>
+        <span>
+          <button class="button is-danger" @click="confirmDelete()">削除</button>
         </span>
       </p>
     </footer>
@@ -53,6 +55,29 @@ export default {
   computed: {
     fullPath: function () {
       return "/reviews/create/" + this.coffee.id;
+    },
+  },
+
+  methods: {
+    deleteCoffee() {
+      db.collection("coffees")
+        .doc(this.coffee.id)
+        .delete()
+        .then(function () {
+          console.log("Document successfully deleted!");
+        })
+        .catch(function (error) {
+          console.error("Error removing document: ", error);
+        });
+    },
+
+    confirmDelete() {
+      // TODO:確認モダール作成
+      var answer = window.confirm(this.coffee.id + "のコーヒーを削除します");
+      if (answer == true) {
+        this.deleteCoffee();
+        this.$router.push("/mypage");
+      }
     },
   },
 };
