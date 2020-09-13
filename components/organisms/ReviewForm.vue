@@ -1,53 +1,55 @@
 <template>
-  <form>
-    <div>
-      <p>苦さについて</p>
-      <p>焙煎度合は一旦忘れて、「あなたがどう感じたか」を記してください。</p>
-      <label>酸っぱい</label>
-      <input name="bitterness" v-model.number="bitterness" type="radio" value="1" />
-      <input name="bitterness" v-model.number="bitterness" type="radio" value="2" />
-      <input name="bitterness" v-model.number="bitterness" type="radio" value="3" />
-      <input name="bitterness" v-model.number="bitterness" type="radio" value="4" />
-      <label>苦い</label>
-    </div>
-    <div>
-      <p>濃さについて</p>
-      <p>抽出時間は一旦忘れて、「あなたがどう感じたか」を記してください。</p>
-      <label>薄い</label>
-      <input name="strongness" v-model.number="strongness" type="radio" value="1" />
-      <input name="strongness" v-model.number="strongness" type="radio" value="2" />
-      <input name="strongness" v-model.number="strongness" type="radio" value="3" />
-      <input name="strongness" v-model.number="strongness" type="radio" value="4" />
-      <label>濃い</label>
-    </div>
-    <div>
-      <p>役割について</p>
-      <p>「どういう時におすすめか」という観点で選んでください。</p>
-      <label>リラックス</label>
-      <input name="situation" v-model.number="situation" type="radio" value="1" />
-      <input name="situation" v-model.number="situation" type="radio" value="2" />
-      <input name="situation" v-model.number="situation" type="radio" value="3" />
-      <input name="situation" v-model.number="situation" type="radio" value="4" />
-      <label>眠気覚まし</label>
-    </div>
-    <div>
-      <p>また飲みたい??</p>
-      <p>ご遠慮なく！</p>
-      <label>飲みたくない</label>
-      <input name="repeat" v-model.number="repeat" type="radio" value="1" />
-      <input name="repeat" v-model.number="repeat" type="radio" value="2" />
-      <input name="repeat" v-model.number="repeat" type="radio" value="3" />
-      <label>また飲みたい!!</label>
-    </div>
-    <div>
-      <p>感想</p>
-      <p>コーヒーについての感想を教えてください。また、既定のレシピ通りに出来なかった場合はその旨を記してください（例：お湯を入れすぎた、抽出時間長すぎた）</p>
-      <input v-model="feeling" />
-    </div>
-    <button @click="sendReview" v-bind:disabled="!isValid">送信!!</button>
-    <!-- TODO:どの誤りかを詳しく出力 -->
-    <p v-show="!isValid" class="is-danger">入力に不備があります</p>
-  </form>
+  <div>
+    <form>
+      <div>
+        <p>苦さについて</p>
+        <p>焙煎度合は一旦忘れて、「あなたがどう感じたか」を記してください。</p>
+        <label>酸っぱい</label>
+        <input name="bitterness" v-model.number="bitterness" type="radio" value="1" />
+        <input name="bitterness" v-model.number="bitterness" type="radio" value="2" />
+        <input name="bitterness" v-model.number="bitterness" type="radio" value="3" />
+        <input name="bitterness" v-model.number="bitterness" type="radio" value="4" />
+        <label>苦い</label>
+      </div>
+      <div>
+        <p>濃さについて</p>
+        <p>抽出時間は一旦忘れて、「あなたがどう感じたか」を記してください。</p>
+        <label>薄い</label>
+        <input name="strongness" v-model.number="strongness" type="radio" value="1" />
+        <input name="strongness" v-model.number="strongness" type="radio" value="2" />
+        <input name="strongness" v-model.number="strongness" type="radio" value="3" />
+        <input name="strongness" v-model.number="strongness" type="radio" value="4" />
+        <label>濃い</label>
+      </div>
+      <div>
+        <p>役割について</p>
+        <p>「どういう時におすすめか」という観点で選んでください。</p>
+        <label>リラックス</label>
+        <input name="situation" v-model.number="situation" type="radio" value="1" />
+        <input name="situation" v-model.number="situation" type="radio" value="2" />
+        <input name="situation" v-model.number="situation" type="radio" value="3" />
+        <input name="situation" v-model.number="situation" type="radio" value="4" />
+        <label>眠気覚まし</label>
+      </div>
+      <div>
+        <p>また飲みたい??</p>
+        <p>ご遠慮なく！</p>
+        <label>飲みたくない</label>
+        <input name="repeat" v-model.number="repeat" type="radio" value="1" />
+        <input name="repeat" v-model.number="repeat" type="radio" value="2" />
+        <input name="repeat" v-model.number="repeat" type="radio" value="3" />
+        <label>また飲みたい!!</label>
+      </div>
+      <div>
+        <p>感想</p>
+        <p>コーヒーについての感想を教えてください。また、既定のレシピ通りに出来なかった場合はその旨を記してください（例：お湯を入れすぎた、抽出時間長すぎた）</p>
+        <input v-model="feeling" />
+      </div>
+      <!-- TODO:どの誤りかを詳しく出力 -->
+      <p v-show="!isValid" class="is-danger">入力に不備があります</p>
+      <button @click="sendReview" v-bind:disabled="!isValid" type="button" class="button is-primary">送信!!</button>
+    </form>
+  </div>
 </template>
 
 <script>
@@ -83,7 +85,7 @@ export default {
 
   methods: {
     async sendReview() {
-      console.debug("sendReviewに入りました", this.coffeeId);
+      // console.debug("sendReviewに入りました", this.coffeeId);
       if (this.user !== null) {
         await db
           .collection("reviews")
@@ -99,7 +101,7 @@ export default {
             createdTime: firebase.firestore.FieldValue.serverTimestamp(),
           })
           .then(function () {
-            console.debug("レビューを投稿しました");
+            // console.debug("レビューを投稿しました");
           })
           .catch(function (error) {
             console.error("Error adding document: ", error);
@@ -113,16 +115,17 @@ export default {
             },
             { merge: true }
           )
-          .then(function () {
-            console.debug("コーヒーのレビューの有無を更新しました");
-            this.$router.push({ path: "/", params: {} });
+          .then(() => {
+            // console.debug("コーヒーのレビューの有無を更新しました");
+            alert("レビューを投稿しました。");
+            this.$router.push("/mypage");
           })
           .catch(function (error) {
             console.error("Error adding document: ", error);
           });
       } else {
         alert("ERROR1:ログインしてください");
-        this.$router.push("login");
+        this.$router.push("/login");
       }
     },
   },
