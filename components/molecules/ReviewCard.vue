@@ -3,7 +3,6 @@
     <div class="card-content">
       <p class="title">
         <BeanName :bean-id="targetCoffee.beanId" />
-
       </p>
       <p class="subtitle">ID : {{review.coffeeId}}</p>
       <div class="columns is-mobile">
@@ -49,9 +48,8 @@ export default {
     };
   },
 
-  async created() {
-    await db
-      .collection("coffees")
+  created() {
+    db.collection("coffees")
       .doc(this.review.coffeeId)
       .get()
       // .then(function (doc) {//動かない
