@@ -5,7 +5,7 @@
         <BeanName :bean-id="targetCoffee.beanId" />
       </p>
       <p class="subtitle">ID : {{review.coffeeId}}</p>
-      <div class="columns is-mobile">
+      <div class="columns">
         <div class="column">
           <ul>
             <li>レビューの書かれた日 : <TimeFirebaseToJs :time="review.createdTime"/> </li>
@@ -13,8 +13,10 @@
             <li>濃さ : {{review.strongness}}</li>
             <li>また飲みたいか : {{repeatToJapanese}}</li>
             <li>役割 : {{situationToJapanese}}</li>
+            <li>備考・感想 : {{review.feeling}}</li>
           </ul>
         </div>
+        <hr/>
         <div class="column">
           <ul>
             <!-- TODO: すべてコンポーネントにする -->
