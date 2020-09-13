@@ -1,6 +1,6 @@
 <template>
   <!-- TODO:削除する方法を作る。 -->
-  <div class="card">
+  <div class="card" v-if="coffee">
     <div class="card-content">
       <p class="title">
         <BeanName :bean-id="coffee.beanId" />
@@ -36,6 +36,7 @@
         </span>
       </p>
     </footer>
+    
   </div>
 </template>
 
