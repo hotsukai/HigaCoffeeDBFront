@@ -15,10 +15,16 @@ const currentUser = firebase.auth().currentUser;
 const db = firebase.firestore();
 export default {
   async asyncData() {
+    var cUser;
+    await firebase.auth().onAuthStateChanged(function (user) {
+      if (user) {
+        cUser = user;
+      }
+    });
     const coffeesArray = [];
     await db
       .collection("coffees")
-      .where("userId", "==", currentUser.uid)
+      .where("userId", "==", cUser.uid)
       .where("isReviewExist","==",false)
       .get()
       .then(function (querySnapshot) {
@@ -26,7 +32,7 @@ export default {
           coffeesArray.push(doc.data());
         });
       });
-    return { coffees: coffeesArray };
+    return { coffees: coffeesArray ,currentUser:cUser};
   },
 
   data() {
