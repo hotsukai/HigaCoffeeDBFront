@@ -8,6 +8,7 @@
       <div class="columns is-mobile">
         <div class="column">
           <ul>
+            <li>レビューの書かれた日 : <TimeFirebaseToJs :time="review.createdTime"/> </li>
             <li>苦さ : {{review.bitterness}}</li>
             <li>濃さ : {{review.strongness}}</li>
             <li>また飲みたいか : {{repeatToJapanese}}</li>
