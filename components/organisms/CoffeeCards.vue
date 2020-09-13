@@ -1,5 +1,5 @@
 <template>
-  <div>
+  <div v-if="coffees">
     <div v-for="coffee in coffees" v-bind:key="coffee.id">
       <CoffeeCard :coffee="coffee" />
     </div>
