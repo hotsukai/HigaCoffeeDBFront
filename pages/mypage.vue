@@ -21,22 +21,30 @@
 
 <script>
 import firebase from "@/plugins/firebase";
-const currentUser = firebase.auth().currentUser;
 const db = firebase.firestore();
 
 export default {
   async asyncData() {
+    var cUser;
+    await firebase.auth().onAuthStateChanged(function (user) {
+      if (user) {
+        cUser = user;
+      }
+    });
+
     const reviewsArray = [];
     await db
       .collection("reviews")
-      .where("userId", "==", currentUser.uid) // TODO:ページネーション
+      .where("userId", "==", cUser.uid) // TODO:ページネーション
+      .orderBy("createdTime", "desc")
+      .limit(25)
       .get()
       .then(function (querySnapshot) {
         querySnapshot.forEach(function (doc) {
           reviewsArray.push(doc.data());
         });
       });
-    return { reviews: reviewsArray };
+    return { reviews: reviewsArray, currentUser: cUser };
   },
 
   data() {
@@ -47,9 +55,9 @@ export default {
   },
 
   created() {
-    if (currentUser != null) {
-      this.name = currentUser.displayName;
-      this.photoURL = currentUser.photoURL;
+    if (this.currentUser != null) {
+      this.name = this.currentUser.displayName;
+      this.photoURL =this.currentUser.photoURL;
     }
   },
 
@@ -60,10 +68,8 @@ export default {
   },
 
   methods: {
-    getMoreReview() {
-
-    }
-  }
+    getMoreReview() {},
+  },
 };
 </script>
 
