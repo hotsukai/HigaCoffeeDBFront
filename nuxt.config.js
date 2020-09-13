@@ -36,7 +36,9 @@ export default {
   ** https://nuxtjs.org/guide/plugins
   */
   plugins: [
-    '~/plugins/extractionMethods'
+    '~/plugins/extractionMethods',
+    '~/plugins/beanNames'
+
   ],
   /*
   ** Auto import components

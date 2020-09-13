@@ -44,15 +44,7 @@ export default {
     };
   },
   async mounted() {
-    await db
-      .collection("beans")
-      .doc(String(this.coffee.bean_id))
-      .get()
-      .then((doc) => {
-        if (doc.exists) {
-          this.beanData = doc.data();
-        }
-      });
+    this.beanData =this.$beanNames[this.coffee.bean_id-1]
   },
 
   computed: {
