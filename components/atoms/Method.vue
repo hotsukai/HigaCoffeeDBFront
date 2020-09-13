@@ -13,7 +13,6 @@ export default {
     };
   },
   async mounted() {
-    console.debug("eM plug : ", this.$extractionMethods[0]);
     this.unsafeExtractionMethod = this.$extractionMethods[this.em - 1];
     
   },
