@@ -1,7 +1,8 @@
 <template>
   <div class="card">
     <div class="card-content">
-      <!-- <p class="title">{{targetCoffee.name}}</p> -->
+      <p class="title"><BeanName :beanId="targetCoffee.bean_id"/></p>
+      <!-- {{targetCoffee.bean_id}} -->
       <p class="subtitle">ID : {{review.coffee_id}}</p>
       <div class="columns is-mobile">
         <div class="column">
