@@ -14,13 +14,14 @@
 import { Vue, Component } from "vue-property-decorator";
 import firebase from "@/plugins/firebase";
 @Component
-export default class indexPage  extends Vue{
- isLogin: boolean = false;
+export default class indexPage extends Vue {
+  isLogin: boolean = false;
   async mounted() {
     await firebase
       .auth()
       .onAuthStateChanged((user) => (this.isLogin = user ? true : false));
-  }}
+  }
+}
 </script>
 
 <style>
