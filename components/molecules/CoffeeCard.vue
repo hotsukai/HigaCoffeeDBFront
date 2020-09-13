@@ -8,6 +8,10 @@
       <p class="subtitle">ID: {{coffee.id}}</p>
       <ul>
         <!-- TODO: すべてコンポーネントにする -->
+        <li>
+          登録された時間 :
+          <TimeFirebaseToJs :time="coffee.createdTime" />
+        </li>
         <li>蒸らし時間 : {{coffee.extractionTime}}min</li>
         <li>粉の量 : {{coffee.powderAmount}}g</li>
         <li>水の量 : {{coffee.waterAmount}}ml</li>
