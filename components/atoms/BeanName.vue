@@ -10,18 +10,16 @@ export default {
       beanData: {},
     };
   },
-  async mounted() {
+
+  mounted() {
     if (this.beanId == null) {
       this.beanData = { name: "豆の名前の取得でエラーが発生しました" };
       console.warn(
         "Error at BeanName : 豆の名前の取得でエラーが発生しました。"
       );
     } else {
-      var tmp = this.$beanNames[this.beanId - 1];
-      this.beanData = tmp;
+      this.beanData = this.$beanNames[this.beanId - 1];
     }
-    console.debug("bId:", this.beanId);
-    console.debug("bData:", this.beanData);
   },
 };
 </script>

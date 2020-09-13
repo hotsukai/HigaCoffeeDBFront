@@ -1,9 +1,11 @@
 <template>
   <div class="card">
     <div class="card-content">
-      <p class="title"><BeanName :beanId="targetCoffee.bean_id"/></p>
-      <!-- {{targetCoffee.bean_id}} -->
-      <p class="subtitle">ID : {{review.coffee_id}}</p>
+      <p class="title">
+        <BeanName :bean-id="targetCoffee.beanId" />
+
+      </p>
+      <p class="subtitle">ID : {{review.coffeeId}}</p>
       <div class="columns is-mobile">
         <div class="column">
           <ul>
@@ -26,7 +28,7 @@
             </li>
             <li>
               抽出方法 :
-              <Method :em="targetCoffee.extractionMethod_id" />
+              <Method :em="targetCoffee.extractionMethodId" />
             </li>
           </ul>
         </div>
@@ -47,13 +49,14 @@ export default {
     };
   },
 
-  async mounted() {
+  async created() {
     await db
       .collection("coffees")
-      .doc(this.review.coffee_id)
+      .doc(this.review.coffeeId)
       .get()
       // .then(function (doc) {//動かない
-      .then((doc) => {//動く
+      .then((doc) => {
+        //動く
         if (doc.exists) {
           this.targetCoffee = doc.data();
         }

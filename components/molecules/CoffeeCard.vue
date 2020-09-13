@@ -3,7 +3,7 @@
   <div class="card">
     <div class="card-content">
       <p class="title">
-        <BeanName :beanId="coffee.bean_id" />
+        <BeanName :bean-id="coffee.beanId" />
       </p>
       <p class="subtitle">ID: {{coffee.id}}</p>
       <ul>
@@ -18,7 +18,7 @@
         </li>
         <li>
           抽出方法 :
-          <Method :em="coffee.extractionMethod_id" />
+          <Method :em="coffee.extractionMethodId" />
         </li>
       </ul>
     </div>

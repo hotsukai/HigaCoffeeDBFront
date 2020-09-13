@@ -15,12 +15,12 @@ export default class ReviewIndex extends Vue {
     {
       id: 1,
       bitterness: 3,
-      coffee_id: "123",
+      coffeeId: "123",
       feeling: "数字??",
       repeat: 3,
       situation: 1,
       strongness: 2,
-      user_id: "KIsUbKboVlbyj8Yskhps4qZaXgr2",
+      userId: "KIsUbKboVlbyj8Yskhps4qZaXgr2",
     },
   ];
 }

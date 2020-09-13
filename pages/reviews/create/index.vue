@@ -18,7 +18,7 @@ export default {
     const coffeesArray = [];
     await db
       .collection("coffees")
-      .where("user_id", "==", currentUser.uid)
+      .where("userId", "==", currentUser.uid)
       .where("isReviewExist","==",false)
       .get()
       .then(function (querySnapshot) {
@@ -32,7 +32,7 @@ export default {
   data() {
     return {
       name: "",
-      user_id: "",
+      userId: "",
       photoURL: "",
       coffees: [],
     };

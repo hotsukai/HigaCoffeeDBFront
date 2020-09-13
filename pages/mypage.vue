@@ -9,6 +9,9 @@
     <div v-show="isReviewExist">
       <p class="subtitle">あなたが書いたレビュー</p>
       <ReviewCards :reviews="reviews" />
+      <div class v-show="false">
+        <button @click="getMoreReview">もっと見る</button>
+      </div>
     </div>
     <div v-show="! isReviewExist">
       <p>まだレビューがありません</p>
@@ -26,7 +29,7 @@ export default {
     const reviewsArray = [];
     await db
       .collection("reviews")
-      .where("user_id", "==", currentUser.uid)
+      .where("userId", "==", currentUser.uid) // TODO:ページネーション
       .get()
       .then(function (querySnapshot) {
         querySnapshot.forEach(function (doc) {
@@ -55,6 +58,12 @@ export default {
       return this.reviews.length > 0;
     },
   },
+
+  methods: {
+    getMoreReview() {
+
+    }
+  }
 };
 </script>
 

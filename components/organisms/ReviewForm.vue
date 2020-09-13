@@ -53,6 +53,7 @@
 <script>
 import firebase from "@/plugins/firebase";
 var db = firebase.firestore();
+
 export default {
   // TODO:数字になってない
   props: ["coffeeId"],
@@ -81,10 +82,11 @@ export default {
   },
 
   methods: {
-    sendReview() {
+    async sendReview() {
       console.debug("sendReviewに入りました", this.coffeeId);
       if (this.user !== null) {
-        db.collection("reviews")
+        await db
+          .collection("reviews")
           .doc(this.coffeeId)
           .set({
             bitterness: this.bitterness,
@@ -92,8 +94,9 @@ export default {
             situation: this.situation,
             repeat: this.repeat,
             feeling: this.feeling,
-            user_id: this.user.uid,
-            coffee_id: this.coffeeId,
+            userId: this.user.uid,
+            coffeeId: this.coffeeId,
+            createdTime: firebase.firestore.FieldValue.serverTimestamp(),
           })
           .then(function () {
             console.debug("レビューを投稿しました");
@@ -101,7 +104,8 @@ export default {
           .catch(function (error) {
             console.error("Error adding document: ", error);
           });
-        db.collection("coffees")
+        await db
+          .collection("coffees")
           .doc(this.coffeeId)
           .set(
             {
@@ -111,6 +115,7 @@ export default {
           )
           .then(function () {
             console.debug("コーヒーのレビューの有無を更新しました");
+            this.$router.push({ path: "/", params: {} });
           })
           .catch(function (error) {
             console.error("Error adding document: ", error);
@@ -119,7 +124,6 @@ export default {
         alert("ERROR1:ログインしてください");
         this.$router.push("login");
       }
-      this.$router.push({ path: "/", params: {} });
     },
   },
 };
