@@ -33,7 +33,7 @@ export default class GoogleLogin extends Vue {
         var user = result.user;
         console.log(user);
         this.sendUser(user);
-        this.$router.push("mypage")
+        this.$router.push("/mypage")
       });
   }
 }
