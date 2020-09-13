@@ -5,7 +5,7 @@
       <img :src="photoURL" class="profile-img" />
       <p>お名前:{{name}}</p>
     </div>
-    <RentalButton />
+    <RentalButton :user="currentUser"/>
     <div v-show="isReviewExist">
       <p class="subtitle">あなたが書いたレビュー</p>
       <ReviewCards :reviews="reviews" />
@@ -26,16 +26,19 @@ const db = firebase.firestore();
 export default {
   async asyncData() {
     var cUser;
-    await firebase.auth().onAuthStateChanged(function (user) {
+    await firebase.auth().onAuthStateChanged((user)=> {
       if (user) {
         cUser = user;
       }
     });
 
+        console.debug(cUser.uid)
     const reviewsArray = [];
     await db
       .collection("reviews")
-      .where("userId", "==", cUser.uid) // TODO:ページネーション
+      // .where("userId", "==", cUser.uid) // TODO:ページネーション
+      .where("userId", "==","DtzgYFCTfEPc6fqAsQTJ6ELCwnP2") // TODO:ページネーション
+
       .orderBy("createdTime", "desc")
       .limit(25)
       .get()
