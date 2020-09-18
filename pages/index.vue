@@ -12,18 +12,20 @@
   </div>
 </template>
 
-<script lang="ts">
-import { Vue, Component } from "vue-property-decorator";
+<script>
 import firebase from "@/plugins/firebase";
-@Component
-export default class indexPage extends Vue {
-  isLogin: boolean = false;
+export default {
+  data() {
+    return {
+      isLogin: false,
+    };
+  },
   async mounted() {
     await firebase
       .auth()
       .onAuthStateChanged((user) => (this.isLogin = user ? true : false));
-  }
-}
+  },
+};
 </script>
 
 <style>
