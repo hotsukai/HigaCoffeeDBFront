@@ -9,23 +9,26 @@
   </div>
 </template>
 
-<script lang="ts">
-import { Vue, Component } from "vue-property-decorator";
-import firebase from "@/plugins/firebase";
-@Component({
-  layout: "default",
-  components: {},
-})
-export default class LoginButtonComponent extends Vue {
-  isLogin: boolean = false;
+<script>
+import firebase from "@/plugins/firebase"
+export default {
+  data(){
+    return{
+      isLogin: false,
+    }
+  },
+
   async mounted() {
     await firebase
       .auth()
       .onAuthStateChanged((user) => (this.isLogin = user ? true : false));
-  }
-  async logout() {
-    await firebase.auth().signOut();
-    this.$router.push("/");
+  },
+  
+  methods:{
+    async logout() {
+      await firebase.auth().signOut();
+      this.$router.push("/");
+    }
   }
 }
 </script>
