@@ -89,8 +89,8 @@ export default {
       if (this.user !== null) {
         let batch = db.batch();
 
-        let reviewsDoc = db.collection("coffees").doc(this.coffeeData.id);
-        batch.update(reviewsDoc, {
+        let coffeesDoc = db.collection("coffees").doc(this.coffeeData.id);
+        batch.update(coffeesDoc, {
           bitterness: this.bitterness,
           strongness: this.strongness,
           situation: this.situation,
@@ -99,7 +99,7 @@ export default {
           userId: this.user.uid,
           coffeeId: this.coffeeData.id,
           isReviewExist: true,
-          reviewCreatedTime: firebase.firestore.FieldValue.serverTimestamp(),
+          reviewregisteredTime: firebase.firestore.FieldValue.serverTimestamp(),
         });
 
         let usersDoc = db.collection("users").doc(this.user.uid);

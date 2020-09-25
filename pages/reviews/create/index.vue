@@ -2,7 +2,7 @@
   <div>
     <h1 class="title">あなたあてのコーヒー</h1>
     <div v-show="isCoffeeExist">
-      <CoffeeCards :coffees="coffees" />
+      <CoffeeCards :coffees="coffees" :user="currentUser" />
     </div>
     <div v-show="! isCoffeeExist">あなたあてのコーヒーがありません。</div>
   </div>
@@ -30,18 +30,10 @@ export default {
       .then(function (querySnapshot) {
         querySnapshot.forEach(function (doc) {
           coffeesArray.push(doc.data());
+          console.debug("c",doc.data());
         });
       });
     return { coffees: coffeesArray ,currentUser:cUser};
-  },
-
-  data() {
-    return {
-      name: "",
-      userId: "",
-      photoURL: "",
-      coffees: [],
-    };
   },
 
   computed: {

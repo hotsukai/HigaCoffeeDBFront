@@ -12,6 +12,7 @@ const currentUser = firebase.auth().currentUser;
 
 export default {
   props: ["user"],
+
   data() {
     return {
       // TODO:コーヒーのデータを正しいものに
@@ -107,33 +108,36 @@ export default {
       ],
     };
   },
+
   methods: {
     async addRentalCoffees() {
       if (this.user != null) {
+        var batch = db.batch();
         await this.coffees.forEach((coffee) => {
           var generatedId = db.collection("coffees").doc().id;
-          db.collection("coffees")
-            .doc(generatedId)
-            .set({
-              id: generatedId,
-              beanId: coffee.beanId,
-              extractionTime: coffee.extractionTime,
-              isReviewExist: coffee.isReviewExist,
-              powderAmount: coffee.powderAmount,
-              userId: this.user.uid,
-              waterAmount: coffee.waterAmount,
-              extractionMethodId: 1,
-              createdTime: firebase.firestore.FieldValue.serverTimestamp(),
-            })
-            .then(function () {})
-            .catch(function (error) {
-              alert("エラーが発生しました : ", error);
-              console.log("ERROR : rental button ", error);
-            });
+          var coffeesDoc = db.collection("coffees").doc(generatedId);
+          coffee.id = generatedId;
+          (coffee.registeredTime = firebase.firestore.FieldValue.serverTimestamp()),
+            batch.set(coffeesDoc, coffee);
+
+          let usersDoc = db.collection("users").doc(this.user.uid);
+          batch.update(usersDoc, {
+            coffees: firebase.firestore.FieldValue.arrayUnion(generatedId),
+          });
         });
-        alert("レンタルサービスのコーヒーのレビューがかけるようになりました。");
-        // TODO:レビューページへ
-        await this.$router.push({ path: "/reviews/create", params: {} });
+
+        batch
+          .commit()
+          .then( ()=> {
+            alert(
+              "レンタルサービスのコーヒーのレビューがかけるようになりました。"
+            );
+            this.$router.push({ path: "/reviews/create", params: {} });
+          })
+          .catch( (error)=> {
+            alert("エラーが発生しました : ", error);
+            console.warn("ERROR : rental button ", error);
+          });
       } else {
         alert("ログインしてください");
         this.$router.push({ path: "/login", params: {} });

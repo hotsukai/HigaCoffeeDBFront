@@ -34,9 +34,10 @@ export default {
 
     const reviewsArray = [];
     await db
-      .collection("reviews")
+      .collection("coffees")
       .where("userId", "==", cUser.uid) // TODO:ページネーション
-      .orderBy("createdTime", "desc")
+      .where("isReviewExist","==", true)
+      .orderBy("registeredTime", "desc")
       .limit(25)
       .get()
       .then(function (querySnapshot) {

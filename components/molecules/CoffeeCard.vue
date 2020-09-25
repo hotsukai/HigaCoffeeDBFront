@@ -10,7 +10,7 @@
         <!-- TODO: すべてコンポーネントにする -->
         <li>
           登録された時間 :
-          <TimeFirebaseToJs :time="coffee.createdTime" />
+          <TimeFirebaseToJs :time="coffee.registeredTime" />
         </li>
         <li>蒸らし時間 : {{coffee.extractionTime}}min</li>
         <li>粉の量 : {{coffee.powderAmount}}g</li>
@@ -36,7 +36,6 @@
         </span>
       </p>
     </footer>
-    
   </div>
 </template>
 
@@ -51,7 +50,7 @@ import firebase from "@/plugins/firebase";
 const db = firebase.firestore();
 
 export default {
-  props: ["coffee"],
+  props: ["coffee","user"],
 
   computed: {
     fullPath: function () {
@@ -61,9 +60,14 @@ export default {
 
   methods: {
     deleteCoffee() {
-      db.collection("coffees")
-        .doc(this.coffee.id)
-        .delete()
+      let batch = db.batch();
+      let coffeeDoc = db.collection("coffees").doc(this.coffee.id);
+
+      batch
+        .delete(coffeeDoc)
+
+        let usersDoc = db.collection("users").doc(this.user.uid);
+        batch.update()
         .then(function () {
           console.log("Document successfully deleted!");
         })
