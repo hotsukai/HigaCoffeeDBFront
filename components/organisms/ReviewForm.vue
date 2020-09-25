@@ -121,9 +121,7 @@ export default {
             this.strongness
           ),
         });
-        console.debug("hofw");
         batch.commit().then(() => {
-          console.debug("review　投稿");
           alert("レビューを投稿しました。");
           this.$router.push("/mypage");
         });
