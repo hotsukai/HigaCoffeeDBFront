@@ -50,7 +50,7 @@ import firebase from "@/plugins/firebase";
 const db = firebase.firestore();
 
 export default {
-  props: ["coffee","user"],
+  props: ["coffee", "user"],
 
   computed: {
     fullPath: function () {
@@ -61,13 +61,22 @@ export default {
   methods: {
     deleteCoffee() {
       let batch = db.batch();
+
       let coffeeDoc = db.collection("coffees").doc(this.coffee.id);
+      batch.delete(coffeeDoc);
+
+      let usersDoc = db.collection("users").doc(this.user.uid);
+      batch.update(usersDoc, {
+        coffees: firebase.firestore.FieldValue.arrayRemove(this.coffee.id),
+      });
+
+      let datasDoc = db.collection("datas").doc(String(this.coffee.beanId));
+      batch.update(datasDoc, {
+        countCoffees: firebase.firestore.FieldValue.increment(-1),
+      });
 
       batch
-        .delete(coffeeDoc)
-
-        let usersDoc = db.collection("users").doc(this.user.uid);
-        batch.update()
+        .commit()
         .then(function () {
           console.log("Document successfully deleted!");
         })
@@ -76,11 +85,11 @@ export default {
         });
     },
 
-    confirmDelete() {
+    async confirmDelete() {
       // TODO:確認モダール作成
       var answer = window.confirm(this.coffee.id + "のコーヒーを削除します");
       if (answer == true) {
-        this.deleteCoffee();
+        await this.deleteCoffee();
         this.$router.push("/mypage");
       }
     },

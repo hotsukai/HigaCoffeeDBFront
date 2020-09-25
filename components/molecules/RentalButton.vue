@@ -113,28 +113,34 @@ export default {
     async addRentalCoffees() {
       if (this.user != null) {
         var batch = db.batch();
+
         await this.coffees.forEach((coffee) => {
           var generatedId = db.collection("coffees").doc().id;
           var coffeesDoc = db.collection("coffees").doc(generatedId);
           coffee.id = generatedId;
-          (coffee.registeredTime = firebase.firestore.FieldValue.serverTimestamp()),
-            batch.set(coffeesDoc, coffee);
+          coffee.registeredTime = firebase.firestore.FieldValue.serverTimestamp();
+          batch.set(coffeesDoc, coffee);
 
           let usersDoc = db.collection("users").doc(this.user.uid);
           batch.update(usersDoc, {
             coffees: firebase.firestore.FieldValue.arrayUnion(generatedId),
           });
+
+          let datasDoc = db.collection("datas").doc(String(coffee.beanId));
+          batch.update(datasDoc, {
+            countCoffees: firebase.firestore.FieldValue.increment(1),
+          });
         });
 
         batch
           .commit()
-          .then( ()=> {
+          .then(() => {
             alert(
               "レンタルサービスのコーヒーのレビューがかけるようになりました。"
             );
             this.$router.push({ path: "/reviews/create", params: {} });
           })
-          .catch( (error)=> {
+          .catch((error) => {
             alert("エラーが発生しました : ", error);
             console.warn("ERROR : rental button ", error);
           });

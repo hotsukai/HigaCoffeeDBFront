@@ -30,7 +30,6 @@ export default {
       .then(function (querySnapshot) {
         querySnapshot.forEach(function (doc) {
           coffeesArray.push(doc.data());
-          console.debug("c",doc.data());
         });
       });
     return { coffees: coffeesArray ,currentUser:cUser};
