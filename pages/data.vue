@@ -34,15 +34,27 @@
 </template>
 
 <script>
-export default {
+import firebase from "@/plugins/firebase";
+const db = firebase.firestore();
+export default { 
   data() {
     return {
       beans: this.$beanNames,
       pickedSection1: "",
       pickedSection2: "",
       pickedBeanSection2: "",
+      datas:[]
     };
   },
+
+  created() {
+    db.collection("datas").get()
+    .then((querySnapshot)=>{
+      querySnapshot.forEach((data)=>{
+        this.datas.push(data.data())
+      })
+    })
+  }
 };
 </script>
 
