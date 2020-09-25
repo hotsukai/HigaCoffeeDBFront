@@ -11,8 +11,8 @@
 
 <script>
 import firebase from "@/plugins/firebase";
-const currentUser = firebase.auth().currentUser;
 const db = firebase.firestore();
+
 export default {
   async asyncData() {
     var cUser;
