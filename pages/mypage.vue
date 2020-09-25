@@ -25,7 +25,7 @@ const db = firebase.firestore();
 
 export default {
   async asyncData() {
-    var cUser;
+    let cUser;
     await firebase.auth().onAuthStateChanged((user) => {
       if (user) {
         cUser = user;

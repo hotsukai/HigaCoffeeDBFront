@@ -20,7 +20,7 @@ export default {
       isLogin: false,
     };
   },
-  async mounted() {
+  async created() {
     await firebase
       .auth()
       .onAuthStateChanged((user) => (this.isLogin = user ? true : false));

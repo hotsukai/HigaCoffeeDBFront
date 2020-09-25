@@ -12,7 +12,8 @@ export default {
       unsafeExtractionMethod: "",
     };
   },
-  async mounted() {
+
+  async created() {
     this.unsafeExtractionMethod = this.$extractionMethods[this.em - 1];
     
   },

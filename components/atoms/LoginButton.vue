@@ -1,36 +1,36 @@
 <template>
   <div>
-    <div v-if="isLogin">
+    <div v-show="isLogin">
       <button @click="logout" class="button">ログアウト</button>
     </div>
-    <div v-else>
+    <div v-show="!isLogin">
       <nuxt-link to="login" class="button">ログイン</nuxt-link>
     </div>
   </div>
 </template>
 
 <script>
-import firebase from "@/plugins/firebase"
+import firebase from "@/plugins/firebase";
 export default {
-  data(){
-    return{
+  data() {
+    return {
       isLogin: false,
-    }
+    };
   },
 
-  async mounted() {
+  async created() {
     await firebase
       .auth()
       .onAuthStateChanged((user) => (this.isLogin = user ? true : false));
   },
-  
-  methods:{
+
+  methods: {
     async logout() {
       await firebase.auth().signOut();
       this.$router.push("/");
-    }
-  }
-}
+    },
+  },
+};
 </script>
 
 <style>

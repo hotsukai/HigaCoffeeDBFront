@@ -1,13 +1,14 @@
 <template>
   <div>
-    <h1>ログイン</h1>
+    <h1 class="title">ログイン</h1>
     <div class="field">
       <div class="control">
         <input v-model="inputSecretWord" placeholder="合言葉は？？" type="password" />
+        <button class="button is-primary" @click="checkSecretWord">認証</button>
         <div v-if="isSecretWordCorrect">
           <GoogleLogin />
         </div>
-        <div v-else>
+        <div v-show="isWordIncorrect">
           <p>合言葉が間違っています</p>
         </div>
       </div>
@@ -25,14 +26,15 @@ export default {
     return {
       inputSecretWord: "",
       secretWord: "",
+      isSecretWordCorrect: false,
+      isWordIncorrect: false,
     };
   },
 
-  async mounted() {
+  async created() {
     firebase.auth().onAuthStateChanged((user) => {
       if (user) {
         this.$router.push("/");
-      } else {
       }
     });
 
@@ -47,9 +49,14 @@ export default {
       });
   },
 
-  computed: {
-    isSecretWordCorrect() {
-      return this.secretWord === this.inputSecretWord;
+  methods: {
+    checkSecretWord() {
+      if (this.secretWord === this.inputSecretWord) {
+        this.isSecretWordCorrect = true;
+        this.isWordIncorrect = false;
+      } else {
+        this.isWordIncorrect = true;
+      }
     },
   },
 };
