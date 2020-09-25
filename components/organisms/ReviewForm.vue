@@ -5,39 +5,36 @@
         <p>苦さについて</p>
         <p>焙煎度合は一旦忘れて、「あなたがどう感じたか」を記してください。</p>
         <label>酸っぱい</label>
-        <input name="bitterness" v-model.number="bitterness" type="radio" value="1" />
-        <input name="bitterness" v-model.number="bitterness" type="radio" value="2" />
-        <input name="bitterness" v-model.number="bitterness" type="radio" value="3" />
-        <input name="bitterness" v-model.number="bitterness" type="radio" value="4" />
+        <span v-for="num in 4" :key="num">
+          <input name="bitterness" v-model.number="bitterness" type="radio" :value="num" />
+        </span>
         <label>苦い</label>
       </div>
       <div>
         <p>濃さについて</p>
         <p>抽出時間は一旦忘れて、「あなたがどう感じたか」を記してください。</p>
         <label>薄い</label>
-        <input name="strongness" v-model.number="strongness" type="radio" value="1" />
-        <input name="strongness" v-model.number="strongness" type="radio" value="2" />
-        <input name="strongness" v-model.number="strongness" type="radio" value="3" />
-        <input name="strongness" v-model.number="strongness" type="radio" value="4" />
+        <span v-for="num in 4" :key="num">
+          <input name="strongness" v-model.number="strongness" type="radio" :value="num" />
+        </span>
         <label>濃い</label>
       </div>
       <div>
         <p>役割について</p>
         <p>「どういう時におすすめか」という観点で選んでください。</p>
         <label>リラックス</label>
-        <input name="situation" v-model.number="situation" type="radio" value="1" />
-        <input name="situation" v-model.number="situation" type="radio" value="2" />
-        <input name="situation" v-model.number="situation" type="radio" value="3" />
-        <input name="situation" v-model.number="situation" type="radio" value="4" />
+        <span v-for="num in 4" :key="num">
+          <input name="situation" v-model.number="situation" type="radio" :value="num" />
+        </span>
         <label>眠気覚まし</label>
       </div>
       <div>
         <p>また飲みたい??</p>
         <p>ご遠慮なく！</p>
         <label>飲みたくない</label>
-        <input name="repeat" v-model.number="repeat" type="radio" value="1" />
-        <input name="repeat" v-model.number="repeat" type="radio" value="2" />
-        <input name="repeat" v-model.number="repeat" type="radio" value="3" />
+        <span v-for="num in 3" :key="num">
+          <input name="repeat" v-model.number="repeat" type="radio" :value="num" />
+        </span>
         <label>また飲みたい!!</label>
       </div>
       <div>
@@ -47,7 +44,12 @@
       </div>
       <!-- TODO:どの誤りかを詳しく出力 -->
       <p v-show="!isValid" class="is-danger">入力に不備があります</p>
-      <button @click="sendReview" v-bind:disabled="!isValid" type="button" class="button is-primary">送信!!</button>
+      <button
+        @click="sendReview"
+        v-bind:disabled="!isValid"
+        type="button"
+        class="button is-primary"
+      >送信!!</button>
     </form>
   </div>
 </template>
@@ -57,8 +59,8 @@ import firebase from "@/plugins/firebase";
 var db = firebase.firestore();
 
 export default {
-  // TODO:数字になってない
-  props: ["coffeeId"],
+  props: ["coffeeData"],
+
   data() {
     return {
       bitterness: -1,
@@ -69,11 +71,10 @@ export default {
       user: firebase.auth().currentUser, //TODO: リロードすると得られない。
     };
   },
-  created() {
-    this.coffeeId = this.$route.params.id;
-  },
+
   computed: {
     isValid() {
+      console.debug("coffeeData:", this.coffeeData);
       return (
         this.bitterness !== -1 &&
         this.strongness !== -1 &&
@@ -84,45 +85,48 @@ export default {
   },
 
   methods: {
-    async sendReview() {
-      // console.debug("sendReviewに入りました", this.coffeeId);
+    sendReview() {
       if (this.user !== null) {
-        await db
-          .collection("reviews")
-          .doc(this.coffeeId)
-          .set({
-            bitterness: this.bitterness,
-            strongness: this.strongness,
-            situation: this.situation,
-            repeat: this.repeat,
-            feeling: this.feeling,
-            userId: this.user.uid,
-            coffeeId: this.coffeeId,
-            createdTime: firebase.firestore.FieldValue.serverTimestamp(),
-          })
-          .then(function () {
-            // console.debug("レビューを投稿しました");
-          })
-          .catch(function (error) {
-            console.error("Error adding document: ", error);
-          });
-        await db
-          .collection("coffees")
-          .doc(this.coffeeId)
-          .set(
-            {
-              isReviewExist: true,
-            },
-            { merge: true }
-          )
-          .then(() => {
-            // console.debug("コーヒーのレビューの有無を更新しました");
-            alert("レビューを投稿しました。");
-            this.$router.push("/mypage");
-          })
-          .catch(function (error) {
-            console.error("Error adding document: ", error);
-          });
+        let batch = db.batch();
+
+        let reviewsDoc = db.collection("coffees").doc(this.coffeeData.id);
+        batch.update(reviewsDoc, {
+          bitterness: this.bitterness,
+          strongness: this.strongness,
+          situation: this.situation,
+          repeat: this.repeat,
+          feeling: this.feeling,
+          userId: this.user.uid,
+          coffeeId: this.coffeeData.id,
+          isReviewExist: true,
+          reviewCreatedTime: firebase.firestore.FieldValue.serverTimestamp(),
+        });
+
+        let usersDoc = db.collection("users").doc(this.user.uid);
+        batch.update(usersDoc, {
+          reviews: firebase.firestore.FieldValue.arrayUnion(this.coffeeData.id),
+        });
+
+        let datasDoc = db
+          .collection("datas")
+          .doc(String(this.coffeeData.beanId));
+        batch.update(datasDoc, {
+          countReviews: firebase.firestore.FieldValue.increment(1),
+          sumBitterness: firebase.firestore.FieldValue.increment(
+            this.bitterness
+          ),
+          sumRepeat: firebase.firestore.FieldValue.increment(this.repeat),
+          sumSituation: firebase.firestore.FieldValue.increment(this.situation),
+          sumStrongness: firebase.firestore.FieldValue.increment(
+            this.strongness
+          ),
+        });
+        console.debug("hofw");
+        batch.commit().then(() => {
+          console.debug("review　投稿");
+          alert("レビューを投稿しました。");
+          this.$router.push("/mypage");
+        });
       } else {
         alert("ERROR1:ログインしてください");
         this.$router.push("/login");
