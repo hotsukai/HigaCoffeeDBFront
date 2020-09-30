@@ -74,7 +74,11 @@ export default {
         coffees: firebase.firestore.FieldValue.arrayRemove(this.coffee.id),
       });
 
-      let datasDoc = db.collection("datas").doc(String(this.coffee.beanId));
+      let datasDoc = db
+        .collection("datas")
+        .doc("all")
+        .collection("datas")
+        .doc(String(this.coffee.beanId));
       batch.update(datasDoc, {
         countCoffees: firebase.firestore.FieldValue.increment(-1),
       });

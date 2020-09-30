@@ -5,7 +5,7 @@
         <p>苦さについて</p>
         <p>焙煎度合は一旦忘れて、「あなたがどう感じたか」を記してください。</p>
         <label>酸っぱい</label>
-        <span v-for="num in 4" :key="num">
+        <span v-for="num in [1,2,3,4]" :key="num">
           <input
             name="bitterness"
             v-model.number="bitterness"
@@ -19,7 +19,7 @@
         <p>濃さについて</p>
         <p>抽出時間は一旦忘れて、「あなたがどう感じたか」を記してください。</p>
         <label>薄い</label>
-        <span v-for="num in 4" :key="num">
+        <span v-for="num in [1,2,3,4]" :key="num">
           <input
             name="strongness"
             v-model.number="strongness"
@@ -33,7 +33,7 @@
         <p>役割について</p>
         <p>「どういう時におすすめか」という観点で選んでください。</p>
         <label>リラックス</label>
-        <span v-for="num in 4" :key="num">
+        <span v-for="num in [1,2,3,4]" :key="num">
           <input
             name="situation"
             v-model.number="situation"
@@ -47,7 +47,7 @@
         <p>また飲みたい??</p>
         <p>ご遠慮なく！</p>
         <label>飲みたくない</label>
-        <span v-for="num in 3" :key="num">
+        <span v-for="num in [1,2,3]" :key="num">
           <input
             name="repeat"
             v-model.number="repeat"
@@ -131,6 +131,8 @@ export default {
         });
 
         let datasDoc = db
+          .collection("datas")
+          .doc("all")
           .collection("datas")
           .doc(String(this.coffeeData.beanId));
         batch.update(datasDoc, {
