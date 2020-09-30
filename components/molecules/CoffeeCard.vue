@@ -5,17 +5,17 @@
       <p class="title">
         <BeanName :bean-id="coffee.beanId" />
       </p>
-      <p class="subtitle">ID: {{coffee.id}}</p>
+      <p class="subtitle">ID: {{ coffee.id }}</p>
       <ul>
         <!-- TODO: すべてコンポーネントにする -->
         <li>
           登録された時間 :
           <TimeFirebaseToJs :time="coffee.registeredTime" />
         </li>
-        <li>蒸らし時間 : {{coffee.extractionTime}}min</li>
-        <li>粉の量 : {{coffee.powderAmount}}g</li>
-        <li>水の量 : {{coffee.waterAmount}}ml</li>
-        <li>メッシュ : {{coffee.mesh}}</li>
+        <li>蒸らし時間 : {{ coffee.extractionTime }}min</li>
+        <li>粉の量 : {{ coffee.powderAmount }}g</li>
+        <li>水の量 : {{ coffee.waterAmount }}ml</li>
+        <li>メッシュ : {{ coffee.mesh }}</li>
         <li>
           湯温 :
           <WaterTemperature :wt="coffee.WaterTemperature" />
@@ -29,10 +29,14 @@
     <footer class="card-footer">
       <p class="card-footer-item">
         <span>
-          <nuxt-link :to="fullPath" class="button is-primary">レビューを書く</nuxt-link>
+          <nuxt-link :to="fullPath" class="button is-primary"
+            >レビューを書く</nuxt-link
+          >
         </span>
         <span>
-          <button class="button is-danger" @click="confirmDelete()">削除</button>
+          <button class="button is-danger" @click="confirmDelete()">
+            削除
+          </button>
         </span>
       </p>
     </footer>
@@ -72,6 +76,15 @@ export default {
 
       let datasDoc = db.collection("datas").doc(String(this.coffee.beanId));
       batch.update(datasDoc, {
+        countCoffees: firebase.firestore.FieldValue.increment(-1),
+      });
+
+      let userDatasDoc = db
+        .collection("datas")
+        .doc(this.user.uid)
+        .collection("datas")
+        .doc(String(this.coffee.beanId));
+      batch.update(userDatasDoc, {
         countCoffees: firebase.firestore.FieldValue.increment(-1),
       });
 
