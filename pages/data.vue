@@ -50,10 +50,10 @@
           </p>
         </div>
       </div>
-      <GraphC v-if="pickedSection1 == 'upperC'" :datas="allDatas" />
+      <GraphC v-if="pickedSection1 == 'upperC'" :receivedDatas="allDatas" />
       <div v-if="pickedSection1 == 'lowerC'">
         <div v-if="isLogin">
-          <GraphC :datas="myDatas" />
+          <GraphC :receivedDatas="myDatas" />
         </div>
         <div v-else>
           <p>
