@@ -7,34 +7,39 @@ import firebase from "@/plugins/firebase";
 
 const googleProvider = new firebase.auth.GoogleAuthProvider();
 var db = firebase.firestore();
+
 export default {
   methods: {
-    sendUser(user) {
-      db.collection("users")
-        .doc(user.uid)
-        .set({
-          uid: user.uid,
-          name: user.displayName,
-          reviews: [], //TODO:新規ログインのたびに初期化されてしまう。
-        })
-        .then(function () {
-          console.log("add user data ");
-        })
-        .catch(function (error) {
-          console.error("Error adding document: ", error);
-        });
-    },
-
-    signInWithGooglePopup() {
-      firebase
+    async signInWithGooglePopup() {
+      let user;
+      await firebase
         .auth()
         .signInWithPopup(googleProvider)
         .then((result) => {
-          var user = result.user;
-          console.log(user);
-          this.sendUser(user);
-          this.$router.push("/mypage");
+          user = result.user;
         });
+
+      let batch = db.batch();
+
+      let usersDoc = db.collection("users").doc(user.uid);
+      batch.set(usersDoc, {
+        uid: user.uid,
+        name: user.displayName,
+        reviews: [],
+        coffees: [],
+      });
+
+      let usersDatasDoc = db.collection("datas").doc(user.uid);
+      for (let i = 1; i <= 8; i++) {
+        batch.set(usersDatasDoc.collection("datas").doc(String(i)), {});
+      }
+
+      batch.commit().then(() => {
+        this.$router.push("/mypage");
+      }).catch(err =>{
+        alert("エラーが発生しました : ",err)
+        console.warn(err)
+      })
     },
   },
 };
