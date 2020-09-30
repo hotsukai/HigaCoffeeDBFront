@@ -1,6 +1,12 @@
 # HiGaDBAPP
+## このアプリケーションは?
+- [HiGaCoffee](https://sites.google.com/view/higa-coffee)のコーヒーデータベースのモックアップです。
+- Nuxt.js + Firebaseで作られています。
 
-## Build Setup
+### *HiGaCoffee*とは
+「自分好みのコーヒー」を吟味できる環境づくりを目指す筑波大学の公認学生団体。コーヒーに関するデータ（抽出レシピとレビュー）を都度記録し活用している。
+
+## 実行方法
 
 ```bash
 # install dependencies
@@ -16,5 +22,3 @@ $ yarn start
 # generate static project
 $ yarn generate
 ```
-
-For detailed explanation on how things work, check out [Nuxt.js docs](https://nuxtjs.org).
