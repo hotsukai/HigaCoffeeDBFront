@@ -113,6 +113,8 @@ export default {
     let allDatas = [];
     await db
       .collection("datas")
+      .doc("all")
+      .collection("datas")
       .get()
       .then((querySnapshot) => {
         querySnapshot.forEach((data) => {

@@ -131,6 +131,8 @@ export default {
         });
 
         let datasDoc = db
+          .collection
+          .doc("all")
           .collection("datas")
           .doc(String(this.coffeeData.beanId));
         batch.update(datasDoc, {

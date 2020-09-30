@@ -130,7 +130,11 @@ export default {
             coffees: firebase.firestore.FieldValue.arrayUnion(generatedId),
           });
 
-          let datasDoc = db.collection("datas").doc(String(coffee.beanId));
+          let datasDoc = db
+            .collection("datas")
+            .doc("all")
+            .collection("datas")
+            .doc(String(coffee.beanId));
           batch.update(datasDoc, {
             countCoffees: firebase.firestore.FieldValue.increment(1),
           });
