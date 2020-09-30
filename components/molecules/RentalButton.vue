@@ -1,7 +1,11 @@
 <template>
   <div>
-    <button @click="addRentalCoffees()" class="button">レンタルサービス初回登録</button>
-    <p>レンタルサービスに申込後、上記のボタンを押すことでアプリケーションにコーヒーが登録されます。</p>
+    <button @click="addRentalCoffees()" class="button">
+      レンタルサービス初回登録
+    </button>
+    <p>
+      レンタルサービスに申込後、上記のボタンを押すことでアプリケーションにコーヒーが登録されます。
+    </p>
   </div>
 </template>
 
@@ -128,6 +132,15 @@ export default {
 
           let datasDoc = db.collection("datas").doc(String(coffee.beanId));
           batch.update(datasDoc, {
+            countCoffees: firebase.firestore.FieldValue.increment(1),
+          });
+
+          let userDatasDoc = db
+            .collection("datas")
+            .doc(this.user.uid)
+            .collection("datas")
+            .doc(String(coffee.beanId));
+          batch.update(userDatasDoc, {
             countCoffees: firebase.firestore.FieldValue.increment(1),
           });
         });

@@ -6,7 +6,12 @@
         <p>焙煎度合は一旦忘れて、「あなたがどう感じたか」を記してください。</p>
         <label>酸っぱい</label>
         <span v-for="num in 4" :key="num">
-          <input name="bitterness" v-model.number="bitterness" type="radio" :value="num" />
+          <input
+            name="bitterness"
+            v-model.number="bitterness"
+            type="radio"
+            :value="num"
+          />
         </span>
         <label>苦い</label>
       </div>
@@ -15,7 +20,12 @@
         <p>抽出時間は一旦忘れて、「あなたがどう感じたか」を記してください。</p>
         <label>薄い</label>
         <span v-for="num in 4" :key="num">
-          <input name="strongness" v-model.number="strongness" type="radio" :value="num" />
+          <input
+            name="strongness"
+            v-model.number="strongness"
+            type="radio"
+            :value="num"
+          />
         </span>
         <label>濃い</label>
       </div>
@@ -24,7 +34,12 @@
         <p>「どういう時におすすめか」という観点で選んでください。</p>
         <label>リラックス</label>
         <span v-for="num in 4" :key="num">
-          <input name="situation" v-model.number="situation" type="radio" :value="num" />
+          <input
+            name="situation"
+            v-model.number="situation"
+            type="radio"
+            :value="num"
+          />
         </span>
         <label>眠気覚まし</label>
       </div>
@@ -33,13 +48,20 @@
         <p>ご遠慮なく！</p>
         <label>飲みたくない</label>
         <span v-for="num in 3" :key="num">
-          <input name="repeat" v-model.number="repeat" type="radio" :value="num" />
+          <input
+            name="repeat"
+            v-model.number="repeat"
+            type="radio"
+            :value="num"
+          />
         </span>
         <label>また飲みたい!!</label>
       </div>
       <div>
         <p>感想</p>
-        <p>コーヒーについての感想を教えてください。また、既定のレシピ通りに出来なかった場合はその旨を記してください（例：お湯を入れすぎた、抽出時間長すぎた）</p>
+        <p>
+          コーヒーについての感想を教えてください。また、既定のレシピ通りに出来なかった場合はその旨を記してください（例：お湯を入れすぎた、抽出時間長すぎた）
+        </p>
         <input v-model="feeling" />
       </div>
       <!-- TODO:どの誤りかを詳しく出力 -->
@@ -49,7 +71,9 @@
         v-bind:disabled="!isValid"
         type="button"
         class="button is-primary"
-      >送信!!</button>
+      >
+        送信!!
+      </button>
     </form>
   </div>
 </template>
@@ -74,7 +98,6 @@ export default {
 
   computed: {
     isValid() {
-      console.debug("coffeeData:", this.coffeeData);
       return (
         this.bitterness !== -1 &&
         this.strongness !== -1 &&
@@ -99,7 +122,7 @@ export default {
           userId: this.user.uid,
           coffeeId: this.coffeeData.id,
           isReviewExist: true,
-          reviewregisteredTime: firebase.firestore.FieldValue.serverTimestamp(),
+          reviewRegisteredTime: firebase.firestore.FieldValue.serverTimestamp(),
         });
 
         let usersDoc = db.collection("users").doc(this.user.uid);
@@ -121,6 +144,24 @@ export default {
             this.strongness
           ),
         });
+
+        let userDatasDoc = db
+          .collection("datas")
+          .doc(this.user.uid)
+          .collection("datas")
+          .doc(String(this.coffeeData.beanId));
+        batch.update(userDatasDoc, {
+          countReviews: firebase.firestore.FieldValue.increment(1),
+          sumBitterness: firebase.firestore.FieldValue.increment(
+            this.bitterness
+          ),
+          sumRepeat: firebase.firestore.FieldValue.increment(this.repeat),
+          sumSituation: firebase.firestore.FieldValue.increment(this.situation),
+          sumStrongness: firebase.firestore.FieldValue.increment(
+            this.strongness
+          ),
+        });
+
         batch.commit().then(() => {
           alert("レビューを投稿しました。");
           this.$router.push("/mypage");
