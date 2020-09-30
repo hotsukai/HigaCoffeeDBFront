@@ -38,7 +38,14 @@
         <label for="lowerC">c:濃さ(個人)</label>
       </div>
       <GraphA v-show="pickedSection1 == 'upperA'" :datas="allDatas" />
-      <GraphA v-show="pickedSection1 == 'lowerA'" :datas="myDatas" />
+      <div v-show="pickedSection1 == 'lowerA'">
+        <GraphA v-show="isLogin" :datas="myDatas" />
+        <p v-show="!isLogin" :datas="myDatas">
+          個人グラフを見るには
+          <nuxt-link to="/login"> ログイン </nuxt-link>
+          が必要です。
+        </p>
+      </div>
     </section>
     <hr />
     <section>
@@ -95,19 +102,22 @@ export default {
           allDatas.push(data.data());
         });
       });
-
-    let myDatas = [];
-    await db
-      .collection("datas")
-      .doc(firebase.auth().currentUser.uid)
-      .collection("datas")
-      .get()
-      .then((querySnapshot) => {
-        querySnapshot.forEach((data) => {
-          myDatas.push(data.data());
+    if (firebase.auth().currentUser !== null) {
+      let myDatas = [];
+      await db
+        .collection("datas")
+        .doc(firebase.auth().currentUser.uid)
+        .collection("datas")
+        .get()
+        .then((querySnapshot) => {
+          querySnapshot.forEach((data) => {
+            myDatas.push(data.data());
+          });
         });
-      });
-    return { allDatas: allDatas, myDatas: myDatas };
+      return { allDatas: allDatas, myDatas: myDatas, isLogin: true };
+    } else {
+      return { allDatas: allDatas, isLogin: false };
+    }
   },
 };
 </script>
