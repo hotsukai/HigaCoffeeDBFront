@@ -131,7 +131,7 @@ export default {
         });
 
         let datasDoc = db
-          .collection
+          .collection("datas")
           .doc("all")
           .collection("datas")
           .doc(String(this.coffeeData.beanId));
