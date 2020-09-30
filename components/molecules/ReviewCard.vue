@@ -8,8 +8,8 @@
       <div class="columns">
         <div class="column">
           <ul>
-            <li>レビュー登録日 : <TimeFirebaseToJs :time="review.registeredTime"/> </li>
-            <li>コーヒー登録日 : <TimeFirebaseToJs :time="review.reviewRegisteredTime"/> </li>
+            <li>コーヒー登録日 : <TimeFirebaseToJs :time="review.registeredTime"/> </li>
+            <li>レビュー登録日 : <TimeFirebaseToJs :time="review.reviewRegisteredTime"/> </li>
 
             <li>苦さ : {{review.bitterness}}</li>
             <li>濃さ : {{review.strongness}}</li>
