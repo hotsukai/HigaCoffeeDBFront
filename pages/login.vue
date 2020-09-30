@@ -3,7 +3,7 @@
     <h1 class="title">ログイン</h1>
     <div class="field">
       <div class="control">
-        <input v-model="inputSecretWord" placeholder="合言葉は？？" type="password" />
+        <input  v-model="inputSecretWord" placeholder="合言葉は？？" type="password" class="input" />
         <button class="button is-primary" @click="checkSecretWord">認証</button>
         <div v-if="isSecretWordCorrect">
           <GoogleLogin />
