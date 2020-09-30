@@ -37,7 +37,8 @@
         />
         <label for="lowerC">c:濃さ(個人)</label>
       </div>
-      <UpperA v-show="pickedSection1 == 'upperA'" :datas="datas" />
+      <UpperA v-show="pickedSection1 == 'upperA'" :datas="allDatas" />
+      <UpperA v-show="pickedSection1 == 'lowerA'" :datas="myDatas" />
     </section>
     <hr />
     <section>
@@ -85,16 +86,28 @@ export default {
   },
 
   async asyncData() {
-    let tmp = [];
+    let allDatas = [];
     await db
       .collection("datas")
       .get()
       .then((querySnapshot) => {
         querySnapshot.forEach((data) => {
-          tmp.push(data.data());
+          allDatas.push(data.data());
         });
       });
-    return { datas: tmp };
+
+    let myDatas = [];
+    await db
+      .collection("datas")
+      .doc(firebase.auth().currentUser.uid)
+      .collection("datas")
+      .get()
+      .then((querySnapshot) => {
+        querySnapshot.forEach((data) => {
+          myDatas.push(data.data());
+        });
+      });
+    return { allDatas: allDatas, myDatas: myDatas };
   },
 };
 </script>
