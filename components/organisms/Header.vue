@@ -35,11 +35,13 @@ export default {
   data: () => {
     return { isMenuActive: false };
   },
+  
   methods: {
     toggleMenu() {
       this.isMenuActive = !this.isMenuActive;
     },
   },
+
   watch: {
     '$route' () {
       this.isMenuActive = false

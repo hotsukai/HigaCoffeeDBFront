@@ -1,5 +1,5 @@
 <template>
-  <span>{{beanData.name}}(id:{{beanId}})</span>
+  <span>{{beanData.name}}(豆ID:{{beanId}})</span>
 </template>
 
 <script>
@@ -11,7 +11,9 @@ export default {
       beanData: {},
     };
   },
+
 //TODO:マイページからのときとあなた宛一覧で表示できる方法がcreated+watchしか思いつかなかった、
+//マイページではbeanIDが遅れてくるのではじめはnullになってしまう
   created() {
     if (this.beanId == null) {
       this.beanData = { name: "豆の名前の取得でエラーが発生しました" };

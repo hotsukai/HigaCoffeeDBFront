@@ -37,8 +37,8 @@
         />
         <label for="lowerC">c:濃さ(個人)</label>
       </div>
-      <UpperA v-show="pickedSection1 == 'upperA'" :datas="allDatas" />
-      <UpperA v-show="pickedSection1 == 'lowerA'" :datas="myDatas" />
+      <GraphA v-show="pickedSection1 == 'upperA'" :datas="allDatas" />
+      <GraphA v-show="pickedSection1 == 'lowerA'" :datas="myDatas" />
     </section>
     <hr />
     <section>
