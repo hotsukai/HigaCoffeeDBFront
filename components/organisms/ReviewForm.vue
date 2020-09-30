@@ -122,7 +122,7 @@ export default {
           userId: this.user.uid,
           coffeeId: this.coffeeData.id,
           isReviewExist: true,
-          reviewregisteredTime: firebase.firestore.FieldValue.serverTimestamp(),
+          reviewRegisteredTime: firebase.firestore.FieldValue.serverTimestamp(),
         });
 
         let usersDoc = db.collection("users").doc(this.user.uid);
