@@ -5,6 +5,7 @@
 <script>
 export default {
   props: ["wt"],
+  
   computed: {
     wtData() {
       if (this.wt < 0 || this.wt == null) {
