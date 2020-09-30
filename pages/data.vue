@@ -37,14 +37,31 @@
         />
         <label for="lowerC">c:濃さ(個人)</label>
       </div>
-      <GraphA v-show="pickedSection1 == 'upperA'" :datas="allDatas" />
-      <div v-show="pickedSection1 == 'lowerA'">
-        <GraphA v-show="isLogin" :datas="myDatas" />
-        <p v-show="!isLogin" :datas="myDatas">
-          個人グラフを見るには
-          <nuxt-link to="/login"> ログイン </nuxt-link>
-          が必要です。
-        </p>
+      <GraphA v-if="pickedSection1 == 'upperA'" :datas="allDatas" />
+      <div v-if="pickedSection1 == 'lowerA'">
+        <div v-if="isLogin">
+          <GraphA :datas="myDatas" />
+        </div>
+        <div v-else>
+          <p>
+            個人グラフを見るには
+            <nuxt-link to="/login"> ログイン </nuxt-link>
+            が必要です。
+          </p>
+        </div>
+      </div>
+      <GraphC v-if="pickedSection1 == 'upperC'" :datas="allDatas" />
+      <div v-if="pickedSection1 == 'lowerC'">
+        <div v-if="isLogin">
+          <GraphC :datas="myDatas" />
+        </div>
+        <div v-else>
+          <p>
+            個人グラフを見るには
+            <nuxt-link to="/login"> ログイン </nuxt-link>
+            が必要です。
+          </p>
+        </div>
       </div>
     </section>
     <hr />
