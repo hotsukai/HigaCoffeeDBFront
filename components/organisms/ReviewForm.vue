@@ -2,10 +2,12 @@
   <div>
     <form>
       <div>
-        <p>苦さについて</p>
-        <p>焙煎度合は一旦忘れて、「あなたがどう感じたか」を記してください。</p>
-        <label>酸っぱい</label>
-        <span v-for="num in [1,2,3,4]" :key="num">
+        <label class="label">苦さ</label>
+        <p class="help">
+          焙煎度合は一旦忘れて、「あなたがどう感じたか」を記してください。
+        </p>
+        <label class="radio">酸っぱい</label>
+        <span v-for="num in [1, 2, 3, 4]" :key="num">
           <input
             name="bitterness"
             v-model.number="bitterness"
@@ -13,13 +15,15 @@
             :value="num"
           />
         </span>
-        <label>苦い</label>
+        <label class="radio">苦い</label>
       </div>
       <div>
-        <p>濃さについて</p>
-        <p>抽出時間は一旦忘れて、「あなたがどう感じたか」を記してください。</p>
-        <label>薄い</label>
-        <span v-for="num in [1,2,3,4]" :key="num">
+        <label class="label">濃さ</label>
+        <p class="help">
+          抽出時間は一旦忘れて、「あなたがどう感じたか」を記してください。
+        </p>
+        <label class="radio">薄い</label>
+        <span v-for="num in [1, 2, 3, 4]" :key="num">
           <input
             name="strongness"
             v-model.number="strongness"
@@ -27,13 +31,15 @@
             :value="num"
           />
         </span>
-        <label>濃い</label>
+        <label class="radio">濃い</label>
       </div>
       <div>
-        <p>役割について</p>
-        <p>「どういう時におすすめか」という観点で選んでください。</p>
-        <label>リラックス</label>
-        <span v-for="num in [1,2,3,4]" :key="num">
+        <label class="label">役割</label>
+        <p class="help">
+          「どういう時におすすめか」という観点で選んでください。
+        </p>
+        <label class="radio">リラックス</label>
+        <span v-for="num in [1, 2, 3, 4]" :key="num">
           <input
             name="situation"
             v-model.number="situation"
@@ -41,13 +47,13 @@
             :value="num"
           />
         </span>
-        <label>眠気覚まし</label>
+        <label class="radio">眠気覚まし</label>
       </div>
       <div>
-        <p>また飲みたい??</p>
-        <p>ご遠慮なく！</p>
-        <label>飲みたくない</label>
-        <span v-for="num in [1,2,3]" :key="num">
+        <label class="label">また飲みたい??</label>
+        <p class="help">ご遠慮なく！</p>
+        <label class="radio">飲みたくない</label>
+        <span v-for="num in [1, 2, 3]" :key="num">
           <input
             name="repeat"
             v-model.number="repeat"
@@ -55,14 +61,14 @@
             :value="num"
           />
         </span>
-        <label>また飲みたい!!</label>
+        <label class="radio">また飲みたい!!</label>
       </div>
       <div>
-        <p>感想</p>
-        <p>
+        <label class="label">感想</label>
+        <p class="help">
           コーヒーについての感想を教えてください。また、既定のレシピ通りに出来なかった場合はその旨を記してください（例：お湯を入れすぎた、抽出時間長すぎた）
         </p>
-        <input v-model="feeling" />
+        <input class="input" type="text" v-model="feeling" />
       </div>
       <!-- TODO:どの誤りかを詳しく出力 -->
       <p v-show="!isValid" class="is-danger">入力に不備があります</p>
