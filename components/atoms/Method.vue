@@ -5,18 +5,21 @@
 <script>
 import firebase from "@/plugins/firebase";
 const db = firebase.firestore();
+
 export default {
   props: ["em"],
+
   data() {
     return {
       unsafeExtractionMethod: "",
     };
   },
 
-  async created() {
+  created() {
     this.unsafeExtractionMethod = this.$extractionMethods[this.em - 1];
     
   },
+
   computed: {
     extractionMethod() {
       if (
