@@ -170,25 +170,28 @@ export default {
               sumStrongness: firebase.firestore.FieldValue.increment(
                 this.strongness
               ),
+              //レビュー数
               [`strong${this.strongness}.count`]: isNaN(
                 datasOfAll[`strong${this.strongness}.count`]
               )
                 ? 1
                 : datasOfAll[`strong${this.strongness}.count`] + 1,
 
+              //抽出時間
               [`strong${this.strongness}.sumExtractionTime`]: isNaN(
                 datasOfAll[`strong${this.strongness}.sumExtractionTime`]
               )
-                ? this.strongness
+                ? this.coffeeData.extractionTime
                 : datasOfAll[`strong${this.strongness}.sumExtractionTime`] +
-                  this.sumExtractionTime,
+                  this.coffeeData.extractionTime,
 
+              //粉の量
               [`strong${this.strongness}.sumPowderAmount`]: isNaN(
-                datasOfAll[`strong${this.strongness}.sumExtractionTime`]
+                datasOfAll[`strong${this.strongness}.sumPowderAmount`]
               )
-                ? this.strongness
-                : datasOfAll[`strong${this.strongness}.sumExtraction`] +
-                  this.powderAmount,
+                ? this.coffeeData.powderAmount
+                : datasOfAll[`strong${this.strongness}.sumPowderAmount`] +
+                  this.coffeeData.powderAmount,
             });
 
             //datas/:userId/datas/:beanId
@@ -204,25 +207,28 @@ export default {
               sumStrongness: firebase.firestore.FieldValue.increment(
                 this.strongness
               ),
+              //レビュー数
               [`strong${this.strongness}.count`]: isNaN(
                 datasOfAll[`strong${this.strongness}.count`]
               )
                 ? 1
                 : datasOfAll[`strong${this.strongness}.count`] + 1,
 
+              //抽出時間
               [`strong${this.strongness}.sumExtractionTime`]: isNaN(
                 datasOfAll[`strong${this.strongness}.sumExtractionTime`]
               )
-                ? this.extractionTime
+                ? this.coffeeData.extractionTime
                 : datasOfAll[`strong${this.strongness}.sumExtractionTime`] +
-                  this.sumExtractionTime,
+                  this.cofffeeData.extractionTime,
 
+              //粉の量
               [`strong${this.strongness}.sumPowderAmount`]: isNaN(
-                datasOfAll[`strong${this.strongness}.sumExtractionTime`]
+                datasOfAll[`strong${this.strongness}.sumPowderAmount`]
               )
-                ? this.powderAmount
-                : datasOfAll[`strong${this.strongness}.sumExtraction`] +
-                  this.powderAmount,
+                ? this.coffeeData.powderAmount
+                : datasOfAll[`strong${this.strongness}.sumPowderAmount`] +
+                  this.coffeeData.powderAmount,
             });
           })
           .then(() => {
