@@ -10,6 +10,7 @@
       <p class="subtitle">あなたが書いたレビュー</p>
       <ReviewCards :reviews="reviews" />
       <div class v-show="false">
+        <!-- TODO: 新しい順 -->
         <button @click="getMoreReview">もっと見る</button>
       </div>
     </div>
