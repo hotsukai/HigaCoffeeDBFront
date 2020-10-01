@@ -3,7 +3,7 @@ import { Bubble } from "vue-chartjs";
 
 export default {
   extends: Bubble,
-  props: ["receivedDatas"],
+  props: ["receivedData"],
 
   data() {
     return {
@@ -11,51 +11,35 @@ export default {
         labels: this.$beanNames,
         datasets: [
           {
-            label: "ブラジル中煎り",
+            label: "薄い",
             data: [{ x: 0, y: 0, r: 7 }],
-            backgroundColor: "rgba(100, 10, 10,0.5)",
+            backgroundColor: "rgba(123, 85, 68,0.5)",
           },
           {
-            label: "ブラジル深煎り",
+            label: "少し薄い",
             data: [{ x: 0, y: 0, r: 7 }],
-
+            backgroundColor: "rgba(123, 85, 68,0.62)",
+          },
+          {
+            label: "少し濃い",
+            data: [{ x: 0, y: 0, r: 7 }],
+            backgroundColor: "rgba(123, 85, 68,0.75)",
+          },
+          {
+            label: "濃い",
+            data: [{ x: 0, y: 0, r: 7 }],
+            backgroundColor: "rgba(123, 85, 68,1)",
+          },
+          {
+            label: "bodum基準",
+            data: [{ x: 0, y: 0, r: 7 }],
             backgroundColor: "rgba(100, 10, 10,1)",
           },
           {
-            label: "コロンビア中煎り",
-            data: [{ x: 0, y: 0, r: 7 }],
-
-            backgroundColor: "rgba(10, 100, 10,0.5)",
-          },
-          {
-            label: "コロンビア深煎り",
+            label: "全体のベストレシピ",
             data: [{ x: 0, y: 0, r: 7 }],
 
             backgroundColor: "rgba(10, 100, 10,1)",
-          },
-          {
-            label: "タンザニア中煎り",
-            data: [{ x: 0, y: 0, r: 7 }],
-
-            backgroundColor: "rgba(10, 10, 100,0.5)",
-          },
-          {
-            label: "タンザニア深煎り",
-            data: [{ x: 0, y: 0, r: 7 }],
-
-            backgroundColor: "rgba(10, 10, 100,1)",
-          },
-          {
-            label: "インドネシア中煎り",
-            data: [{ x: 0, y: 0, r: 7 }],
-
-            backgroundColor: "rgba(10, 50, 50,0.5)",
-          },
-          {
-            label: "インドネシア深煎り",
-            data: [{ x: 0, y: 0, r: 7 }],
-
-            backgroundColor: "rgba(10, 50, 50,1)",
           },
         ],
       },
@@ -65,14 +49,14 @@ export default {
             {
               scaleLabel: {
                 display: true, // 表示設定
-                labelString: "役割", // ラベル
+                labelString: "粉の量", // ラベル
               },
               ticks: {
-                max: 4,
-                min: 1,
+                max: 12,
+                min: 7,
                 stepSize: 0.5,
                 callback: function (label, index, labels) {
-                  let xLabels = ["リラックス", "","", "目覚まし"];
+                  let xLabels = ["7", "8", "9", "10", "11"];
                   return xLabels[label - 1];
                 },
               },
@@ -83,14 +67,14 @@ export default {
             {
               scaleLabel: {
                 display: true, // 表示設定
-                labelString: "苦さ", // ラベル
+                labelString: "抽出時間", // ラベル
               },
               ticks: {
                 max: 4,
                 min: 1,
                 stepSize: 0.5,
                 callback: function (label, index, labels) {
-                  let xLabels = ["浅い", "", "", "苦い"];
+                  let xLabels = ["3", "4", "5", "6"];
                   return xLabels[label - 1];
                 },
               },
@@ -102,24 +86,29 @@ export default {
   },
 
   mounted() {
-    if (this.receivedDatas) {
-      for (
-        let beanIterator = 0;
-        beanIterator < this.receivedDatas.length;
-        beanIterator++
-      ) {
-        this.data.datasets[beanIterator].data[0].x =
-          this.receivedDatas[beanIterator].sumSituation /
-          this.receivedDatas[beanIterator].countReviews;
-        this.data.datasets[beanIterator].data[0].y =
-          this.receivedDatas[beanIterator].sumBitterness /
-          this.receivedDatas[beanIterator].countReviews;
-      }
-      console.debug(this.data.datasets[0]);
-      console.debug(this.data.datasets[1]);
+    console.debug("receivedData", this.receivedData);
+    for (let strongIterator = 1; strongIterator <= 4; strongIterator++) {
+      let targetCoffeeData;
+      if ((targetCoffeeData = this.receivedData[`strong${strongIterator}`])) {
+        console.debug("target : ", targetCoffeeData);
+        console.debug(
+          strongIterator,
+          " : x : ",
+          targetCoffeeData.sumPowderAmount / targetCoffeeData.count
+        );
+        console.debug(
+          strongIterator,
+          " : y : ",
+          targetCoffeeData.sumExtractionTime / targetCoffeeData.count
+        );
+        this.data.datasets[strongIterator - 1].data[0].x =
+          targetCoffeeData.sumPowderAmount / targetCoffeeData.count;
 
-      this.renderChart(this.data, this.options);
+        this.data.datasets[strongIterator - 1].data[0].y =
+          targetCoffeeData.sumExtractionTime / targetCoffeeData.count;
+      }
     }
+    this.renderChart(this.data, this.options);
   },
 };
 </script>

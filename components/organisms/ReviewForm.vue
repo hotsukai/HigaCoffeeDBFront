@@ -131,8 +131,8 @@ export default {
               .doc(this.user.uid)
               .collection("datas")
               .doc(String(this.coffeeData.beanId));
-            let datasOfUser = await transaction.get(userDatasDoc)
-            datasOfUser=datasOfUser.data();
+            let datasOfUser = await transaction.get(userDatasDoc);
+            datasOfUser = datasOfUser.data();
 
             let usersDoc = db.collection("users").doc(this.user.uid);
             let coffeesDoc = db.collection("coffees").doc(this.coffeeData.id);
@@ -170,7 +170,7 @@ export default {
               sumStrongness: firebase.firestore.FieldValue.increment(
                 this.strongness
               ),
-                [`strong${this.strongness}.count`]: isNaN(
+              [`strong${this.strongness}.count`]: isNaN(
                 datasOfAll[`strong${this.strongness}.count`]
               )
                 ? 1
@@ -183,7 +183,7 @@ export default {
                 : datasOfAll[`strong${this.strongness}.sumExtractionTime`] +
                   this.sumExtractionTime,
 
-              [`strong${this.strongness}.powderAmount`]: isNaN(
+              [`strong${this.strongness}.sumPowderAmount`]: isNaN(
                 datasOfAll[`strong${this.strongness}.sumExtractionTime`]
               )
                 ? this.strongness
@@ -213,14 +213,14 @@ export default {
               [`strong${this.strongness}.sumExtractionTime`]: isNaN(
                 datasOfAll[`strong${this.strongness}.sumExtractionTime`]
               )
-                ? this.strongness
+                ? this.extractionTime
                 : datasOfAll[`strong${this.strongness}.sumExtractionTime`] +
                   this.sumExtractionTime,
 
-              [`strong${this.strongness}.powderAmount`]: isNaN(
+              [`strong${this.strongness}.sumPowderAmount`]: isNaN(
                 datasOfAll[`strong${this.strongness}.sumExtractionTime`]
               )
-                ? this.strongness
+                ? this.powderAmount
                 : datasOfAll[`strong${this.strongness}.sumExtraction`] +
                   this.powderAmount,
             });

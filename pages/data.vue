@@ -84,7 +84,7 @@
           name="section2"
           v-model="pickedSection2"
         />
-        <label for="upperB">B:概要(個人)</label>
+        <label for="upperB">B:濃度(全体)</label>
         <input
           type="radio"
           id="lowerB"
@@ -92,18 +92,17 @@
           name="section2"
           v-model="pickedSection2"
         />
-        <label for="lowerB">b:濃さ(個人)</label>
+        <label for="lowerB">b:濃度(個人)</label>
       </div>
 
       <div>{{ pickedBeanSection2 }}{{ pickedSection2 }}</div>
       <GraphB
-        v-if="pickedSection2 == 'upperB'"
-        :receivedDatas="allDatas"
-        :beanId="pickedBeanSection2"
+        v-if="pickedSection2 == 'upperB' && pickedBeanSection2 !== ''"
+        :receivedData="allDatas[pickedBeanSection2]"
       />
-      <div v-if="pickedSection2 == 'lowerB'">
+      <div v-if="pickedSection2 == 'lowerB' && pickedBeanSection2 !== ''">
         <div v-if="isLogin">
-          <GraphB :receivedDatas="myDatas" />
+          <GraphB :receivedData="myDatas[pickedBeanSection2]" />
         </div>
         <div v-else>
           <p>
