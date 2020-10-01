@@ -87,25 +87,27 @@ export default {
 
   mounted() {
     console.debug("receivedData", this.receivedData);
-    for (let strongIterator = 1; strongIterator <= 4; strongIterator++) {
-      let targetCoffeeData;
-      if ((targetCoffeeData = this.receivedData[`strong${strongIterator}`])) {
-        console.debug("target : ", targetCoffeeData);
-        console.debug(
-          strongIterator,
-          " : x : ",
-          targetCoffeeData.sumPowderAmount / targetCoffeeData.count
-        );
-        console.debug(
-          strongIterator,
-          " : y : ",
-          targetCoffeeData.sumExtractionTime / targetCoffeeData.count
-        );
-        this.data.datasets[strongIterator - 1].data[0].x =
-          targetCoffeeData.sumPowderAmount / targetCoffeeData.count;
+    if (this.receivedData) {
+      for (let strongIterator = 1; strongIterator <= 4; strongIterator++) {
+        let targetCoffeeData;
+        if ((targetCoffeeData = this.receivedData[`strong${strongIterator}`])) {
+          console.debug("target : ", targetCoffeeData);
+          console.debug(
+            strongIterator,
+            " : x : ",
+            targetCoffeeData.sumPowderAmount / targetCoffeeData.count
+          );
+          console.debug(
+            strongIterator,
+            " : y : ",
+            targetCoffeeData.sumExtractionTime / targetCoffeeData.count
+          );
+          this.data.datasets[strongIterator - 1].data[0].x =
+            targetCoffeeData.sumPowderAmount / targetCoffeeData.count;
 
-        this.data.datasets[strongIterator - 1].data[0].y =
-          targetCoffeeData.sumExtractionTime / targetCoffeeData.count;
+          this.data.datasets[strongIterator - 1].data[0].y =
+            targetCoffeeData.sumExtractionTime / targetCoffeeData.count;
+        }
       }
     }
     this.renderChart(this.data, this.options);
