@@ -69,7 +69,11 @@
       <p class="title">セクション2 どうやって淹れる??</p>
       <div>
         <select v-model="pickedBeanSection2">
-          <option v-for="bean in beans" v-bind:key="bean.id">
+          <option
+            v-for="(bean, index) in beans"
+            v-bind:key="bean.id"
+            v-bind:value="index + 1"
+          >
             {{ bean.name }}
           </option>
         </select>
@@ -92,6 +96,23 @@
       </div>
 
       <div>{{ pickedBeanSection2 }}{{ pickedSection2 }}</div>
+      <GraphB
+        v-if="pickedSection2 == 'upperB'"
+        :receivedDatas="allDatas"
+        :beanId="pickedBeanSection2"
+      />
+      <div v-if="pickedSection2 == 'lowerB'">
+        <div v-if="isLogin">
+          <GraphB :receivedDatas="myDatas" />
+        </div>
+        <div v-else>
+          <p>
+            個人グラフを見るには
+            <nuxt-link to="/login"> ログイン </nuxt-link>
+            が必要です。
+          </p>
+        </div>
+      </div>
     </section>
   </div>
 </template>
