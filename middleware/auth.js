@@ -9,7 +9,6 @@ const middleware = ({
     if (!user &&
       !(route.name === 'login' || route.name === 'index' || route.name === 'data')) {
       redirect('/login')
-      console.debug("redirected <need login>",route.name)
     }
   })
 }

@@ -69,7 +69,11 @@
       <p class="title">セクション2 どうやって淹れる??</p>
       <div>
         <select v-model="pickedBeanSection2">
-          <option v-for="bean in beans" v-bind:key="bean.id">
+          <option
+            v-for="(bean, index) in beans"
+            v-bind:key="bean.id"
+            v-bind:value="index"
+          >
             {{ bean.name }}
           </option>
         </select>
@@ -80,7 +84,7 @@
           name="section2"
           v-model="pickedSection2"
         />
-        <label for="upperB">B:概要(個人)</label>
+        <label for="upperB">B:濃度(全体)</label>
         <input
           type="radio"
           id="lowerB"
@@ -88,10 +92,27 @@
           name="section2"
           v-model="pickedSection2"
         />
-        <label for="lowerB">b:濃さ(個人)</label>
+        <label for="lowerB">b:濃度(個人)</label>
       </div>
 
-      <div>{{ pickedBeanSection2 }}{{ pickedSection2 }}</div>
+      <!-- <div>{{ pickedBeanSection2 }}{{ pickedSection2 }}</div> -->
+      <GraphB
+        v-if="pickedSection2 == 'upperB' && pickedBeanSection2 !== ''"
+        :key="pickedBeanSection2"
+        :receivedData="allDatas[pickedBeanSection2]"
+      />
+      <div v-if="pickedSection2 == 'lowerB' && pickedBeanSection2 !== ''">
+        <div v-if="isLogin">
+          <GraphB :receivedData="myDatas[pickedBeanSection2]" :key="pickedBeanSection2" />
+        </div>
+        <div v-else>
+          <p>
+            個人グラフを見るには
+            <nuxt-link to="/login"> ログイン </nuxt-link>
+            が必要です。
+          </p>
+        </div>
+      </div>
     </section>
   </div>
 </template>

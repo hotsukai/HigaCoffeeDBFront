@@ -116,64 +116,125 @@ export default {
   methods: {
     sendReview() {
       if (this.user !== null) {
-        let batch = db.batch();
+        return db
+          .runTransaction(async (transaction) => {
+            let allDatasDoc = db
+              .collection("datas")
+              .doc("all")
+              .collection("datas")
+              .doc(String(this.coffeeData.beanId));
+            let datasOfAll = await transaction.get(allDatasDoc);
+            datasOfAll = datasOfAll.data();
 
-        let coffeesDoc = db.collection("coffees").doc(this.coffeeData.id);
-        batch.update(coffeesDoc, {
-          bitterness: this.bitterness,
-          strongness: this.strongness,
-          situation: this.situation,
-          repeat: this.repeat,
-          feeling: this.feeling,
-          userId: this.user.uid,
-          coffeeId: this.coffeeData.id,
-          isReviewExist: true,
-          reviewRegisteredTime: firebase.firestore.FieldValue.serverTimestamp(),
-        });
+            let userDatasDoc = db
+              .collection("datas")
+              .doc(this.user.uid)
+              .collection("datas")
+              .doc(String(this.coffeeData.beanId));
+            let datasOfUser = await transaction.get(userDatasDoc);
+            datasOfUser = datasOfUser.data();
 
-        let usersDoc = db.collection("users").doc(this.user.uid);
-        batch.update(usersDoc, {
-          reviews: firebase.firestore.FieldValue.arrayUnion(this.coffeeData.id),
-        });
+            let usersDoc = db.collection("users").doc(this.user.uid);
+            let coffeesDoc = db.collection("coffees").doc(this.coffeeData.id);
 
-        let datasDoc = db
-          .collection("datas")
-          .doc("all")
-          .collection("datas")
-          .doc(String(this.coffeeData.beanId));
-        batch.update(datasDoc, {
-          countReviews: firebase.firestore.FieldValue.increment(1),
-          sumBitterness: firebase.firestore.FieldValue.increment(
-            this.bitterness
-          ),
-          sumRepeat: firebase.firestore.FieldValue.increment(this.repeat),
-          sumSituation: firebase.firestore.FieldValue.increment(this.situation),
-          sumStrongness: firebase.firestore.FieldValue.increment(
-            this.strongness
-          ),
-        });
+            //coffees/:coffeeId
+            transaction.update(coffeesDoc, {
+              bitterness: this.bitterness,
+              strongness: this.strongness,
+              situation: this.situation,
+              repeat: this.repeat,
+              feeling: this.feeling,
+              userId: this.user.uid,
+              coffeeId: this.coffeeData.id,
+              isReviewExist: true,
+              reviewRegisteredTime: firebase.firestore.FieldValue.serverTimestamp(),
+            });
 
-        let userDatasDoc = db
-          .collection("datas")
-          .doc(this.user.uid)
-          .collection("datas")
-          .doc(String(this.coffeeData.beanId));
-        batch.update(userDatasDoc, {
-          countReviews: firebase.firestore.FieldValue.increment(1),
-          sumBitterness: firebase.firestore.FieldValue.increment(
-            this.bitterness
-          ),
-          sumRepeat: firebase.firestore.FieldValue.increment(this.repeat),
-          sumSituation: firebase.firestore.FieldValue.increment(this.situation),
-          sumStrongness: firebase.firestore.FieldValue.increment(
-            this.strongness
-          ),
-        });
+            //users/:uid
+            transaction.update(usersDoc, {
+              reviews: firebase.firestore.FieldValue.arrayUnion(
+                this.coffeeData.id
+              ),
+            });
 
-        batch.commit().then(() => {
-          alert("レビューを投稿しました。");
-          this.$router.push("/mypage");
-        });
+            // datas/all/datas/:beanId
+            transaction.update(allDatasDoc, {
+              countReviews: firebase.firestore.FieldValue.increment(1),
+              sumBitterness: firebase.firestore.FieldValue.increment(
+                this.bitterness
+              ),
+              sumRepeat: firebase.firestore.FieldValue.increment(this.repeat),
+              sumSituation: firebase.firestore.FieldValue.increment(
+                this.situation
+              ),
+              sumStrongness: firebase.firestore.FieldValue.increment(
+                this.strongness
+              ),
+              //レビュー数
+              [`strong${this.strongness}.count`]: isNaN(
+                datasOfAll[`strong${this.strongness}.count`]
+              )
+                ? 1
+                : datasOfAll[`strong${this.strongness}.count`] + 1,
+
+              //抽出時間
+              [`strong${this.strongness}.sumExtractionTime`]: isNaN(
+                datasOfAll[`strong${this.strongness}.sumExtractionTime`]
+              )
+                ? this.coffeeData.extractionTime
+                : datasOfAll[`strong${this.strongness}.sumExtractionTime`] +
+                  this.coffeeData.extractionTime,
+
+              //粉の量
+              [`strong${this.strongness}.sumPowderAmount`]: isNaN(
+                datasOfAll[`strong${this.strongness}.sumPowderAmount`]
+              )
+                ? this.coffeeData.powderAmount
+                : datasOfAll[`strong${this.strongness}.sumPowderAmount`] +
+                  this.coffeeData.powderAmount,
+            });
+
+            //datas/:userId/datas/:beanId
+            transaction.update(userDatasDoc, {
+              countReviews: firebase.firestore.FieldValue.increment(1),
+              sumBitterness: firebase.firestore.FieldValue.increment(
+                this.bitterness
+              ),
+              sumRepeat: firebase.firestore.FieldValue.increment(this.repeat),
+              sumSituation: firebase.firestore.FieldValue.increment(
+                this.situation
+              ),
+              sumStrongness: firebase.firestore.FieldValue.increment(
+                this.strongness
+              ),
+              //レビュー数
+              [`strong${this.strongness}.count`]: isNaN(
+                datasOfAll[`strong${this.strongness}.count`]
+              )
+                ? 1
+                : datasOfAll[`strong${this.strongness}.count`] + 1,
+
+              //抽出時間
+              [`strong${this.strongness}.sumExtractionTime`]: isNaN(
+                datasOfAll[`strong${this.strongness}.sumExtractionTime`]
+              )
+                ? this.coffeeData.extractionTime
+                : datasOfAll[`strong${this.strongness}.sumExtractionTime`] +
+                  this.cofffeeData.extractionTime,
+
+              //粉の量
+              [`strong${this.strongness}.sumPowderAmount`]: isNaN(
+                datasOfAll[`strong${this.strongness}.sumPowderAmount`]
+              )
+                ? this.coffeeData.powderAmount
+                : datasOfAll[`strong${this.strongness}.sumPowderAmount`] +
+                  this.coffeeData.powderAmount,
+            });
+          })
+          .then(() => {
+            alert("レビューを投稿しました。");
+            this.$router.push("/mypage");
+          });
       } else {
         alert("ERROR1:ログインしてください");
         this.$router.push("/login");
