@@ -1,6 +1,6 @@
 <template>
   <div>
-    <p>ID:{{coffeeId}}のコーヒーについて</p>
+    <p>ID:{{ coffeeId }}のコーヒーについて</p>
     <ReviewForm :coffeeData="coffeeData"></ReviewForm>
   </div>
 </template>
@@ -13,7 +13,7 @@ export default {
   data() {
     return {
       coffeeData: null,
-      coffeeId:null
+      coffeeId: null,
     };
   },
 
@@ -24,7 +24,15 @@ export default {
       .get()
       .then((doc) => {
         this.coffeeData = doc.data();
-        this.coffeeId=doc.id
+        this.coffeeId = doc.id;
+        if (this.coffeeData.isReviewExist === true) {
+          alert("このコーヒーにはすでにレビューがあります。");
+          this.$router.push("/");
+        }
+        if (firebase.auth().currentUser.uid !== this.coffeeData.userId) {
+          alert("このコーヒーにレビューを書く権限がありません");
+          this.$router.push("/");
+        }
       });
   },
 };
