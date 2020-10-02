@@ -1,4 +1,5 @@
 <template>
+<!-- TODO:メタ情報 -->
   <div>
     <Header />
     <Nuxt />
