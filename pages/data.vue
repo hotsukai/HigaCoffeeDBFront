@@ -72,7 +72,7 @@
           <option
             v-for="(bean, index) in beans"
             v-bind:key="bean.id"
-            v-bind:value="index + 1"
+            v-bind:value="index"
           >
             {{ bean.name }}
           </option>
