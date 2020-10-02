@@ -8,7 +8,7 @@ export default {
   data() {
     return {
       data: {
-        labels: this.$beanNames,
+        labels: ["薄い", "やや薄い", "少し濃い", "濃い"],
         datasets: [
           {
             label: "薄い",
@@ -52,13 +52,9 @@ export default {
                 labelString: "粉の量", // ラベル
               },
               ticks: {
-                max: 12,
+                max: 15,
                 min: 7,
-                stepSize: 0.5,
-                callback: function (label, index, labels) {
-                  let xLabels = ["7", "8", "9", "10", "11"];
-                  return xLabels[label - 1];
-                },
+                stepSize: 1,
               },
             },
           ],
@@ -70,13 +66,9 @@ export default {
                 labelString: "抽出時間", // ラベル
               },
               ticks: {
-                max: 4,
-                min: 1,
+                max: 6,
+                min: 3,
                 stepSize: 0.5,
-                callback: function (label, index, labels) {
-                  let xLabels = ["3", "4", "5", "6"];
-                  return xLabels[label - 1];
-                },
               },
             },
           ],
@@ -91,10 +83,16 @@ export default {
       for (let strongIterator = 1; strongIterator <= 4; strongIterator++) {
         let targetCoffeeData;
         if ((targetCoffeeData = this.receivedData[`strong${strongIterator}`])) {
-          console.debug("target : ", targetCoffeeData);
           console.debug(
+            "target : ",
+            targetCoffeeData,
+            "strongIterator",
             strongIterator,
-            " : x : ",
+            " pw ",
+            targetCoffeeData.sumPowderAmount,
+            "cou",
+            targetCoffeeData.count,
+            "pw/cou",
             targetCoffeeData.sumPowderAmount / targetCoffeeData.count
           );
           console.debug(
