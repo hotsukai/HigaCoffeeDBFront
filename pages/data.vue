@@ -95,14 +95,15 @@
         <label for="lowerB">b:濃度(個人)</label>
       </div>
 
-      <div>{{ pickedBeanSection2 }}{{ pickedSection2 }}</div>
+      <!-- <div>{{ pickedBeanSection2 }}{{ pickedSection2 }}</div> -->
       <GraphB
         v-if="pickedSection2 == 'upperB' && pickedBeanSection2 !== ''"
+        :key="pickedBeanSection2"
         :receivedData="allDatas[pickedBeanSection2]"
       />
       <div v-if="pickedSection2 == 'lowerB' && pickedBeanSection2 !== ''">
         <div v-if="isLogin">
-          <GraphB :receivedData="myDatas[pickedBeanSection2]" />
+          <GraphB :receivedData="myDatas[pickedBeanSection2]" :key="pickedBeanSection2" />
         </div>
         <div v-else>
           <p>
