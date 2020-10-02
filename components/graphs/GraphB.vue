@@ -78,28 +78,10 @@ export default {
   },
 
   mounted() {
-    console.debug("receivedData", this.receivedData);
     if (this.receivedData) {
       for (let strongIterator = 1; strongIterator <= 4; strongIterator++) {
         let targetCoffeeData;
         if ((targetCoffeeData = this.receivedData[`strong${strongIterator}`])) {
-          console.debug(
-            "target : ",
-            targetCoffeeData,
-            "strongIterator",
-            strongIterator,
-            " pw ",
-            targetCoffeeData.sumPowderAmount,
-            "cou",
-            targetCoffeeData.count,
-            "pw/cou",
-            targetCoffeeData.sumPowderAmount / targetCoffeeData.count
-          );
-          console.debug(
-            strongIterator,
-            " : y : ",
-            targetCoffeeData.sumExtractionTime / targetCoffeeData.count
-          );
           this.data.datasets[strongIterator - 1].data[0].x =
             targetCoffeeData.sumPowderAmount / targetCoffeeData.count;
 

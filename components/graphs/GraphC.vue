@@ -115,9 +115,6 @@ export default {
           this.receivedDatas[beanIterator].sumBitterness /
           this.receivedDatas[beanIterator].countReviews;
       }
-      console.debug(this.data.datasets[0]);
-      console.debug(this.data.datasets[1]);
-
       this.renderChart(this.data, this.options);
     }
   },
