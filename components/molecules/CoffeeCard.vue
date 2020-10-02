@@ -1,5 +1,4 @@
 <template>
-  <!-- TODO:削除する方法を作る。 -->
   <div class="card" v-if="coffee">
     <div class="card-content">
       <p class="title">
@@ -7,7 +6,6 @@
       </p>
       <p class="subtitle">ID: {{ coffee.id }}</p>
       <ul>
-        <!-- TODO: すべてコンポーネントにする -->
         <li>
           登録された時間 :
           <TimeFirebaseToJs :time="coffee.registeredTime" />
@@ -103,7 +101,6 @@ export default {
     },
 
     async confirmDelete() {
-      // TODO:確認モダール作成
       var answer = window.confirm(this.coffee.id + "のコーヒーを削除します");
       if (answer == true) {
         await this.deleteCoffee();

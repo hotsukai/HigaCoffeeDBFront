@@ -1,4 +1,5 @@
 <template>
+<!-- TODO:どんなコーヒーについてか表示 -->
   <div>
     <form>
       <div>
@@ -243,7 +244,6 @@ export default {
   },
 };
 //TODO:すでにこのコーヒーにレビューがある場合エラーを吐く。
-// TODO: 投稿後に?bitterness=2&strongness=4&situation=1&repeat=3みたいなパラメータがつく..?
 //TODO: このコーヒーのレビューを書く権利があるかを取得
 </script>
 
