@@ -17,7 +17,6 @@
       <div class="navbar-menu" id="navbarMenu" :class="{'is-active':isMenuActive}">
         <div class="navbar-end">
           <nuxt-link to="/data" class="navbar-item">データを見る</nuxt-link>
-          <!--TODO: データページ作成-->
           <nuxt-link to="/mypage" class="navbar-item">マイページ</nuxt-link>
           <nuxt-link to="/reviews/create" class="navbar-item">レビューを書く</nuxt-link>
           <nuxt-link to="/coffees/create" class="navbar-item">コーヒーを淹れる</nuxt-link>
