@@ -1,5 +1,5 @@
 <template>
-  <span>{{extractionMethod}}</span>
+  <span>{{ extractionMethod }}</span>
 </template>
 
 <script>
@@ -17,7 +17,6 @@ export default {
 
   created() {
     this.unsafeExtractionMethod = this.$extractionMethods[this.em - 1];
-    
   },
 
   computed: {

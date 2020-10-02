@@ -8,6 +8,7 @@ const db = firebase.firestore();
 
 export default {
   props: ["coffee"],
+
   data() {
     return {
       currentUser: null,
@@ -51,9 +52,10 @@ export default {
       batch
         .commit()
         .then(function () {
-          console.log("Document successfully deleted!");
+          alert("コーヒーを削除しました");
         })
         .catch(function (error) {
+          alert("コーヒーの削除に失敗しました", error);
           console.error("Error removing document: ", error);
         });
     },
@@ -63,7 +65,6 @@ export default {
       console.debug("cu", this.currentUser);
       if (answer === true && this.currentUser !== null) {
         await this.deleteCoffee();
-        alert("コーヒーを削除しました")
         this.$router.push("/mypage");
       }
     },

@@ -10,7 +10,6 @@
       <p class="subtitle">あなたが書いたレビュー</p>
       <ReviewCards :reviews="reviews" />
       <div class v-show="false">
-        <!-- TODO: 新しい順 -->
         <button @click="getMoreReview">もっと見る</button>
       </div>
     </div>
@@ -38,7 +37,7 @@ export default {
       .collection("coffees")
       .where("userId", "==", cUser.uid) // TODO:ページネーション
       .where("isReviewExist","==", true)
-      .orderBy("registeredTime", "desc")
+      .orderBy("reviewRegisteredTime", "desc")
       .limit(25)
       .get()
       .then(function (querySnapshot) {

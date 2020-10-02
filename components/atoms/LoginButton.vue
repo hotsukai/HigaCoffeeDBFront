@@ -28,6 +28,7 @@ export default {
   methods: {
     async logout() {
       await firebase.auth().signOut();
+      alert("ログアウトしました。")
       this.$router.push("/");
     },
   },
