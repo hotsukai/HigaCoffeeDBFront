@@ -1,7 +1,7 @@
 <template>
   <div>
-    <p>ID:{{ coffeeId }}のコーヒーについて</p>
-    <ReviewForm :coffeeData="coffeeData"></ReviewForm>
+    <CoffeeCard :coffee="coffeeData"><span></span></CoffeeCard>
+    <ReviewForm :coffeeData="coffeeData" />
   </div>
 </template>
 
