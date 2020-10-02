@@ -33,7 +33,7 @@
             >
           </span>
           <span>
-            <CoffeeDeleteButton :coffee="coffee" :user="user"/>
+            <CoffeeDeleteButton :coffee="coffee" :user="user" />
           </span>
         </p>
       </footer>
