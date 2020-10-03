@@ -70,7 +70,6 @@
         </p>
         <input class="input" type="text" v-model="feeling" />
       </div>
-      <!-- TODO:どの誤りかを詳しく出力 -->
       <p v-show="!isValid" class="is-danger">入力に不備があります</p>
       <button
         @click="sendReview"

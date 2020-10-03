@@ -1,5 +1,5 @@
 <template>
-  <span>{{ extractionMethod }}</span>
+  <span>{{ extractionMethod.name }}</span>
 </template>
 
 <script>
