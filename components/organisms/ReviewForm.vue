@@ -70,7 +70,6 @@
         </p>
         <input class="input" type="text" v-model="feeling" />
       </div>
-      <!-- TODO:どの誤りかを詳しく出力 -->
       <p v-show="!isValid" class="is-danger">入力に不備があります</p>
       <button
         @click="sendReview"
@@ -242,9 +241,6 @@ export default {
     },
   },
 };
-//TODO:すでにこのコーヒーにレビューがある場合エラーを吐く。
-// TODO: 投稿後に?bitterness=2&strongness=4&situation=1&repeat=3みたいなパラメータがつく..?
-//TODO: このコーヒーのレビューを書く権利があるかを取得
 </script>
 
 <style >

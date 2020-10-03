@@ -4,28 +4,32 @@
       <p class="title">
         <BeanName :bean-id="targetCoffee.beanId" />
       </p>
-      <p class="subtitle">ID : {{review.coffeeId}}</p>
+      <p class="subtitle">ID : {{ review.coffeeId }}</p>
       <div class="columns">
         <div class="column">
           <ul>
-            <li>コーヒー登録日 : <TimeFirebaseToJs :time="review.registeredTime"/> </li>
-            <li>レビュー登録日 : <TimeFirebaseToJs :time="review.reviewRegisteredTime"/> </li>
+            <li>
+              レビュー登録日 :
+              <TimeFirebaseToJs :time="review.reviewRegisteredTime" />
+            </li>
 
-            <li>苦さ : {{review.bitterness}}</li>
-            <li>濃さ : {{review.strongness}}</li>
-            <li>また飲みたいか : {{repeatToJapanese}}</li>
-            <li>役割 : {{situationToJapanese}}</li>
-            <li>備考・感想 : {{review.feeling}}</li>
+            <li>苦さ : {{ review.bitterness }}</li>
+            <li>濃さ : {{ review.strongness }}</li>
+            <li>また飲みたいか : {{ repeatToJapanese }}</li>
+            <li>役割 : {{ situationToJapanese }}</li>
+            <li>備考・感想 : {{ review.feeling }}</li>
           </ul>
         </div>
-        <hr/>
-        <div class="column">
+        <div class="column" v-show="viewMore">
           <ul>
-            <!-- TODO: すべてコンポーネントにする -->
-            <li>蒸らし時間 : {{targetCoffee.extractionTime}}min</li>
-            <li>粉の量 : {{targetCoffee.powderAmount}}g</li>
-            <li>水の量 : {{targetCoffee.waterAmount}}ml</li>
-            <li>メッシュ : {{targetCoffee.mesh}}</li>
+            <li>
+              コーヒー登録日 :
+              <TimeFirebaseToJs :time="review.registeredTime" />
+            </li>
+            <li>蒸らし時間 : {{ targetCoffee.extractionTime }}min</li>
+            <li>粉の量 : {{ targetCoffee.powderAmount }}g</li>
+            <li>水の量 : {{ targetCoffee.waterAmount }}ml</li>
+            <li>メッシュ : {{ targetCoffee.mesh }}</li>
             <li>
               湯温 :
               <WaterTemperature :wt="targetCoffee.WaterTemperature" />
@@ -36,6 +40,12 @@
             </li>
           </ul>
         </div>
+        <button @click="toggleViewMore()" class="button" v-show="!viewMore">
+          くわしく見る
+        </button>
+        <button @click="toggleViewMore()" class="button" v-show="viewMore">
+          詳細を閉じる
+        </button>
       </div>
     </div>
   </div>
@@ -50,7 +60,14 @@ export default {
   data() {
     return {
       targetCoffee: {},
+      viewMore: false,
     };
+  },
+
+  methods: {
+    toggleViewMore() {
+      this.viewMore = !this.viewMore;
+    },
   },
 
   created() {

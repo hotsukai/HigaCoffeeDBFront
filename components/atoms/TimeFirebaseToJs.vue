@@ -1,15 +1,17 @@
 <template>
-  <span>{{shapeTime}}</span>
+  <span>{{ shapeTime }}</span>
 </template>
 
 <script>
 export default {
   props: ["time"],
-
-  computed: {
-    shapeTime() {
-      var jsTime = this.time.toDate();
-      return (
+  data() {
+    return { shapeTime: null };
+  },
+  created() {
+    if (this.time) {
+      let jsTime = this.time.toDate();
+      this.shapeTime =
         jsTime.getFullYear() +
         "/" +
         jsTime.getMonth() +
@@ -18,9 +20,8 @@ export default {
         " " +
         jsTime.getHours() +
         ":" +
-        jsTime.getMinutes()
-      );
-    },
+        jsTime.getMinutes();
+    }
   },
 };
 </script>
