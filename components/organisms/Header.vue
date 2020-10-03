@@ -120,6 +120,9 @@ export default {
 .navbar-item {
   color: #e1dfdb;
 }
+.navbar-burger {
+  color: #e1dfdb;
+}
 
 .isSelected {
   font-weight: bold;

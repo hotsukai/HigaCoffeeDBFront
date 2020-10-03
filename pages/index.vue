@@ -18,6 +18,7 @@
       <p>
         2019年に生まれ、2020年になんとか自立した小さな団体です。少しでもご関心をお持ちの方はお気軽にご連絡ください。あなたの参加を心よりお待ちしております。
       </p>
+      <a href="https://sites.google.com/view/higa-coffee/top"><p>HiGa Coffeeをもっと知る>></p></a>
     </div>
   </div>
 </template>
