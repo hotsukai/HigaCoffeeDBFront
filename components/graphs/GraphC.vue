@@ -60,6 +60,8 @@ export default {
         ],
       },
       options: {
+        responsive: true,
+        maintainAspectRatio: false,
         scales: {
           xAxes: [
             {
@@ -70,9 +72,9 @@ export default {
               ticks: {
                 max: 4,
                 min: 1,
-                stepSize: 0.5,
+                stepSize: 1,
                 callback: function (label, index, labels) {
-                  let xLabels = ["リラックス", "","", "目覚まし"];
+                  let xLabels = ["リラックス", "", "", "目覚まし"];
                   return xLabels[label - 1];
                 },
               },
@@ -88,7 +90,7 @@ export default {
               ticks: {
                 max: 4,
                 min: 1,
-                stepSize: 0.5,
+                stepSize: 1,
                 callback: function (label, index, labels) {
                   let xLabels = ["浅い", "", "", "苦い"];
                   return xLabels[label - 1];

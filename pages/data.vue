@@ -50,7 +50,10 @@
           </p>
         </div>
       </div>
-      <GraphC v-if="pickedSection1 == 'upperC'" :receivedDatas="allDatas" />
+      <GraphC
+        v-if="pickedSection1 == 'upperC'"
+        :receivedDatas="allDatas"
+      />
       <div v-if="pickedSection1 == 'lowerC'">
         <div v-if="isLogin">
           <GraphC :receivedDatas="myDatas" />
@@ -103,7 +106,10 @@
       />
       <div v-if="pickedSection2 == 'lowerB' && pickedBeanSection2 !== ''">
         <div v-if="isLogin">
-          <GraphB :receivedData="myDatas[pickedBeanSection2]" :key="pickedBeanSection2" />
+          <GraphB
+            :receivedData="myDatas[pickedBeanSection2]"
+            :key="pickedBeanSection2"
+          />
         </div>
         <div v-else>
           <p>
