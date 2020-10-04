@@ -2,7 +2,7 @@
   <div>
     <nav class="navbar" role="navigation" aria-label="main navigation">
       <div class="navbar-brand">
-        <nuxt-link to="/" class="navbar-item">HiGaCoffeeDBProject</nuxt-link>
+        <nuxt-link to="/" class="navbar-item"><img src="logo.png" /></nuxt-link>
         <div
           class="navbar-burger burger"
           data-target="navbarMenu"
@@ -24,25 +24,32 @@
             to="/data"
             class="navbar-item"
             :class="{ isSelected: isDataSelected }"
-            >データを見る</nuxt-link
+            >みる</nuxt-link
+          >
+          <nuxt-link
+            to="/data"
+            class="navbar-item"
+            :class="{ isSelected: isDataSelected }"
+            >よむ</nuxt-link
+          >
+
+          <nuxt-link
+            to="/reviews/create"
+            class="navbar-item"
+            :class="{ isSelected: isCreateReviewSelected }"
+            >かく</nuxt-link
+          >
+          <nuxt-link
+            to="/coffees/create"
+            class="navbar-item"
+            :class="{ isSelected: isCreateCoffeeSelected }"
+            >淹れる</nuxt-link
           >
           <nuxt-link
             to="/mypage"
             class="navbar-item"
             :class="{ isSelected: isMypageSelected }"
             >マイページ</nuxt-link
-          >
-          <nuxt-link
-            to="/reviews/create"
-            class="navbar-item"
-            :class="{ isSelected: isCreateReviewSelected }"
-            >レビューを書く</nuxt-link
-          >
-          <nuxt-link
-            to="/coffees/create"
-            class="navbar-item"
-            :class="{ isSelected: isCreateCoffeeSelected }"
-            >コーヒーを淹れる</nuxt-link
           >
           <div class="buttons">
             <LoginButton />
