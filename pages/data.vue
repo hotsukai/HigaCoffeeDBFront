@@ -130,9 +130,9 @@ export default {
   data() {
     return {
       beans: this.$beanNames,
-      pickedSection1: "",
-      pickedSection2: "",
-      pickedBeanSection2: "",
+      pickedSection1: "upperA",
+      pickedSection2: "upperB",
+      pickedBeanSection2: "1",
     };
   },
 
