@@ -2,7 +2,9 @@
   <div>
     <nav class="navbar" role="navigation" aria-label="main navigation">
       <div class="navbar-brand">
-        <nuxt-link to="/" class="navbar-item">HiGaCoffeeDBProject</nuxt-link>
+        <nuxt-link to="/" class="navbar-item"
+          ><img src="logo.png" /></nuxt-link
+        >
         <div
           class="navbar-burger burger"
           data-target="navbarMenu"
