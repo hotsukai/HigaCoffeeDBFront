@@ -1,20 +1,58 @@
 <template>
   <div>
     <nav class="navbar" role="navigation" aria-label="main navigation">
-      <div class="navbar-menu">
-        <div class="navbar-start">
-          <nuxt-link to="/" class="navbar-item">トップへ</nuxt-link>
-          <a class="navbar-item">データを見る</a>
-          <!--TODO: データページ作成-->
+      <div class="navbar-brand">
+        <nuxt-link to="/" class="navbar-item"><img src="/logo.png" /></nuxt-link>
+        <div
+          class="navbar-burger burger"
+          data-target="navbarMenu"
+          @click="toggleMenu()"
+          :class="{ 'is-active': isMenuActive }"
+        >
+          <span aria-hidden="true"></span>
+          <span aria-hidden="true"></span>
+          <span aria-hidden="true"></span>
         </div>
+      </div>
+      <div
+        class="navbar-menu"
+        id="navbarMenu"
+        :class="{ 'is-active': isMenuActive }"
+      >
         <div class="navbar-end">
-          <div class="navbar-item">
-            <nuxt-link to="/mypage" class="navbar-item">マイページ</nuxt-link>
-            <nuxt-link to="/reviews/create" class="navbar-item">レビューを書く</nuxt-link>
-            <a class="navbar-item">コーヒーを淹れる</a>
-            <div class="buttons">
-              <LoginButton />
-            </div>
+          <nuxt-link
+            to="/data"
+            class="navbar-item"
+            :class="{ isSelected: isDataSelected }"
+            >みる</nuxt-link
+          >
+          <nuxt-link
+            to="/data"
+            class="navbar-item"
+            :class="{ isSelected: isDataSelected }"
+            >よむ</nuxt-link
+          >
+
+          <nuxt-link
+            to="/reviews/create"
+            class="navbar-item"
+            :class="{ isSelected: isCreateReviewSelected }"
+            >かく</nuxt-link
+          >
+          <nuxt-link
+            to="/coffees/create"
+            class="navbar-item"
+            :class="{ isSelected: isCreateCoffeeSelected }"
+            >淹れる</nuxt-link
+          >
+          <nuxt-link
+            to="/mypage"
+            class="navbar-item"
+            :class="{ isSelected: isMypageSelected }"
+            >マイページ</nuxt-link
+          >
+          <div class="buttons">
+            <LoginButton />
           </div>
         </div>
       </div>
@@ -22,17 +60,78 @@
   </div>
 </template>
 
-<script lang="ts">
-import { Vue, Component } from "vue-property-decorator";
-@Component({
-  layout: "default",
-  components: {},
-})
-export default class HeaderComponents extends Vue {}
+<script>
+export default {
+  data: () => {
+    return {
+      isMenuActive: false,
+      isDataSelected: false,
+      isMypageSelected: false,
+      isCreateReviewSelected: false,
+      isCreateCoffeeSelected: false,
+    };
+  },
+
+  created() {
+    this.changeSelectedPage();
+  },
+
+  methods: {
+    toggleMenu() {
+      this.isMenuActive = !this.isMenuActive;
+    },
+
+    changeSelectedPage() {
+      this.isDataSelected = false;
+      this.isMypageSelected = false;
+      this.isCreateReviewSelected = false;
+      this.isCreateCoffeeSelected = false;
+      switch (this.$route.name) {
+        case "data":
+          this.isDataSelected = true;
+          break;
+        case "mypage":
+          this.isMypageSelected = true;
+          break;
+        case "reviews-create":
+          this.isCreateReviewSelected = true;
+          break;
+        case "coffeescreate":
+          this.isCreateCoffeeSelected = true;
+          break;
+        default:
+          console.debug("selected route", this.$route.name);
+          break;
+      }
+    },
+  },
+
+  watch: {
+    $route() {
+      this.isMenuActive = false;
+      this.changeSelectedPage();
+    },
+  },
+};
 </script>
 
 <style scoped>
+.navbar {
+  background-color: #303033;
+}
+
 .navbar-menu {
-  background-color: darkgoldenrod;
+  background-color: #303033;
+}
+
+.navbar-item {
+  color: #e1dfdb;
+}
+.navbar-burger {
+  color: #e1dfdb;
+}
+
+.isSelected {
+  font-weight: bold;
 }
 </style>

@@ -1,33 +1,38 @@
 <template>
   <div>
-    <div v-if="isLogin">
+    <div v-show="isLogin">
       <button @click="logout" class="button">ログアウト</button>
     </div>
-    <div v-else>
+    <div v-show="!isLogin">
       <nuxt-link to="login" class="button">ログイン</nuxt-link>
     </div>
   </div>
 </template>
 
-<script lang="ts">
-import { Vue, Component } from "vue-property-decorator";
+<script>
 import firebase from "@/plugins/firebase";
-@Component({
-  layout: "default",
-  components: {},
-})
-export default class LoginButtonComponent extends Vue {
-  isLogin: boolean = false;
-  async mounted() {
+
+export default {
+  data() {
+    return {
+      isLogin: false,
+    };
+  },
+
+  async created() {
     await firebase
       .auth()
       .onAuthStateChanged((user) => (this.isLogin = user ? true : false));
-  }
-  async logout() {
-    await firebase.auth().signOut();
-    this.$router.push("/");
-  }
-}
+  },
+
+  methods: {
+    async logout() {
+      await firebase.auth().signOut();
+      alert("ログアウトしました。")
+      this.$router.push("/");
+    },
+  },
+};
 </script>
 
 <style>

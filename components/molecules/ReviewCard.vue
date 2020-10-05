@@ -1,66 +1,109 @@
 <template>
   <div class="card">
     <div class="card-content">
-      <p class="title">{{targetCoffee.name}}</p>
-      <p class="subtitle"></p>
-      <ul>
-        <li>苦さ:{{review.bitterness}}</li>
-        <li>濃さ:{{review.strongness}}</li>
-        <li>また飲みたいか:{{repeatToJapanese}}</li>
-        <li>役割:{{situationToJapanese}}</li>
-      </ul>
+      <p class="title">
+        <BeanName :bean-id="targetCoffee.beanId" />
+      </p>
+      <p class="subtitle">ID : {{ review.coffeeId }}</p>
+      <div class="columns">
+        <div class="column">
+          <ul>
+            <li>
+              レビュー登録日 :
+              <TimeFirebaseToJs :time="review.reviewRegisteredTime" />
+            </li>
+
+            <li>苦さ : {{ review.bitterness }}</li>
+            <li>濃さ : {{ review.strongness }}</li>
+            <li>また飲みたいか : {{ repeatToJapanese }}</li>
+            <li>役割 : {{ situationToJapanese }}</li>
+            <li>備考・感想 : {{ review.feeling }}</li>
+          </ul>
+        </div>
+        <div class="column" v-show="viewMore">
+          <ul>
+            <li>
+              コーヒー登録日 :
+              <TimeFirebaseToJs :time="review.registeredTime" />
+            </li>
+            <li>蒸らし時間 : {{ targetCoffee.extractionTime }}min</li>
+            <li>粉の量 : {{ targetCoffee.powderAmount }}g</li>
+            <li>水の量 : {{ targetCoffee.waterAmount }}ml</li>
+            <li>メッシュ : {{ targetCoffee.mesh }}</li>
+            <li>
+              湯温 :
+              <WaterTemperature :wt="targetCoffee.WaterTemperature" />
+            </li>
+            <li>
+              抽出方法 :
+              <Method :em="targetCoffee.extractionMethodId" />
+            </li>
+          </ul>
+        </div>
+        <button @click="toggleViewMore()" class="button" v-show="!viewMore">
+          くわしく見る
+        </button>
+        <button @click="toggleViewMore()" class="button" v-show="viewMore">
+          詳細を閉じる
+        </button>
+      </div>
     </div>
   </div>
 </template>
 
-<script lang="ts">
-import { Vue, Component, Prop } from "vue-property-decorator";
-import firebase from "../../plugins/firebase";
+<script>
+import firebase from "@/plugins/firebase";
+const db = firebase.firestore();
 
-var db = firebase.firestore();
-@Component
-export default class ReviewCard extends Vue {
-  @Prop()
-  review!: any;
+export default {
+  props: ["review"],
+  data() {
+    return {
+      targetCoffee: {},
+      viewMore: false,
+    };
+  },
 
-  get repeatToJapanese() {
-    const repeat_japanese = ["飲みたくない!!", "普通", "また飲みたい!"];
-    return repeat_japanese[parseInt(this.review.repeat) - 1];
-  }
+  methods: {
+    toggleViewMore() {
+      this.viewMore = !this.viewMore;
+    },
+  },
 
-  get situationToJapanese() {
-    const situation_japanese = [
-      "リラックス",
-      "ややリラックス",
-      "やや眠気覚まし",
-      "眠気覚まし",
-    ];
-    return situation_japanese[parseInt(this.review.situation) - 1];
-  }
-  get targetCoffee() {
-    // return this.getCoffeeData();
-    return {name:"ブラジル深煎",id:123}//TODO:ハードコーディングやめる
-  }
-
-  getCoffeeData() {
-    var data;
+  created() {
     db.collection("coffees")
-      .doc(this.review.coffee_id)
+      .doc(this.review.coffeeId)
       .get()
-      .then(function (doc) {
+      // .then(function (doc) {//動かない
+      .then((doc) => {
+        //動く
         if (doc.exists) {
-          data = doc.data();
-          console.debug("in then:");
-          console.debug(data);
-          return data;
-        } else {
-          console.log("Coffeeが見つかりませんでした。");
-          return -1;
+          this.targetCoffee = doc.data();
         }
       });
-  }
-}
+  },
+
+  computed: {
+    repeatToJapanese() {
+      const repeat_japanese = ["飲みたくない!!", "普通", "また飲みたい!"];
+      return repeat_japanese[parseInt(this.review.repeat) - 1];
+    },
+
+    situationToJapanese() {
+      const situation_japanese = [
+        "リラックス",
+        "ややリラックス",
+        "やや眠気覚まし",
+        "眠気覚まし",
+      ];
+      return situation_japanese[parseInt(this.review.situation) - 1];
+    },
+  },
+};
 </script>
 
-<style>
+<style scoped>
+.card {
+  margin-bottom: 1em;
+}
 </style>
