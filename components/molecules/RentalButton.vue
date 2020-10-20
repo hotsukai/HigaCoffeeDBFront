@@ -22,7 +22,7 @@ export default {
       // TODO:コーヒーのデータを正しいものに
       coffees: [
         {
-          beanId: 1,
+          beanId: 3,
           extractionTime: 3,
           isReviewExist: false,
           powderAmount: 8.2,
@@ -33,7 +33,7 @@ export default {
           extractionMethodId: 1,
         },
         {
-          beanId: 1,
+          beanId: 3,
           extractionTime: 3,
           isReviewExist: false,
           powderAmount: 8.2,
@@ -44,7 +44,7 @@ export default {
           extractionMethodId: 1,
         },
         {
-          beanId: 1,
+          beanId: 3,
           extractionTime: 5,
           isReviewExist: false,
           powderAmount: 12.5,
@@ -55,7 +55,7 @@ export default {
           extractionMethodId: 1,
         },
         {
-          beanId: 1,
+          beanId: 3,
           extractionTime: 5,
           isReviewExist: false,
           powderAmount: 12.5,
@@ -66,7 +66,7 @@ export default {
           extractionMethodId: 1,
         },
         {
-          beanId: 2,
+          beanId: 4,
           extractionTime: 3,
           isReviewExist: false,
           powderAmount: 8.2,
@@ -77,7 +77,7 @@ export default {
           extractionMethodId: 1,
         },
         {
-          beanId: 2,
+          beanId: 4,
           extractionTime: 3,
           isReviewExist: false,
           powderAmount: 8.2,
@@ -88,7 +88,7 @@ export default {
           extractionMethodId: 1,
         },
         {
-          beanId: 2,
+          beanId: 4,
           extractionTime: 5,
           isReviewExist: false,
           powderAmount: 12.5,
@@ -99,7 +99,7 @@ export default {
           extractionMethodId: 1,
         },
         {
-          beanId: 2,
+          beanId: 4,
           extractionTime: 5,
           isReviewExist: false,
           powderAmount: 12.5,

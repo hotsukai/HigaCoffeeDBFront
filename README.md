@@ -23,5 +23,3 @@ $ yarn start
 # generate static project
 $ yarn generate
 ```
-
-- firebaseプロジェクトはセキュリティ上、設定させたドメインからしかアクセスできなくなっています。必要に応じて新たなプロジェクトを作成してください。
