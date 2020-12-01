@@ -55,8 +55,15 @@ export default {
   modules: [
     // Doc: https://github.com/nuxt-community/modules/tree/master/packages/bulma
     '@nuxtjs/bulma',
+    '@nuxtjs/axios',
     '@nuxtjs/dotenv'
   ],
+  axios: {
+     //追加
+        baseURL: process.env.API_URL,
+        //追加
+        credentials: true
+      },
   /*
   ** Build configuration
   ** See https://nuxtjs.org/api/configuration-build/
@@ -71,6 +78,6 @@ export default {
     },
   },
   router: {
-    middleware: ['auth']
+    middleware: ['logined','notLogin']
   }
 }
