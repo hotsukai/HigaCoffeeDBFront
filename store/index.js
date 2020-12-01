@@ -15,7 +15,7 @@ export const actions = {
       .then(response => {
         console.debug(JSON.stringify(response.result));
         if (response.result) {
-          commit("setUser", response);
+          commit("setUser", response.data);
           console.debug("成功", JSON.stringify(response));
           alert("ログインしました。")
           return true;
