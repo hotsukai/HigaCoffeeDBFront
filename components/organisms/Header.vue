@@ -100,7 +100,7 @@ export default {
           this.isCreateCoffeeSelected = true;
           break;
         default:
-          console.debug("selected route", this.$route.name);
+          // console.debug("selected route", this.$route.name);
           break;
       }
     },

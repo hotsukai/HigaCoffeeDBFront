@@ -10,17 +10,19 @@ export const mutations = {
 
 export const actions = {
   async login({ commit }, { username, password, watchWord }) {
-    const response = await this.$axios
+    return await this.$axios
       .$post("/auth/login", { username, password, watchWord })
       .then(response => {
         console.debug(JSON.stringify(response.result));
-        if(response.result){
+        if (response.result) {
           commit("setUser", response);
-          console.debug("成功",JSON.stringify(response));
-        }
-        else{
-          alert("ログインに失敗しました : "+response.message)
+          console.debug("成功", JSON.stringify(response));
+          alert("ログインしました。")
+          return true;
+        } else {
+          alert("ログインに失敗しました : " + response.message);
           console.debug(JSON.stringify(response));
+          return false;
         }
       })
       .catch(err => {

@@ -49,11 +49,13 @@ export default {
   },
   methods: {
     async submit() {
-      await this.$store.dispatch("login", {
+      let status = await this.$store.dispatch("login", {
         username: this.userName,
         password: this.password,
         watchWord: this.watchWord
       });
+      console.debug("status ; " + status);
+      if (status) this.$router.push("/");
     }
   }
 };
