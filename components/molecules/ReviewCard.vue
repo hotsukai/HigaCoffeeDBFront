@@ -20,6 +20,7 @@
             <li>備考・感想 : {{ review.feeling }}</li>
           </ul>
         </div>
+<!--
         <div class="column" v-show="viewMore">
           <ul>
             <li>
@@ -40,6 +41,7 @@
             </li>
           </ul>
         </div>
+        -->
         <button @click="toggleViewMore()" class="button" v-show="!viewMore">
           くわしく見る
         </button>
@@ -52,9 +54,6 @@
 </template>
 
 <script>
-import firebase from "@/plugins/firebase";
-const db = firebase.firestore();
-
 export default {
   props: ["review"],
   data() {
@@ -71,16 +70,16 @@ export default {
   },
 
   created() {
-    db.collection("coffees")
-      .doc(this.review.coffeeId)
-      .get()
-      // .then(function (doc) {//動かない
-      .then((doc) => {
-        //動く
-        if (doc.exists) {
-          this.targetCoffee = doc.data();
-        }
-      });
+    // db.collection("coffees")
+    //   .doc(this.review.coffeeId)
+    //   .get()
+    //   // .then(function (doc) {//動かない
+    //   .then((doc) => {
+    //     //動く
+    //     if (doc.exists) {
+    //       this.targetCoffee = doc.data();
+    //     }
+    //   });
   },
 
   computed: {

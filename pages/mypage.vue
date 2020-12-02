@@ -1,11 +1,11 @@
 <template>
-  <div>
-    <h1 class="title">{{name}}のマイページ</h1>
+  <div v-if="user">
+    <h1 class="title">{{ user.name }}のマイページ</h1>
     <div>
-      <img :src="photoURL" class="profile-img" />
-      <p>お名前:{{name}}</p>
+      <!-- <img :src="photoURL" class="profile-img" /> -->
+      <p>お名前:{{ user.name }}</p>
     </div>
-    <RentalButton :user="currentUser" />
+    <!-- <RentalButton :user="currentUser" />-->
     <div v-show="isReviewExist">
       <p class="subtitle">あなたが書いたレビュー</p>
       <ReviewCards :reviews="reviews" />
@@ -13,10 +13,10 @@
         <button @click="getMoreReview">もっと見る</button>
       </div>
     </div>
-    <div v-show="! isReviewExist">
+    <div v-show="!isReviewExist">
       <p>まだレビューがありません</p>
     </div>
-  </div>
+  </div> 
 </template>
 
 <script>
@@ -24,53 +24,37 @@ import firebase from "@/plugins/firebase";
 const db = firebase.firestore();
 
 export default {
-  async asyncData() {
-    let cUser;
-    await firebase.auth().onAuthStateChanged((user) => {
-      if (user) {
-        cUser = user;
-      }
-    });
-
-    const reviewsArray = [];
-    await db
-      .collection("coffees")
-      .where("userId", "==", cUser.uid) // TODO:ページネーション
-      .where("isReviewExist","==", true)
-      .orderBy("reviewRegisteredTime", "desc")
-      .limit(25)
-      .get()
-      .then(function (querySnapshot) {
-        querySnapshot.forEach(function (doc) {
-          reviewsArray.push(doc.data());
-        });
-      });
-    return { reviews: reviewsArray, currentUser: cUser };
-  },
-
   data() {
     return {
-      name: "初期の名前",
-      photoURL: "",
+      reviews: [],
+      user: {}
     };
   },
 
-  created() {
-    if (this.currentUser != null) {
-      this.name = this.currentUser.displayName;
-      this.photoURL = this.currentUser.photoURL;
+  async created() {
+    let user = this.$store.state.currentUser;
+    this.user = user;
+    if (!user) {
+      alert("ログインしてください");
+      this.$router.push("/login");
     }
+
+    this.reviews = await this.$axios
+      .$get("/reviews", { params: { reviewer: user.id } })
+      .then(response => {
+        return response.data;
+      });
   },
 
   computed: {
     isReviewExist() {
       return this.reviews.length > 0;
-    },
+    }
   },
 
   methods: {
-    getMoreReview() {},
-  },
+    getMoreReview() {}
+  }
 };
 </script>
 
