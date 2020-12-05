@@ -28,7 +28,7 @@
         <p class="help">
           既定のレシピ通りに出来なかった場合はその旨を記してください（例：お湯を入れすぎた、抽出時間長すぎた）
         </p>
-        <input class="input" type="text" v-model="feeling" />
+        <input class="input" type="text" />
       </div>
       <p v-show="!isValid" class="is-danger">入力に不備があります</p>
       <button
@@ -44,14 +44,18 @@
 </template>
 
 <script>
-import firebase from "@/plugins/firebase";
-var db = firebase.firestore();
-
 export default {
   props: ["coffeeData"],
 
   data() {
-    return {};
+    return { beans: [] };
+  },
+
+  async created() {
+
+    this.beans = await this.$axios.$get("/beans").then(response => {
+      return response.data;
+    });
   },
 
   computed: {
