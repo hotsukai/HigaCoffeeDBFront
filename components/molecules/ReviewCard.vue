@@ -2,15 +2,15 @@
   <div class="card">
     <div class="card-content">
       <p class="title">
-        <BeanName :bean-id="targetCoffee.beanId" />
+        {{review.coffee.bean.name}}
       </p>
-      <p class="subtitle">ID : {{ review.coffeeId }}</p>
+      <p class="subtitle">ID : {{ review.coffee.id }}</p>
       <div class="columns">
         <div class="column">
           <ul>
             <li>
               レビュー登録日 :
-              <TimeFirebaseToJs :time="review.reviewRegisteredTime" />
+              {{ review.createdAt }}
             </li>
 
             <li>苦さ : {{ review.bitterness }}</li>
@@ -20,28 +20,27 @@
             <li>備考・感想 : {{ review.feeling }}</li>
           </ul>
         </div>
-<!--
+
         <div class="column" v-show="viewMore">
           <ul>
             <li>
-              コーヒー登録日 :
-              <TimeFirebaseToJs :time="review.registeredTime" />
+              コーヒー登録日 :{{review.coffee.createdAt}}
             </li>
-            <li>蒸らし時間 : {{ targetCoffee.extractionTime }}min</li>
-            <li>粉の量 : {{ targetCoffee.powderAmount }}g</li>
-            <li>水の量 : {{ targetCoffee.waterAmount }}ml</li>
-            <li>メッシュ : {{ targetCoffee.mesh }}</li>
+            <li>蒸らし時間 : {{ review.coffee.extractionTime }}min</li>
+            <li>粉の量 : {{ review.coffee.powderAmount }}g</li>
+            <li>水の量 : {{ review.coffee.waterAmount }}ml</li>
+            <li>メッシュ : {{ review.coffee.mesh }}</li>
             <li>
               湯温 :
-              <WaterTemperature :wt="targetCoffee.WaterTemperature" />
+              <WaterTemperature :wt="review.coffee.WaterTemperature" />
             </li>
             <li>
               抽出方法 :
-              <Method :em="targetCoffee.extractionMethodId" />
+              <Method :em="review.coffee.extractionMethodId" />
             </li>
           </ul>
         </div>
-        -->
+
         <button @click="toggleViewMore()" class="button" v-show="!viewMore">
           くわしく見る
         </button>
@@ -58,29 +57,16 @@ export default {
   props: ["review"],
   data() {
     return {
-      targetCoffee: {},
-      viewMore: false,
+      viewMore: false
     };
   },
 
   methods: {
     toggleViewMore() {
       this.viewMore = !this.viewMore;
-    },
+    }
   },
 
-  created() {
-    // db.collection("coffees")
-    //   .doc(this.review.coffeeId)
-    //   .get()
-    //   // .then(function (doc) {//動かない
-    //   .then((doc) => {
-    //     //動く
-    //     if (doc.exists) {
-    //       this.targetCoffee = doc.data();
-    //     }
-    //   });
-  },
 
   computed: {
     repeatToJapanese() {
@@ -93,11 +79,11 @@ export default {
         "リラックス",
         "ややリラックス",
         "やや眠気覚まし",
-        "眠気覚まし",
+        "眠気覚まし"
       ];
       return situation_japanese[parseInt(this.review.situation) - 1];
-    },
-  },
+    }
+  }
 };
 </script>
 
