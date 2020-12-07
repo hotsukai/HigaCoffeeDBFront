@@ -83,6 +83,6 @@ export default {
     }
   },
   router: {
-    middleware: ["logined", "notLogin"]
+    middleware: ["auth","logined", "notLogin"]
   }
 };
