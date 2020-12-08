@@ -56,18 +56,11 @@ export default {
     "@nuxtjs/dotenv",
     "@nuxtjs/proxy"
   ],
-  // axios: {
-  //   proxy:true,
-  //   // credentials: true
-  // },
-  proxy: {
-    "/api/": {
-      target: "http://localhost:5000",
-      // target: process.env.API_URL,
-      changeOrigin: true,
-      secure: false
-    }
+  axios: {
+    baseURL: process.env.API_URL,
+    credentials: true
   },
+
  
   /*
    ** Build configuration
