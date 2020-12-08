@@ -29,7 +29,6 @@
       </div>
       <div v-show="selectedExtractionMethod == 1">
         <label class="label">抽出時間</label>
-        <!-- TODO:フレンチプレスのみ -->
         <input
           v-model.number="selectedExtractionTime"
           type="number"
@@ -53,7 +52,7 @@
           v-model.number="selectedWaterAmount"
           type="number"
           min="0"
-          max="200"
+          max="500"
         />mL
       </div>
       <div>
@@ -68,6 +67,7 @@
       <div>
         <label class="label">飲む人</label>
         <div v-for="i in selectedDrinkers.length" :key="i">
+          <!-- TODO: 重複をゆるさない -->
           <input
             v-model.number="selectedDrinkers[i - 1]"
             type="number"
@@ -103,7 +103,7 @@
       </div>
       <div>
         <label class="label">メモ</label>
-        <input class="input" type="text" />
+        <input class="input" type="text" v-model="memo" />
         <p class="help">
           既定のレシピ通りに出来なかった場合はその旨を記してください（例：お湯を入れすぎた、抽出時間長すぎた）
         </p>
@@ -125,16 +125,19 @@
 export default {
   data() {
     return {
-      beans: {},
       selectedBean: null,
       extractionMethods: {},
+      selectedDrinkers: [null],
       selectedExtractionMethod: 1,
       selectedExtractionTime: 3,
       selectedPowderAmount: 8.5,
       selectedWaterAmount: 100,
       selectedWaterTemperature: 96,
-      users: [],
-      selectedDrinkers: [""]
+      selectedMesh: null,
+      beans: {},
+      meshs: [],
+      memo: "",
+      users: []
     };
   },
 
@@ -151,7 +154,26 @@ export default {
 
   computed: {
     isValid() {
-      return true;
+      return (
+        // TODO: メッセージを丁寧にする
+        this.selectedBean !== null &&
+        this.selectedExtractionMethod !== "" &&
+        this.selectedExtractionTime !== "" &&
+        this.selectedPowderAmount !== "" &&
+        this.selectedWaterAmount !== "" &&
+        this.selectedWaterTemperature !== "" &&
+        this.selectedMesh !== "" &&
+        this.selectedExtractionTime >= 0 &&
+        this.selectedExtractionTime <= 10 &&
+        this.selectedPowderAmount >= 0 &&
+        this.selectedPowderAmount <= 20 &&
+        this.selectedWaterAmount >= 0 &&
+        this.selectedWaterAmount <= 500 &&
+        this.selectedWaterTemperature >= 0 &&
+        this.selectedWaterTemperature <= 100 &&
+        this.selectedDrinkers[0] !== "" &&
+        this.selectedDrinkers[0] !== null
+      );
     },
     usersMaxId() {
       return this.users.reduce((accumulator, user) => {
@@ -167,15 +189,39 @@ export default {
     }
   },
 
-  //   watch: {
-  // selectedDrinkers
-  //   },
-
   methods: {
-    sendCoffee() {},
+    sendCoffee() {
+      this.$axios
+        .$post("/coffees", {
+          beanId: this.selectedBean,
+          drinkerIds: this.selectedDrinkers,
+          dripperId: this.$store.state.currentUser.id,
+          extractionMethodId: this.selectedExtractionMethod,
+          extractionTime: this.selectedExtractionTime,
+          meshId: this.selectedMesh,
+          memo: this.memo,
+          powderAmount: this.selectedPowderAmount,
+          waterAmount: this.selectedWaterAmount,
+          waterTemperature: this.selectedWaterTemperature
+        })
+        .then(res => {
+          if (res.result) {
+            console.log(res.data);
+            alert("コーヒーを登録しました。");
+          } else {
+            alert("ERROR1:コーヒーの登録に失敗しました" + res.message);
+          }
+          this.$router.push("/");
+        })
+        .catch(err => {
+          console.error("コーヒーの登録に失敗しました" + err.message);
+          alert("ERROR2:コーヒーの登録に失敗しました" + res.message);
+          this.$router.push("/");
+        });
+    },
     addDrinker() {
       if (this.selectedDrinkers.length < this.users.length) {
-        this.selectedDrinkers.push("");
+        this.selectedDrinkers.push(null);
       }
     },
     deleteDrinker(id) {
