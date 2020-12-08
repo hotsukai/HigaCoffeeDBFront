@@ -2,7 +2,7 @@
   <div>
     <h1 class="title">ログイン</h1>
     <div class="field">
-      <div class="control">
+      <form class="control">
         <div>
           <label for="watchWord">合言葉</label>
         </div>
@@ -25,11 +25,11 @@
             class="input"
           />
         </div>
-        <button class="button is-primary" @click="submit()">ログイン</button>
+        <button class="button is-primary" @click="submit()" type="button">ログイン</button>
         <div v-show="isWordIncorrect">
           <p>合言葉が間違っています</p>
         </div>
-      </div>
+      </form>
     </div>
   </div>
 </template>
