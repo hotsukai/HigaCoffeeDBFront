@@ -2,46 +2,39 @@
   <div>
     <h1 class="title">あなたあてのコーヒー</h1>
     <div v-show="isCoffeeExist">
-      <CoffeeCards :coffees="coffees" :user="currentUser" />
+      <CoffeeCards :coffees="coffees"/>
     </div>
-    <div v-show="! isCoffeeExist">あなたあてのコーヒーがありません。</div>
+    <div v-show="!isCoffeeExist">あなたあてのコーヒーがありません。</div>
   </div>
 </template>
 
-
 <script>
-import firebase from "@/plugins/firebase";
-const db = firebase.firestore();
-
 export default {
-  async asyncData() {
-    var cUser;
-    await firebase.auth().onAuthStateChanged(function (user) {
-      if (user) {
-        cUser = user;
+  data() {
+    return {
+      coffees: []
+    };
+  },
+
+  async created() {
+    let user = this.$store.state.currentUser
+    this.coffees = await this.$axios.$get("/coffees", {
+      params: {
+        has_review: false,
+        drinker_id: user.id
       }
+    }).then(res =>{
+      console.debug(res.data)
+      return res.data
     });
-    const coffeesArray = [];
-    await db
-      .collection("coffees")
-      .where("userId", "==", cUser.uid)
-      .where("isReviewExist","==",false)
-      .get()
-      .then(function (querySnapshot) {
-        querySnapshot.forEach(function (doc) {
-          coffeesArray.push(doc.data());
-        });
-      });
-    return { coffees: coffeesArray ,currentUser:cUser};
   },
 
   computed: {
     isCoffeeExist() {
       return this.coffees.length > 0;
-    },
-  },
+    }
+  }
 };
 </script>
 
-<style>
-</style>
+<style></style>
