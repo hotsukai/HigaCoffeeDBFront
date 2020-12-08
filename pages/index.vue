@@ -24,19 +24,7 @@
 </template>
 
 <script>
-import firebase from "@/plugins/firebase";
-export default {
-  data() {
-    return {
-      isLogin: false,
-    };
-  },
-  async created() {
-    await firebase
-      .auth()
-      .onAuthStateChanged((user) => (this.isLogin = user ? true : false));
-  },
-};
+
 </script>
 
 <style>

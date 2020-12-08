@@ -8,8 +8,6 @@
 
 // TODO最新n件を表示する。
 <script>
-import firebase from "@/plugins/firebase";
-import { User } from "firebase";
 export default {
   data() {
     return {

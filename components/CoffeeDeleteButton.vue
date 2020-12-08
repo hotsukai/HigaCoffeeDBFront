@@ -3,9 +3,6 @@
 </template>
 
 <script>
-import firebase from "@/plugins/firebase";
-const db = firebase.firestore();
-
 export default {
   props: ["coffee"],
 
@@ -16,7 +13,6 @@ export default {
   },
 
   created() {
-    this.currentUser = firebase.auth().currentUser;
   },
 
   methods: {
@@ -28,7 +24,6 @@ export default {
 
       let usersDoc = db.collection("users").doc(this.currentUser.uid);
       batch.update(usersDoc, {
-        coffees: firebase.firestore.FieldValue.arrayRemove(this.coffee.id),
       });
 
       let datasDoc = db
@@ -37,7 +32,6 @@ export default {
         .collection("datas")
         .doc(String(this.coffee.beanId));
       batch.update(datasDoc, {
-        countCoffees: firebase.firestore.FieldValue.increment(-1),
       });
 
       let userDatasDoc = db
@@ -46,7 +40,6 @@ export default {
         .collection("datas")
         .doc(String(this.coffee.beanId));
       batch.update(userDatasDoc, {
-        countCoffees: firebase.firestore.FieldValue.increment(-1),
       });
 
       batch

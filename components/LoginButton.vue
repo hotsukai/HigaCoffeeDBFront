@@ -10,7 +10,6 @@
 </template>
 
 <script>
-import firebase from "@/plugins/firebase";
 
 export default {
   data() {
@@ -20,14 +19,13 @@ export default {
   },
 
   async created() {
-    await firebase
-      .auth()
-      .onAuthStateChanged((user) => (this.isLogin = user ? true : false));
+    let user=true
+    this.isLogin = user ? true : false
   },
 
   methods: {
     async logout() {
-      await firebase.auth().signOut();
+      
       alert("ログアウトしました。")
       this.$router.push("/");
     },
