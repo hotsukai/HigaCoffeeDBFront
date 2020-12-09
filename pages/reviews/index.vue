@@ -1,8 +1,12 @@
 <template>
   <div>
     <p class="title">レビューを読む</p>
-    <p>Comming soon...!!!</p>
-    <!-- <ReviewCards :reviews="reviews"></ReviewCards> -->
+    <form>
+      <select class="select"
+        ><option>ブラジル中煎り</option></select
+      >
+    </form>
+    <ReviewCards :reviews="reviews"></ReviewCards>
   </div>
 </template>
 
@@ -11,22 +15,25 @@
 export default {
   data() {
     return {
-      reviews: [
-        {
-          id: 1,
-          bitterness: 3,
-          coffeeId: "123",
-          feeling: "数字??",
-          repeat: 3,
-          situation: 1,
-          strongness: 2,
-          userId: "KIsUbKboVlbyj8Yskhps4qZaXgr2",
-        },
-      ],
+      reviews: []
     };
   },
+
+  async created() {
+    this.reviews = await this.$axios
+      .$get("/reviews")
+      .then(response => {
+        if (response.result) {
+          return response.data;
+        } else {
+          alert("データの取得に失敗しました。" + response.message);
+        }
+      })
+      .catch(e => {
+        alert("データの取得に失敗しました。" + response.message);
+      });
+  }
 };
 </script>
 
-<style>
-</style>
+<style></style>
