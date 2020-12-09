@@ -177,13 +177,11 @@ export default {
     },
     usersMaxId() {
       return this.users.reduce((accumulator, user) => {
-        console.debug("acc" + accumulator);
         return accumulator <= user.id ? user.id : accumulator;
       }, 1);
     },
     usersMinId() {
       return this.users.reduce((accumulator, user) => {
-        console.debug("acc" + accumulator);
         return accumulator >= user.id ? user.id : accumulator;
       }, 1);
     }

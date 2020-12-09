@@ -25,7 +25,9 @@
             class="input"
           />
         </div>
-        <button class="button is-primary" @click="submit()" type="button">ログイン</button>
+        <button class="button is-primary" @click="submit()" type="button">
+          ログイン
+        </button>
         <div v-show="isWordIncorrect">
           <p>合言葉が間違っています</p>
         </div>
@@ -49,13 +51,20 @@ export default {
   },
   methods: {
     async submit() {
-      let status = await this.$store.dispatch("login", {
-        username: this.userName,
-        password: this.password,
-        watchWord: this.watchWord
-      });
-      console.debug("status ; " + status);
-      if (status) this.$router.push("/");
+      await this.$store
+        .dispatch("login", {
+          username: this.userName,
+          password: this.password,
+          watchWord: this.watchWord
+        })
+        .then(status => {
+          if (status) {
+            this.$router.push("/");
+            alert("ログインしました");
+          } else {
+            alert("ログインに失敗しました");
+          }
+        });
     }
   }
 };
