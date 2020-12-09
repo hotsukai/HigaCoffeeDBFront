@@ -2,9 +2,16 @@
   <div class="card">
     <div class="card-content">
       <p class="title">
-        {{review.coffee.bean.name}}
+        <nuxt-link :to="'/reviews?bean=' + review.coffee.bean.id">
+          {{ review.coffee.bean.name }}
+        </nuxt-link>
       </p>
-      <p class="subtitle">ID : {{ review.coffee.id }}</p>
+      <p class="subtitle">
+        コーヒーID : {{ review.coffee.id }}
+        <nuxt-link v-if="isLogin" :to="'/users/' + review.reviewer.id">{{
+          review.reviewer.name
+        }}</nuxt-link>
+      </p>
       <div class="columns">
         <div class="column">
           <ul>
@@ -23,21 +30,13 @@
 
         <div class="column" v-show="viewMore">
           <ul>
-            <li>
-              コーヒー登録日 :{{review.coffee.createdAt}}
-            </li>
+            <li>コーヒー登録日 :{{ review.coffee.createdAt }}</li>
             <li>蒸らし時間 : {{ review.coffee.extractionTime }}min</li>
             <li>粉の量 : {{ review.coffee.powderAmount }}g</li>
             <li>水の量 : {{ review.coffee.waterAmount }}ml</li>
             <li>メッシュ : {{ review.coffee.mesh }}</li>
-            <li>
-              湯温 :
-              <WaterTemperature :wt="review.coffee.WaterTemperature" />
-            </li>
-            <li>
-              抽出方法 :
-              <Method :em="review.coffee.extractionMethodId" />
-            </li>
+            <li>湯温 :{{ review.coffee.waterTemperature }}℃</li>
+            <li>抽出方法 :{{ review.coffee.extractionMethod.name }}</li>
           </ul>
         </div>
 
@@ -57,7 +56,8 @@ export default {
   props: ["review"],
   data() {
     return {
-      viewMore: false
+      viewMore: false,
+      isLogin: false
     };
   },
 
@@ -67,11 +67,14 @@ export default {
     }
   },
 
+  created() {
+    this.isLogin = this.$store.state.currentUser != null;
+  },
 
   computed: {
     repeatToJapanese() {
       const repeat_japanese = ["飲みたくない!!", "普通", "また飲みたい!"];
-      return repeat_japanese[parseInt(this.review.repeat) - 1];
+      return repeat_japanese[parseInt(this.review.wantRepeat) - 1];
     },
 
     situationToJapanese() {
