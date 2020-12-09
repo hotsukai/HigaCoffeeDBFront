@@ -36,19 +36,19 @@
           <nuxt-link
             to="/reviews/create"
             class="navbar-item"
-            :class="{ isSelected: isCreateReviewSelected }"
+            :class="{ isSelected: isCreateReviewSelected, notActive: !isLogin }"
             >かく</nuxt-link
           >
           <nuxt-link
             to="/coffees/create"
             class="navbar-item"
-            :class="{ isSelected: isCreateCoffeeSelected }"
+            :class="{ isSelected: isCreateCoffeeSelected, notActive: !isLogin }"
             >淹れる</nuxt-link
           >
           <nuxt-link
             to="/mypage"
             class="navbar-item"
-            :class="{ isSelected: isMypageSelected }"
+            :class="{ isSelected: isMypageSelected, notActive: !isLogin }"
             >マイページ</nuxt-link
           >
           <div class="buttons">
@@ -69,7 +69,8 @@ export default {
       isMypageSelected: false,
       isCreateReviewSelected: false,
       isCreateCoffeeSelected: false,
-      isReadReviewSelected: false
+      isReadReviewSelected: false,
+      isLogin: false
     };
   },
 
@@ -130,13 +131,17 @@ export default {
 }
 
 .navbar-item {
-  color: #e1dfdb;
+  color: #eee;
 }
 .navbar-burger {
-  color: #e1dfdb;
+  color: #eee;
 }
 
 .isSelected {
   font-weight: bold;
+}
+
+.notActive {
+  color: #aaa;
 }
 </style>
