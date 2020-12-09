@@ -147,9 +147,7 @@ export default {
         this.situation <= 4 &&
         this.situation >= 0 &&
         this.wantRepeat <= 3 &&
-        this.wantRepeat >= 0 &&
-        this.feeling <= 4 &&
-        this.feeling >= 0
+        this.wantRepeat >= 0 
       );
     }
   }
