@@ -1,8 +1,8 @@
 <template>
   <div>
-    <p class="title">レビュー一覧</p>
+    <p class="title">レビューを読む</p>
     <p>Comming soon...!!!</p>
-    <ReviewCards :reviews="reviews"></ReviewCards>
+    <!-- <ReviewCards :reviews="reviews"></ReviewCards> -->
   </div>
 </template>
 

@@ -2,7 +2,7 @@
   <div>
     <nav class="navbar" role="navigation" aria-label="main navigation">
       <div class="navbar-brand">
-        <nuxt-link to="/" class="navbar-item"><img src="/logo.png" /></nuxt-link>
+        <nuxt-link to="/" class="navbar-item"><img src="/logo.png"/></nuxt-link>
         <div
           class="navbar-burger burger"
           data-target="navbarMenu"
@@ -27,9 +27,9 @@
             >みる</nuxt-link
           >
           <nuxt-link
-            to="/data"
+            to="/reviews/"
             class="navbar-item"
-            :class="{ isSelected: isDataSelected }"
+            :class="{ isSelected: isReadReviewSelected }"
             >よむ</nuxt-link
           >
 
@@ -69,6 +69,7 @@ export default {
       isMypageSelected: false,
       isCreateReviewSelected: false,
       isCreateCoffeeSelected: false,
+      isReadReviewSelected: false
     };
   },
 
@@ -86,6 +87,7 @@ export default {
       this.isMypageSelected = false;
       this.isCreateReviewSelected = false;
       this.isCreateCoffeeSelected = false;
+      this.isReadReviewSelected = false;
       switch (this.$route.name) {
         case "data":
           this.isDataSelected = true;
@@ -96,22 +98,25 @@ export default {
         case "reviews-create":
           this.isCreateReviewSelected = true;
           break;
-        case "coffeescreate":
+        case "coffees-create":
           this.isCreateCoffeeSelected = true;
+          break;
+        case "reviews":
+          this.isReadReviewSelected = true;
           break;
         default:
           // console.debug("selected route", this.$route.name);
           break;
       }
-    },
+    }
   },
 
   watch: {
     $route() {
       this.isMenuActive = false;
       this.changeSelectedPage();
-    },
-  },
+    }
+  }
 };
 </script>
 
