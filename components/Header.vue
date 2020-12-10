@@ -2,7 +2,7 @@
   <div>
     <nav class="navbar" role="navigation" aria-label="main navigation">
       <div class="navbar-brand">
-        <nuxt-link to="/" class="navbar-item"><img src="/logo.png" /></nuxt-link>
+        <nuxt-link to="/" class="navbar-item"><img src="/logo.png"/></nuxt-link>
         <div
           class="navbar-burger burger"
           data-target="navbarMenu"
@@ -27,28 +27,28 @@
             >みる</nuxt-link
           >
           <nuxt-link
-            to="/data"
+            to="/reviews/"
             class="navbar-item"
-            :class="{ isSelected: isDataSelected }"
+            :class="{ isSelected: isReadReviewSelected }"
             >よむ</nuxt-link
           >
 
           <nuxt-link
             to="/reviews/create"
             class="navbar-item"
-            :class="{ isSelected: isCreateReviewSelected }"
+            :class="{ isSelected: isCreateReviewSelected, notActive: !isLogin }"
             >かく</nuxt-link
           >
           <nuxt-link
             to="/coffees/create"
             class="navbar-item"
-            :class="{ isSelected: isCreateCoffeeSelected }"
+            :class="{ isSelected: isCreateCoffeeSelected, notActive: !isLogin }"
             >淹れる</nuxt-link
           >
           <nuxt-link
             to="/mypage"
             class="navbar-item"
-            :class="{ isSelected: isMypageSelected }"
+            :class="{ isSelected: isMypageSelected, notActive: !isLogin }"
             >マイページ</nuxt-link
           >
           <div class="buttons">
@@ -69,6 +69,8 @@ export default {
       isMypageSelected: false,
       isCreateReviewSelected: false,
       isCreateCoffeeSelected: false,
+      isReadReviewSelected: false,
+      isLogin: false
     };
   },
 
@@ -86,6 +88,7 @@ export default {
       this.isMypageSelected = false;
       this.isCreateReviewSelected = false;
       this.isCreateCoffeeSelected = false;
+      this.isReadReviewSelected = false;
       switch (this.$route.name) {
         case "data":
           this.isDataSelected = true;
@@ -96,22 +99,25 @@ export default {
         case "reviews-create":
           this.isCreateReviewSelected = true;
           break;
-        case "coffeescreate":
+        case "coffees-create":
           this.isCreateCoffeeSelected = true;
           break;
+        case "reviews":
+          this.isReadReviewSelected = true;
+          break;
         default:
-          console.debug("selected route", this.$route.name);
+          // console.debug("selected route", this.$route.name);
           break;
       }
-    },
+    }
   },
 
   watch: {
     $route() {
       this.isMenuActive = false;
       this.changeSelectedPage();
-    },
-  },
+    }
+  }
 };
 </script>
 
@@ -125,13 +131,17 @@ export default {
 }
 
 .navbar-item {
-  color: #e1dfdb;
+  color: #eee;
 }
 .navbar-burger {
-  color: #e1dfdb;
+  color: #eee;
 }
 
 .isSelected {
   font-weight: bold;
+}
+
+.notActive {
+  color: #aaa;
 }
 </style>

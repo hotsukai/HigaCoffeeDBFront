@@ -2,15 +2,22 @@
   <div class="card">
     <div class="card-content">
       <p class="title">
-        <BeanName :bean-id="targetCoffee.beanId" />
+        <nuxt-link :to="'/reviews?bean=' + review.coffee.bean.id">
+          {{ review.coffee.bean.name }}
+        </nuxt-link>
       </p>
-      <p class="subtitle">ID : {{ review.coffeeId }}</p>
+      <p class="subtitle">
+        コーヒーID : {{ review.coffee.id }}
+        <nuxt-link v-if="isLogin" :to="'/users/' + review.reviewer.id">{{
+          review.reviewer.name
+        }}</nuxt-link>
+      </p>
       <div class="columns">
         <div class="column">
           <ul>
             <li>
               レビュー登録日 :
-              <TimeFirebaseToJs :time="review.reviewRegisteredTime" />
+              {{ review.createdAt }}
             </li>
 
             <li>苦さ : {{ review.bitterness }}</li>
@@ -20,26 +27,19 @@
             <li>備考・感想 : {{ review.feeling }}</li>
           </ul>
         </div>
+
         <div class="column" v-show="viewMore">
           <ul>
-            <li>
-              コーヒー登録日 :
-              <TimeFirebaseToJs :time="review.registeredTime" />
-            </li>
-            <li>蒸らし時間 : {{ targetCoffee.extractionTime }}min</li>
-            <li>粉の量 : {{ targetCoffee.powderAmount }}g</li>
-            <li>水の量 : {{ targetCoffee.waterAmount }}ml</li>
-            <li>メッシュ : {{ targetCoffee.mesh }}</li>
-            <li>
-              湯温 :
-              <WaterTemperature :wt="targetCoffee.WaterTemperature" />
-            </li>
-            <li>
-              抽出方法 :
-              <Method :em="targetCoffee.extractionMethodId" />
-            </li>
+            <li>コーヒー登録日 :{{ review.coffee.createdAt }}</li>
+            <li>蒸らし時間 : {{ review.coffee.extractionTime }}min</li>
+            <li>粉の量 : {{ review.coffee.powderAmount }}g</li>
+            <li>水の量 : {{ review.coffee.waterAmount }}ml</li>
+            <li>メッシュ : {{ review.coffee.mesh }}</li>
+            <li>湯温 :{{ review.coffee.waterTemperature }}℃</li>
+            <li>抽出方法 :{{ review.coffee.extractionMethod.name }}</li>
           </ul>
         </div>
+
         <button @click="toggleViewMore()" class="button" v-show="!viewMore">
           くわしく見る
         </button>
@@ -52,41 +52,29 @@
 </template>
 
 <script>
-import firebase from "@/plugins/firebase";
-const db = firebase.firestore();
-
 export default {
   props: ["review"],
   data() {
     return {
-      targetCoffee: {},
       viewMore: false,
+      isLogin: false
     };
   },
 
   methods: {
     toggleViewMore() {
       this.viewMore = !this.viewMore;
-    },
+    }
   },
 
   created() {
-    db.collection("coffees")
-      .doc(this.review.coffeeId)
-      .get()
-      // .then(function (doc) {//動かない
-      .then((doc) => {
-        //動く
-        if (doc.exists) {
-          this.targetCoffee = doc.data();
-        }
-      });
+    this.isLogin = this.$store.state.currentUser != null;
   },
 
   computed: {
     repeatToJapanese() {
       const repeat_japanese = ["飲みたくない!!", "普通", "また飲みたい!"];
-      return repeat_japanese[parseInt(this.review.repeat) - 1];
+      return repeat_japanese[parseInt(this.review.wantRepeat) - 1];
     },
 
     situationToJapanese() {
@@ -94,11 +82,11 @@ export default {
         "リラックス",
         "ややリラックス",
         "やや眠気覚まし",
-        "眠気覚まし",
+        "眠気覚まし"
       ];
       return situation_japanese[parseInt(this.review.situation) - 1];
-    },
-  },
+    }
+  }
 };
 </script>
 

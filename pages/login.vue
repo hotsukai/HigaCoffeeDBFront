@@ -2,62 +2,70 @@
   <div>
     <h1 class="title">ログイン</h1>
     <div class="field">
-      <div class="control">
-        <input  v-model="inputSecretWord" placeholder="合言葉は？？" type="password" class="input" />
-        <button class="button is-primary" @click="checkSecretWord">認証</button>
-        <div v-if="isSecretWordCorrect">
-          <GoogleLogin />
+      <form class="control">
+        <div>
+          <label for="watchWord">合言葉</label>
         </div>
+        <input
+          v-model="inputWatchWord"
+          placeholder="合言葉は？？"
+          type="password"
+          class="input"
+        />
+        <div>
+          <label for="userName">ユーザー名</label>
+          <input type="text" id="userName" v-model="userName" class="input" />
+        </div>
+        <div>
+          <label for="password">パスワード</label>
+          <input
+            type="password"
+            id="password"
+            v-model="password"
+            class="input"
+          />
+        </div>
+        <button class="button is-primary" @click="submit()" type="button">
+          ログイン
+        </button>
         <div v-show="isWordIncorrect">
           <p>合言葉が間違っています</p>
         </div>
-      </div>
+      </form>
     </div>
   </div>
 </template>
 
 <script>
 import { Vue, Component } from "vue-property-decorator";
-import firebase from "@/plugins/firebase";
-const db = firebase.firestore();
 
 export default {
   data() {
     return {
-      inputSecretWord: "",
-      secretWord: "",
+      inputWatchWord: "",
+      userName: "",
+      password: "",
       isSecretWordCorrect: false,
-      isWordIncorrect: false,
+      isWordIncorrect: false
     };
   },
-
-  async created() {
-    firebase.auth().onAuthStateChanged((user) => {
-      if (user) {
-        this.$router.push("/");
-      }
-    });
-
-    await db
-      .collection("secretWord")
-      .doc("2020")
-      .get()
-      .then((doc) => {
-        if (doc.exists) {
-          this.secretWord = doc.data().secretWord;
-        }
-      });
-  },
-
   methods: {
-    checkSecretWord() {
-      if (this.secretWord === this.inputSecretWord) {
-        this.isSecretWordCorrect = true;
-        this.isWordIncorrect = false;
-      } else {
-        this.isWordIncorrect = true;
-      }
-    },
-  },
+    async submit() {
+      await this.$store
+        .dispatch("login", {
+          username: this.userName,
+          password: this.password,
+          watchWord: this.watchWord
+        })
+        .then(status => {
+          if (status) {
+            this.$router.push("/");
+            alert("ログインしました");
+          } else {
+            alert("ログインに失敗しました");
+          }
+        });
+    }
+  }
 };
 </script>

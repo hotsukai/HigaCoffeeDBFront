@@ -2,25 +2,29 @@
   <div class="card" v-if="coffee">
     <div class="card-content">
       <p class="title">
-        <BeanName :bean-id="coffee.beanId" />
+        {{ coffee.bean.name }}
       </p>
       <p class="subtitle">ID: {{ coffee.id }}</p>
       <ul>
         <li>
           登録された時間 :
-          <TimeFirebaseToJs :time="coffee.registeredTime" />
+          {{ coffee.createdAt }}
         </li>
         <li>蒸らし時間 : {{ coffee.extractionTime }}min</li>
         <li>粉の量 : {{ coffee.powderAmount }}g</li>
         <li>水の量 : {{ coffee.waterAmount }}ml</li>
-        <li>メッシュ : {{ coffee.mesh }}</li>
+        <li>メッシュ : {{ coffee.meshId }}</li>
         <li>
           湯温 :
-          <WaterTemperature :wt="coffee.WaterTemperature" />
+          {{ coffee.waterTemperature }}
         </li>
         <li>
           抽出方法 :
-          <Method :em="coffee.extractionMethodId" />
+          {{ coffee.extractionMethodId }}
+        </li>
+        <li>
+          メモ:
+          {{ coffee.memo }}
         </li>
       </ul>
     </div>
@@ -33,7 +37,7 @@
             >
           </span>
           <span>
-            <CoffeeDeleteButton :coffee="coffee" :user="user" />
+            <!-- <CoffeeDeleteButton :coffee="coffee" :user="user" /> -->
           </span>
         </p>
       </footer>
@@ -41,26 +45,22 @@
   </div>
 </template>
 
-<style  scoped>
+<style scoped>
 .card {
   margin-bottom: 1em;
 }
 </style>
 
 <script>
-import firebase from "@/plugins/firebase";
-const db = firebase.firestore();
-
 export default {
-  props: ["coffee", "user"],
+  props: ["coffee"],
 
   computed: {
-    fullPath: function () {
+    fullPath: function() {
       return "/reviews/create/" + this.coffee.id;
-    },
-  },
+    }
+  }
 };
 </script>
 
-<style>
-</style>
+<style></style>

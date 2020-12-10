@@ -1,34 +1,39 @@
 <template>
   <div>
-    <p class="title">レビュー一覧</p>
-    <p>Comming soon...!!!</p>
+    <p class="title">レビューを読む</p>
+    <form>
+      <select class="select"
+        ><option>ブラジル中煎り</option></select
+      >
+    </form>
     <ReviewCards :reviews="reviews"></ReviewCards>
   </div>
 </template>
 
 // TODO最新n件を表示する。
 <script>
-import firebase from "@/plugins/firebase";
-import { User } from "firebase";
 export default {
   data() {
     return {
-      reviews: [
-        {
-          id: 1,
-          bitterness: 3,
-          coffeeId: "123",
-          feeling: "数字??",
-          repeat: 3,
-          situation: 1,
-          strongness: 2,
-          userId: "KIsUbKboVlbyj8Yskhps4qZaXgr2",
-        },
-      ],
+      reviews: []
     };
   },
+
+  async created() {
+    this.reviews = await this.$axios
+      .$get("/reviews")
+      .then(response => {
+        if (response.result) {
+          return response.data;
+        } else {
+          alert("データの取得に失敗しました。" + response.message);
+        }
+      })
+      .catch(e => {
+        alert("データの取得に失敗しました。" + response.message);
+      });
+  }
 };
 </script>
 
-<style>
-</style>
+<style></style>
