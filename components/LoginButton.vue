@@ -10,28 +10,41 @@
 </template>
 
 <script>
-
 export default {
   data() {
     return {
-      isLogin: false,
+      isLogin: false
     };
   },
 
-  async created() {
-    let user=true
-    this.isLogin = user ? true : false
+  computed: {
+    user() {
+      return this.$store.state.currentUser;
+    }
+  },
+
+  created() {
+    this.isLogin = this.$store.state.currentUser !== null;
+  },
+
+  watch: {
+    user(val) {
+      console.debug("val : " + val);
+      this.isLogin = val !== null;
+    }
   },
 
   methods: {
     async logout() {
-      
-      alert("ログアウトしました。")
-      this.$router.push("/");
-    },
-  },
+      await this.$store.dispatch("logout").then(res => {
+        if (res) {
+          alert("ログアウトしました");
+          this.$router.push("/");
+        }
+      });
+    }
+  }
 };
 </script>
 
-<style>
-</style>
+<style></style>
