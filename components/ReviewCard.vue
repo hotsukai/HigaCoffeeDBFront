@@ -16,8 +16,7 @@
         <div class="column">
           <ul>
             <li>
-              レビュー登録日 :
-              {{ review.createdAt }}
+              レビュー登録日 : <ConvertTime :time="review.createdAt"/>
             </li>
 
             <li>苦さ : {{ review.bitterness }}</li>
@@ -30,7 +29,7 @@
 
         <div class="column" v-show="viewMore">
           <ul>
-            <li>コーヒー登録日 :{{ review.coffee.createdAt }}</li>
+            <li>コーヒー登録日 : <ConvertTime :time="review.coffee.createdAt"/></li>
             <li>蒸らし時間 : {{ review.coffee.extractionTime }}min</li>
             <li>粉の量 : {{ review.coffee.powderAmount }}g</li>
             <li>水の量 : {{ review.coffee.waterAmount }}ml</li>

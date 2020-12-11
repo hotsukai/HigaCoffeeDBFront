@@ -7,8 +7,7 @@
       <p class="subtitle">ID: {{ coffee.id }}</p>
       <ul>
         <li>
-          登録された時間 :
-          {{ coffee.createdAt }}
+          登録された時間 : <ConvertTime :time="coffee.createdAt"/>
         </li>
         <li>蒸らし時間 : {{ coffee.extractionTime }}min</li>
         <li>粉の量 : {{ coffee.powderAmount }}g</li>
