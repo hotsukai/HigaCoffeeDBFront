@@ -52,6 +52,12 @@ export default {
       .then(response => {
         return response.data;
       });
+
+    this.coffees = await this.$axios.$get("/coffees", {
+      params: { dripper_id: user.id }
+    }).then(res=>{
+      return res.data
+    });
   },
 
   computed: {
@@ -59,7 +65,7 @@ export default {
       return this.reviews.length > 0;
     },
     isCoffeeExist() {
-      return false;
+      return this.coffees.length > 0;
     }
   },
 

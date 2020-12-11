@@ -36,9 +36,7 @@
               >レビューを書く</nuxt-link
             >
           </span>
-          <span>
-            <!-- <CoffeeDeleteButton :coffee="coffee" :user="user" /> -->
-          </span>
+          <!-- TODO 自分宛てのときのみ表示する。 -->
         </p>
       </footer>
     </slot>
