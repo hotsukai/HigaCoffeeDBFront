@@ -9,7 +9,7 @@ export default function({ route, store, redirect }) {
       route.name === "signup"
     )
   ) {
-    alert("ログインが必要です。");
-    redirect("/login");
+    alert("会員登録が必要です。");
+    redirect("/signup");
   }
 }

@@ -26,13 +26,11 @@
           />
         </div>
         <button class="button is-primary" @click="submit()" type="button">
-          ログイン
+          登録
         </button>
-        <div v-show="isWordIncorrect">
-          <p>合言葉が間違っています</p>
-        </div>
       </form>
     </div>
+    <nuxt-link to="/login">登録がお済みの方はこちらへ</nuxt-link>
   </div>
 </template>
 
@@ -45,8 +43,6 @@ export default {
       inputWatchWord: "",
       userName: "",
       password: "",
-      isSecretWordCorrect: false,
-      isWordIncorrect: false
     };
   },
   methods: {

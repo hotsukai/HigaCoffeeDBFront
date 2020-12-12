@@ -24,6 +24,8 @@
         </div>
       </form>
     </div>
+    <nuxt-link to="/signup">登録がお済みでない場合</nuxt-link>
+
   </div>
 </template>
 
