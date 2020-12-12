@@ -12,9 +12,9 @@ export const mutations = {
 };
 
 export const actions = {
-  async login({ commit }, { username, password, watchWord }) {
+  async login({ commit }, { username, password }) {
     return await this.$axios
-      .$post("/auth/login", { username, password, watchWord })
+      .$post("/auth/login", { username, password })
       .then(response => {
         if (response.result) {
           commit("setUser", response.data);

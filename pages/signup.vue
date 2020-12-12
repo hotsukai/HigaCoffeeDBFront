@@ -1,9 +1,18 @@
 <template>
   <div>
-    <h1 class="title">ログイン</h1>
+    <h1 class="title">ユーザー登録</h1>
     <div class="field">
       <form class="control">
-              <div>
+        <div>
+          <label for="watchWord">合言葉</label>
+        </div>
+        <input
+          v-model="inputWatchWord"
+          placeholder="合言葉は？？"
+          type="password"
+          class="input"
+        />
+        <div>
           <label for="userName">ユーザー名</label>
           <input type="text" id="userName" v-model="userName" class="input" />
         </div>
@@ -33,6 +42,7 @@ import { Vue, Component } from "vue-property-decorator";
 export default {
   data() {
     return {
+      inputWatchWord: "",
       userName: "",
       password: "",
       isSecretWordCorrect: false,
@@ -41,18 +51,27 @@ export default {
   },
   methods: {
     async submit() {
-      await this.$store
-        .dispatch("login", {
+      await this.$axios
+        .$post("/auth/create_user", {
           username: this.userName,
           password: this.password,
+          watchword: this.inputWatchWord
         })
-        .then(res=> {
-          if (res.result) {
-            this.$router.push("/");
-            alert("ログインしました");
+        .then(response => {
+          if (response.result) {
+            this.$store.commit("setUser", response.data);
+            alert("ユーザーを登録しました");
+            this.$router.push("/mypage");
+            return true;
           } else {
-            alert("ログインに失敗しました");
+            alert("ユーザー登録に失敗しました : " + response.message);
+            return false;
           }
+        })
+        .catch(err => {
+          alert("ユーザー登録に失敗しました 1");
+          console.error("error 1 : ", err.message);
+          return false;
         });
     }
   }
