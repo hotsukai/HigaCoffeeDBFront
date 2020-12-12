@@ -36,12 +36,22 @@ export default {
 
   methods: {
     async logout() {
-      await this.$store.dispatch("logout").then(res => {
-        if (res) {
-          alert("ログアウトしました");
-          this.$router.push("/");
-        }
-      });
+      await this.$axios
+        .$get(`/auth/logout`)
+        .then(response => {
+          if (response.result) {
+            this.$store.commit("deleteUser");
+            alert("ログアウトしました");
+            this.$router.push("/");
+            return true;
+          } else {
+            return false;
+          }
+        })
+        .catch(err => {
+          console.error("error 1 : ", err.message);
+          return false;
+        });
     }
   }
 };

@@ -3,7 +3,7 @@
     <h1 class="title">ログイン</h1>
     <div class="field">
       <form class="control">
-              <div>
+        <div>
           <label for="userName">ユーザー名</label>
           <input type="text" id="userName" v-model="userName" class="input" />
         </div>
@@ -41,18 +41,24 @@ export default {
   },
   methods: {
     async submit() {
-      await this.$store
-        .dispatch("login", {
+      this.$axios
+        .$post("/auth/login", {
           username: this.userName,
-          password: this.password,
+          password: this.password
         })
-        .then(res=> {
-          if (res.result) {
-            this.$router.push("/");
+        .then(response => {
+          if (response.result) {
+            this.$store.commit("setUser", response.data);
             alert("ログインしました");
+            this.$router.push("/mypage");
           } else {
-            alert("ログインに失敗しました");
+            alert("ログインに失敗しました" + response.message);
+            return false;
           }
+        })
+        .catch(err => {
+          console.error("error 1 : ", err.message);
+          return false;
         });
     }
   }
