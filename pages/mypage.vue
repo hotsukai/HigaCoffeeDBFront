@@ -18,7 +18,8 @@
     </div>
     <p class="subtitle">あなたが淹れたコーヒー</p>
     <div v-show="isCoffeeExist">
-      <CoffeeCards :coffees="coffees" />
+      <CoffeeCards :coffees="coffees" :showReview="true"><span></span></CoffeeCards>
+      <!-- TODO: レビューを見るボタン -->
       <div class v-show="true">
         <button @click="getMoreCoffee">もっと見る</button>
       </div>
