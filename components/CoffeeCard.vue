@@ -27,7 +27,7 @@
     </div>
     <slot>
       <footer class="card-footer">
-        <p class="card-footer-item">
+        <p class="card-footer-item" v-show="createReview">
           <span>
             <nuxt-link
               :to="'/reviews/create/' + coffee.id"
@@ -63,7 +63,7 @@
 
 <script>
 export default {
-  props: ["coffee","showReview"],
+  props: ["coffee", "showReview","createReview"],
 
   computed: {
     fullPath: function() {

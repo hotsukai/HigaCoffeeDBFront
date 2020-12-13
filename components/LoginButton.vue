@@ -29,7 +29,6 @@ export default {
 
   watch: {
     user(val) {
-      console.debug("val : " + val);
       this.isLogin = val !== null;
     }
   },
