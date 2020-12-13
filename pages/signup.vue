@@ -1,8 +1,17 @@
 <template>
   <div>
-    <h1 class="title">ログイン</h1>
+    <h1 class="title">ユーザー登録</h1>
     <div class="field">
       <form class="control">
+        <div>
+          <label for="watchWord">合言葉</label>
+        </div>
+        <input
+          v-model="inputWatchWord"
+          placeholder="合言葉は？？"
+          type="password"
+          class="input"
+        />
         <div>
           <label for="userName">ユーザー名</label>
           <input type="text" id="userName" v-model="userName" class="input" />
@@ -17,15 +26,11 @@
           />
         </div>
         <button class="button is-primary" @click="submit()" type="button">
-          ログイン
+          登録
         </button>
-        <div v-show="isWordIncorrect">
-          <p>合言葉が間違っています</p>
-        </div>
       </form>
     </div>
-    <nuxt-link to="/signup">登録がお済みでない場合</nuxt-link>
-
+    <nuxt-link to="/login">登録がお済みの方はこちらへ</nuxt-link>
   </div>
 </template>
 
@@ -35,30 +40,32 @@ import { Vue, Component } from "vue-property-decorator";
 export default {
   data() {
     return {
+      inputWatchWord: "",
       userName: "",
       password: "",
-      isSecretWordCorrect: false,
-      isWordIncorrect: false
     };
   },
   methods: {
     async submit() {
-      this.$axios
-        .$post("/auth/login", {
+      await this.$axios
+        .$post("/auth/create_user", {
           username: this.userName,
-          password: this.password
+          password: this.password,
+          watchword: this.inputWatchWord
         })
         .then(response => {
           if (response.result) {
             this.$store.commit("setUser", response.data);
-            alert("ログインしました");
+            alert("ユーザーを登録しました");
             this.$router.push("/mypage");
+            return true;
           } else {
-            alert("ログインに失敗しました" + response.message);
+            alert("ユーザー登録に失敗しました : " + response.message);
             return false;
           }
         })
         .catch(err => {
+          alert("ユーザー登録に失敗しました 1");
           console.error("error 1 : ", err.message);
           return false;
         });

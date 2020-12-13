@@ -6,8 +6,8 @@
       <p>お名前:{{ user.name }}</p>
     </div>
     <!-- <RentalButton :user="currentUser" />-->
+    <p class="subtitle">あなたが書いたレビュー</p>
     <div v-show="isReviewExist">
-      <p class="subtitle">あなたが書いたレビュー</p>
       <ReviewCards :reviews="reviews" />
       <div class v-show="false">
         <button @click="getMoreReview">もっと見る</button>
@@ -16,7 +16,18 @@
     <div v-show="!isReviewExist">
       <p>まだレビューがありません</p>
     </div>
-  </div> 
+    <p class="subtitle">あなたが淹れたコーヒー</p>
+    <div v-show="isCoffeeExist">
+      <CoffeeCards :coffees="coffees" :showReview="true"><span></span></CoffeeCards>
+      <!-- TODO: レビューを見るボタン -->
+      <div class v-show="true">
+        <button @click="getMoreCoffee">もっと見る</button>
+      </div>
+    </div>
+    <div v-show="!isCoffeeExist">
+      <p>まだコーヒーがありません</p>
+    </div>
+  </div>
 </template>
 
 <script>
@@ -24,6 +35,7 @@ export default {
   data() {
     return {
       reviews: [],
+      coffees: [],
       user: {}
     };
   },
@@ -41,16 +53,26 @@ export default {
       .then(response => {
         return response.data;
       });
+
+    this.coffees = await this.$axios.$get("/coffees", {
+      params: { dripper_id: user.id }
+    }).then(res=>{
+      return res.data
+    });
   },
 
   computed: {
     isReviewExist() {
       return this.reviews.length > 0;
+    },
+    isCoffeeExist() {
+      return this.coffees.length > 0;
     }
   },
 
   methods: {
-    getMoreReview() {}
+    getMoreReview() {},
+    getMoreCoffee() {}
   }
 };
 </script>

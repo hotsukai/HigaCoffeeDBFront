@@ -51,6 +51,11 @@
             :class="{ isSelected: isMypageSelected, notActive: !isLogin }"
             >マイページ</nuxt-link
           >
+          <div class="buttons" v-show="!isLogin">
+            <div>
+            <nuxt-link to="/signup" class="button">サインアップ</nuxt-link>
+            </div>
+          </div>
           <div class="buttons">
             <LoginButton />
           </div>
@@ -76,6 +81,12 @@ export default {
 
   created() {
     this.changeSelectedPage();
+    this.isLogin = this.$store.state.currentUser !== null;
+  },
+  computed: {
+    user() {
+      return this.$store.state.currentUser;
+    }
   },
 
   methods: {
@@ -116,6 +127,10 @@ export default {
     $route() {
       this.isMenuActive = false;
       this.changeSelectedPage();
+    },
+    user(val) {
+      console.debug("val : " + val);
+      this.isLogin = val !== null;
     }
   }
 };
