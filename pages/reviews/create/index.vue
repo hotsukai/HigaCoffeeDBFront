@@ -2,7 +2,7 @@
   <div>
     <h1 class="title">あなたあてのコーヒー</h1>
     <div v-show="isCoffeeExist">
-      <CoffeeCards :coffees="coffees"/>
+      <CoffeeCards :coffees="coffees" :showReview="false" :createReview="true"/>
     </div>
     <div v-show="!isCoffeeExist">あなたあてのコーヒーがありません。</div>
   </div>
@@ -24,7 +24,6 @@ export default {
         drinker_id: user.id
       }
     }).then(res =>{
-      console.debug(res.data)
       return res.data
     });
   },

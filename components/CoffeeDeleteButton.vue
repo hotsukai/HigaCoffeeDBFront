@@ -55,7 +55,6 @@ export default {
 
     async confirmDelete() {
       var answer = window.confirm(this.coffee.id + "のコーヒーを削除します");
-      console.debug("cu", this.currentUser);
       if (answer === true && this.currentUser !== null) {
         await this.deleteCoffee();
         this.$router.push("/mypage");

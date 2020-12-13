@@ -117,7 +117,6 @@ export default {
           this.isReadReviewSelected = true;
           break;
         default:
-          // console.debug("selected route", this.$route.name);
           break;
       }
     }
@@ -129,7 +128,6 @@ export default {
       this.changeSelectedPage();
     },
     user(val) {
-      console.debug("val : " + val);
       this.isLogin = val !== null;
     }
   }
