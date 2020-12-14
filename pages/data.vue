@@ -37,10 +37,10 @@
         />
         <label for="lowerC">c:濃さ(個人)</label>
       </div>
-      <GraphA v-if="pickedSection1 == 'upperA'" :datas="allDatas" />
+      <GraphA v-if="pickedSection1 == 'upperA'" :isMine="false" />
       <div v-if="pickedSection1 == 'lowerA'">
         <div v-if="isLogin">
-          <GraphA :datas="myDatas" />
+          <GraphA :isMine="true" />
         </div>
         <div v-else>
           <p>
@@ -50,6 +50,7 @@
           </p>
         </div>
       </div>
+      <!--
       <GraphC
         v-if="pickedSection1 == 'upperC'"
         :receivedDatas="allDatas"
@@ -98,7 +99,6 @@
         <label for="lowerB">b:濃度(個人)</label>
       </div>
 
-      <!-- <div>{{ pickedBeanSection2 }}{{ pickedSection2 }}</div> -->
       <GraphB
         v-if="pickedSection2 == 'upperB' && pickedBeanSection2 !== ''"
         :key="pickedBeanSection2"
@@ -118,7 +118,7 @@
             が必要です。
           </p>
         </div>
-      </div>
+      </div>-->
     </section>
   </div>
 </template>
@@ -131,38 +131,10 @@ export default {
       pickedSection1: "upperA",
       pickedSection2: "upperB",
       pickedBeanSection2: "1",
+      provideData:{},
+      isLogin: this.$store.state.currentUser
     };
-  },
-
-  async asyncData() {
-    let allDatas = [];
-    await db
-      .collection("datas")
-      .doc("all")
-      .collection("datas")
-      .get()
-      .then((querySnapshot) => {
-        querySnapshot.forEach((data) => {
-          allDatas.push(data.data());
-        });
-      });
-    if (firebase.auth().currentUser !== null) {
-      let myDatas = [];
-      await db
-        .collection("datas")
-        .doc(firebase.auth().currentUser.uid)
-        .collection("datas")
-        .get()
-        .then((querySnapshot) => {
-          querySnapshot.forEach((data) => {
-            myDatas.push(data.data());
-          });
-        });
-      return { allDatas: allDatas, myDatas: myDatas, isLogin: true };
-    } else {
-      return { allDatas: allDatas, isLogin: false };
-    }
-  },
+  }
 };
 </script>
 

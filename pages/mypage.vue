@@ -1,16 +1,11 @@
 <template>
   <div v-if="user">
     <h1 class="title">{{ user.name }}のマイページ</h1>
-    <div>
-      <!-- <img :src="photoURL" class="profile-img" /> -->
-      <p>お名前:{{ user.name }}</p>
-    </div>
-    <!-- <RentalButton :user="currentUser" />-->
     <p class="subtitle">あなたが書いたレビュー</p>
     <div v-show="isReviewExist">
       <ReviewCards :reviews="reviews" />
       <div class v-show="false">
-        <button @click="getMoreReview">もっと見る</button>
+        <button @click="getMoreReview" class="button">もっと見る</button>
       </div>
     </div>
     <div v-show="!isReviewExist">
@@ -22,7 +17,7 @@
         ></CoffeeCards>
       <!-- TODO: レビューを見るボタン -->
       <div class v-show="true">
-        <button @click="getMoreCoffee">もっと見る</button>
+        <button @click="getMoreCoffee" class="button">もっと見る</button>
       </div>
     </div>
     <div v-show="!isCoffeeExist">
