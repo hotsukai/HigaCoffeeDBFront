@@ -35,7 +35,6 @@
               >レビューを書く</nuxt-link
             >
           </span>
-          <!-- TODO 自分宛てのときのみ表示する。 -->
         </p>
         <p
           class="card-footer-item"
@@ -48,7 +47,6 @@
               >レビューを見る</nuxt-link
             >
           </span>
-          <!-- TODO 自分宛てのときのみ表示する。 -->
         </p>
       </footer>
     </slot>

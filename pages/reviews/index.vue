@@ -14,8 +14,8 @@
   </div>
 </template>
 
-// TODO最新n件を表示する。
 <script>
+// TODO:絞り込み条件を増やす
 export default {
   data() {
     return {

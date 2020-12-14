@@ -13,7 +13,7 @@ export default {
         labels: [],
         datasets: [
           {
-            label: "淹れられた数",
+            label: "抽出数",
             data: [],
             backgroundColor: [
               "rgba(155, 118, 83, 0.5)",
@@ -38,8 +38,8 @@ export default {
             borderWidth: 1
           },
           {
-            label: "かかれた数",
-            data: [], 
+            label: "レビュー数",
+            data: [],
             backgroundColor: [
               "rgba(155, 118, 83, 1)",
               "rgba(155, 118, 83, 1)",
@@ -84,7 +84,8 @@ export default {
               }
             }
           ]
-        }
+        },
+        onClick: this.handler
       }
     };
   },
@@ -102,9 +103,7 @@ export default {
             bean.usersReviewCount ? bean.usersReviewCount : 0
           );
         } else {
-          this.data.datasets[0].data.push(
-            bean.dripCount ? bean.dripCount : 0
-          );
+          this.data.datasets[0].data.push(bean.dripCount ? bean.dripCount : 0);
           this.data.datasets[1].data.push(
             bean.reviewCount ? bean.reviewCount : 0
           );
@@ -121,6 +120,18 @@ export default {
     isDataLoaded() {
       this.renderChart(this.data, this.options);
     }
-  }//TODO: storeに保存
+  }, //TODO: storeに保存
+
+  methods: {
+    handler(point, event) {
+      if (event.length === 0) {
+        return;
+      }
+      const item = event[0];
+      console.debug("item : ", item._index, item);
+      if (confirm(this.data.labels[item._index] + "のレビューを読みますか"))
+        this.$router.push("/reviews/?bean_id=" + (item._index + 1));
+    }
+  }
 };
 </script>

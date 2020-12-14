@@ -15,7 +15,7 @@
     <div v-show="isCoffeeExist">
       <CoffeeCards :coffees="coffees" :showReview="true"
         ></CoffeeCards>
-      <!-- TODO: レビューを見るボタン -->
+      <!-- TODO: もっと見るボタン -->
       <div class v-show="true">
         <button @click="getMoreCoffee" class="button">もっと見る</button>
       </div>
