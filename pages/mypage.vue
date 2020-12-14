@@ -18,7 +18,8 @@
     </div>
     <p class="subtitle">あなたが淹れたコーヒー</p>
     <div v-show="isCoffeeExist">
-      <CoffeeCards :coffees="coffees" :showReview="true"><span></span></CoffeeCards>
+      <CoffeeCards :coffees="coffees" :showReview="true"
+        ></CoffeeCards>
       <!-- TODO: レビューを見るボタン -->
       <div class v-show="true">
         <button @click="getMoreCoffee">もっと見る</button>
@@ -48,17 +49,21 @@ export default {
       this.$router.push("/login");
     }
 
-    this.reviews = await this.$axios
-      .$get("/reviews", { params: { reviewer: user.id } })
-      .then(response => {
-        return response.data;
-      });
-
-    this.coffees = await this.$axios.$get("/coffees", {
-      params: { dripper_id: user.id }
-    }).then(res=>{
-      return res.data
+    const getReviews = await this.$axios.$get("/reviews", {
+      params: { reviewer: user.id }
     });
+
+    const getCoffees = await this.$axios.$get("/coffees", {
+      params: { dripper_id: user.id }
+    });
+    await Promise.all([getReviews, getCoffees])
+      .then(result => {
+        this.reviews = result[0].data;
+        this.coffees = result[1].data;
+      })
+      .catch(e => {
+        console.warn("データの取得でエラーが発生しました : " + e);
+      });
   },
 
   computed: {
