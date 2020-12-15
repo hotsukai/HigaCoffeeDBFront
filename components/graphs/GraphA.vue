@@ -4,7 +4,7 @@ import { Bar } from "vue-chartjs";
 export default {
   extends: Bar,
 
-  props: ["isMine"],
+  props: ["isMine", "propsDataPromise"],
 
   data() {
     return {
@@ -91,26 +91,25 @@ export default {
   },
 
   async created() {
-    await this.$axios.$get("/data/provide").then(res => {
-      Object.keys(res.data).map(beanId => {
-        const bean = res.data[beanId];
-        this.data.labels.push(bean.name);
-        if (this.isMine) {
-          this.data.datasets[0].data.push(
-            bean.usersDripCount ? bean.usersDripCount : 0
-          );
-          this.data.datasets[1].data.push(
-            bean.usersReviewCount ? bean.usersReviewCount : 0
-          );
-        } else {
-          this.data.datasets[0].data.push(bean.dripCount ? bean.dripCount : 0);
-          this.data.datasets[1].data.push(
-            bean.reviewCount ? bean.reviewCount : 0
-          );
-        }
-      });
-      this.isDataLoaded = true;
-    });
+    const beanData = await this.propsDataPromise;
+    for (let beanId in beanData) {
+      const bean = beanData[beanId];
+      this.data.labels.push(bean.name);
+      if (this.isMine) {
+        this.data.datasets[0].data.push(
+          bean.usersDripCount ? bean.usersDripCount : 0
+        );
+        this.data.datasets[1].data.push(
+          bean.usersReviewCount ? bean.usersReviewCount : 0
+        );
+      } else {
+        this.data.datasets[0].data.push(bean.dripCount ? bean.dripCount : 0);
+        this.data.datasets[1].data.push(
+          bean.reviewCount ? bean.reviewCount : 0
+        );
+      }
+    }
+    this.isDataLoaded = true;
   },
 
   mounted() {

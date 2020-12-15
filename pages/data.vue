@@ -37,10 +37,14 @@
         />
         <label for="lowerC">c:濃さ(個人)</label>
       </div>
-      <GraphA v-if="pickedSection1 == 'upperA'" :isMine="false" />
+      <GraphA
+        v-if="pickedSection1 == 'upperA'"
+        :isMine="false"
+        :propsDataPromise="provideDataPromise"
+      />
       <div v-if="pickedSection1 == 'lowerA'">
         <div v-if="isLogin">
-          <GraphA :isMine="true" />
+          <GraphA :isMine="true" :propsDataPromise="provideDataPromise" />
         </div>
         <div v-else>
           <p>
@@ -131,12 +135,16 @@ export default {
       pickedSection1: "upperA",
       pickedSection2: "upperB",
       pickedBeanSection2: "1",
-      provideData:{},
+      provideDataPromise: null,
       isLogin: this.$store.state.currentUser
     };
+  },
+  created() {
+    this.provideDataPromise = this.$axios.$get("/data/provide").then(res => {
+      return res.data;
+    });
   }
 };
 </script>
 
-<style>
-</style>
+<style></style>
