@@ -4,83 +4,65 @@ import { Bar } from "vue-chartjs";
 export default {
   extends: Bar,
 
-  props: ["datas"],
+  props: ["isMine", "propsDataPromise"],
 
   data() {
     return {
+      isDataLoaded: false,
       data: {
-        labels: ["BRA", "COL", "TZA", "IDN"],
-        // labels: ["BRA"],
+        labels: [],
         datasets: [
           {
-            label: "中煎りレビュー数",
+            label: "抽出数",
             data: [],
             backgroundColor: [
               "rgba(155, 118, 83, 0.5)",
               "rgba(155, 118, 83, 0.5)",
               "rgba(155, 118, 83, 0.5)",
               "rgba(155, 118, 83, 0.5)",
+              "rgba(155, 118, 83, 0.5)",
+              "rgba(155, 118, 83, 0.5)",
+              "rgba(155, 118, 83, 0.5)",
+              "rgba(155, 118, 83, 0.5)"
             ],
             borderColor: [
               "rgba(0,0,0, 1)",
               "rgba(0,0,0, 1)",
               "rgba(0,0,0, 1)",
               "rgba(0,0,0, 1)",
+              "rgba(0,0,0, 1)",
+              "rgba(0,0,0, 1)",
+              "rgba(0,0,0, 1)",
+              "rgba(0,0,0, 1)"
             ],
-            borderWidth: 1,
+            borderWidth: 1
           },
           {
-            label: "中煎り提供数",
-            data: [], //BRA中提,COL中提,TZA中提,IDN中提
-            backgroundColor: [
-              "rgba(155, 118, 83, 1)",
-              "rgba(155, 118, 83, 1)",
-              "rgba(155, 118, 83, 1)",
-              "rgba(155, 118, 83, 1)",
-            ],
-            borderColor: [
-              "rgba(0,0,0, 1)",
-              "rgba(0,0,0, 1)",
-              "rgba(0,0,0, 1)",
-              "rgba(0,0,0, 1)",
-            ],
-            borderWidth: 1,
-          },
-          {
-            label: "深煎りレビュー数",
+            label: "レビュー数",
             data: [],
             backgroundColor: [
-              "rgba(123, 85, 68, 0.5)",
-              "rgba(123, 85, 68, 0.5)",
-              "rgba(123, 85, 68, 0.5)",
-              "rgba(123, 85, 68, 0.5)",
+              "rgba(155, 118, 83, 1)",
+              "rgba(155, 118, 83, 1)",
+              "rgba(155, 118, 83, 1)",
+              "rgba(155, 118, 83, 1)",
+              "rgba(155, 118, 83, 1)",
+              "rgba(155, 118, 83, 1)",
+              "rgba(155, 118, 83, 1)",
+              "rgba(155, 118, 83, 1)"
             ],
             borderColor: [
               "rgba(0,0,0, 1)",
               "rgba(0,0,0, 1)",
               "rgba(0,0,0, 1)",
               "rgba(0,0,0, 1)",
+              "rgba(0,0,0, 1)",
+              "rgba(0,0,0, 1)",
+              "rgba(0,0,0, 1)",
+              "rgba(0,0,0, 1)"
             ],
-            borderWidth: 1,
-          },
-          {
-            label: "深煎り提供数",
-            data: [],
-            backgroundColor: [
-              "rgba(123, 85, 68, 1)",
-              "rgba(123, 85, 68, 1)",
-              "rgba(123, 85, 68, 1)",
-              "rgba(123, 85, 68, 1)",
-            ],
-            borderColor: [
-              "rgba(0,0,0, 1)",
-              "rgba(0,0,0, 1)",
-              "rgba(0,0,0, 1)",
-              "rgba(0,0,0, 1)",
-            ],
-            borderWidth: 1,
-          },
-        ],
+            borderWidth: 1
+          }
+        ]
       },
       options: {
         responsive: true,
@@ -90,52 +72,65 @@ export default {
             {
               scaleLabel: {
                 display: true,
-                labelString: "豆の種類",
-              },
-              //   stacked: true,
-            },
+                labelString: "豆の種類"
+              }
+            }
           ],
           yAxes: [
             {
               ticks: {
                 beginAtZero: true,
-                stepSize: 10,
-              },
-              // stacked: true
-            },
-          ],
+                stepSize: 10
+              }
+            }
+          ]
         },
-      },
+        onClick: this.handler
+      }
     };
   },
 
-  mounted() {
-    if (this.datas) {
-      let middleBeans = [],
-        deepBeans = [];
-
-      for (var i = 0; i < this.datas.length; i++) {
-        if (i % 2 == 0) {
-          middleBeans.push(this.datas[i]);
-        } else {
-          deepBeans.push(this.datas[i]);
-        }
+  async created() {
+    const beanData = await this.propsDataPromise
+    for (let beanId in beanData) {
+      const bean = beanData[beanId];
+      this.data.labels.push(bean.name);
+      if (this.isMine) {
+        this.data.datasets[0].data.push(
+          bean.usersDripCount ? bean.usersDripCount : 0
+        );
+        this.data.datasets[1].data.push(
+          bean.usersReviewCount ? bean.usersReviewCount : 0
+        );
+      } else {
+        this.data.datasets[0].data.push(bean.dripCount ? bean.dripCount : 0);
+        this.data.datasets[1].data.push(
+          bean.reviewCount ? bean.reviewCount : 0
+        );
       }
-      this.data.datasets[0].data = middleBeans.map((bean) =>
-        bean.countReviews ? bean.countReviews : 0
-      );
-      this.data.datasets[1].data = middleBeans.map((bean) =>
-        bean.countCoffees ? bean.countCoffees : 0
-      );
-      this.data.datasets[2].data = deepBeans.map((bean) =>
-        bean.countReviews ? bean.countReviews : 0
-      );
-      this.data.datasets[3].data = deepBeans.map((bean) =>
-        bean.countCoffees ? bean.countCoffees : 0
-      );
+    }
+    this.isDataLoaded = true;
+  },
 
+  mounted() {
+    this.renderChart(this.data, this.options);
+  },
+  watch: {
+    isDataLoaded() {
       this.renderChart(this.data, this.options);
     }
-  },
+  }, //TODO: storeに保存
+
+  methods: {
+    handler(point, event) {
+      if (event.length === 0) {
+        return;
+      }
+      const item = event[0];
+      console.debug("item : ", item._index, item);
+      if (confirm(this.data.labels[item._index] + "のレビューを読みますか"))
+        this.$router.push("/reviews/?bean_id=" + (item._index + 1));
+    }
+  }
 };
 </script>

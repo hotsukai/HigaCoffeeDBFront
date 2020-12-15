@@ -1,16 +1,11 @@
 <template>
   <div v-if="user">
     <h1 class="title">{{ user.name }}のマイページ</h1>
-    <div>
-      <!-- <img :src="photoURL" class="profile-img" /> -->
-      <p>お名前:{{ user.name }}</p>
-    </div>
-    <!-- <RentalButton :user="currentUser" />-->
     <p class="subtitle">あなたが書いたレビュー</p>
     <div v-show="isReviewExist">
       <ReviewCards :reviews="reviews" />
       <div class v-show="false">
-        <button @click="getMoreReview">もっと見る</button>
+        <button @click="getMoreReview" class="button">もっと見る</button>
       </div>
     </div>
     <div v-show="!isReviewExist">
@@ -18,10 +13,11 @@
     </div>
     <p class="subtitle">あなたが淹れたコーヒー</p>
     <div v-show="isCoffeeExist">
-      <CoffeeCards :coffees="coffees" :showReview="true"><span></span></CoffeeCards>
-      <!-- TODO: レビューを見るボタン -->
+      <CoffeeCards :coffees="coffees" :showReview="true"
+        ></CoffeeCards>
+      <!-- TODO: もっと見るボタン -->
       <div class v-show="true">
-        <button @click="getMoreCoffee">もっと見る</button>
+        <button @click="getMoreCoffee" class="button">もっと見る</button>
       </div>
     </div>
     <div v-show="!isCoffeeExist">
@@ -48,17 +44,21 @@ export default {
       this.$router.push("/login");
     }
 
-    this.reviews = await this.$axios
-      .$get("/reviews", { params: { reviewer: user.id } })
-      .then(response => {
-        return response.data;
-      });
-
-    this.coffees = await this.$axios.$get("/coffees", {
-      params: { dripper_id: user.id }
-    }).then(res=>{
-      return res.data
+    const getReviews = await this.$axios.$get("/reviews", {
+      params: { reviewer: user.id }
     });
+
+    const getCoffees = await this.$axios.$get("/coffees", {
+      params: { dripper_id: user.id }
+    });
+    await Promise.all([getReviews, getCoffees])
+      .then(result => {
+        this.reviews = result[0].data;
+        this.coffees = result[1].data;
+      })
+      .catch(e => {
+        console.warn("データの取得でエラーが発生しました : " + e);
+      });
   },
 
   computed: {
