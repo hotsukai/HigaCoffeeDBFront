@@ -37,21 +37,23 @@
         />
         <label for="lowerC">c:濃さ(個人)</label>
       </div>
-      <GraphA
-        v-if="pickedSection1 == 'upperA'"
-        :isMine="false"
-        :propsDataPromise="provideDataPromise"
-      />
-      <div v-if="pickedSection1 == 'lowerA'">
-        <div v-if="isLogin">
-          <GraphA :isMine="true" :propsDataPromise="provideDataPromise" />
-        </div>
-        <div v-else>
-          <p>
-            個人グラフを見るには
-            <nuxt-link to="/login"> ログイン </nuxt-link>
-            が必要です。
-          </p>
+      <div v-if="getProvideDataPromise">
+        <GraphA
+          v-if="pickedSection1 == 'upperA'"
+          :isMine="false"
+          :propsDataPromise="getProvideDataPromise"
+        />
+        <div v-if="pickedSection1 == 'lowerA'">
+          <div v-if="isLogin">
+            <GraphA :isMine="true" :propsDataPromise="getProvideDataPromise" />
+          </div>
+          <div v-else>
+            <p>
+              個人グラフを見るには
+              <nuxt-link to="/login"> ログイン </nuxt-link>
+              が必要です。
+            </p>
+          </div>
         </div>
       </div>
       <!--
@@ -70,17 +72,17 @@
             が必要です。
           </p>
         </div>
-      </div>
+      </div>-->
     </section>
     <hr />
     <section>
       <p class="title">セクション2 どうやって淹れる??</p>
       <div>
-        <select v-model="pickedBeanSection2">
+        <select v-model="pickedBeanSection2" class="select">
           <option
-            v-for="(bean, index) in beans"
+            v-for="bean in beans"
             v-bind:key="bean.id"
-            v-bind:value="index"
+            v-bind:value="bean.id"
           >
             {{ bean.name }}
           </option>
@@ -102,27 +104,24 @@
         />
         <label for="lowerB">b:濃度(個人)</label>
       </div>
-
-      <GraphB
-        v-if="pickedSection2 == 'upperB' && pickedBeanSection2 !== ''"
-        :key="pickedBeanSection2"
-        :receivedData="allDatas[pickedBeanSection2]"
-      />
-      <div v-if="pickedSection2 == 'lowerB' && pickedBeanSection2 !== ''">
-        <div v-if="isLogin">
-          <GraphB
-            :receivedData="myDatas[pickedBeanSection2]"
-            :key="pickedBeanSection2"
-          />
+      <div v-if="getStrongnessDataPromise">
+        <GraphB
+          v-if="pickedSection2 == 'upperB' && pickedBeanSection2 !== ''"
+          :propsDataPromise="getStrongnessDataPromise" :isMine="false"
+        />
+        <div v-if="pickedSection2 == 'lowerB' && pickedBeanSection2 !== ''">
+          <div v-if="isLogin">
+            <GraphB :propsDataPromise="getStrongnessDataPromise" :isMine="true"/>
+          </div>
+          <div v-else>
+            <p>
+              個人グラフを見るには
+              <nuxt-link to="/login"> ログイン </nuxt-link>
+              が必要です。
+            </p>
+          </div>
         </div>
-        <div v-else>
-          <p>
-            個人グラフを見るには
-            <nuxt-link to="/login"> ログイン </nuxt-link>
-            が必要です。
-          </p>
-        </div>
-      </div>-->
+      </div>
     </section>
   </div>
 </template>
@@ -131,18 +130,42 @@
 export default {
   data() {
     return {
-      beans: this.$beanNames,
       pickedSection1: "upperA",
       pickedSection2: "upperB",
-      pickedBeanSection2: "1",
-      provideDataPromise: null,
+      pickedBeanSection2: 1,
+      beans: {},
+      getProvideDataPromise: null,
+      getStrongnessDataPromise: null,
+      getPositionDataPromise: null,
       isLogin: this.$store.state.currentUser
     };
   },
-  created() {
-    this.provideDataPromise = this.$axios.$get("/data/provide").then(res => {
-      return res.data;
+  async created() {
+    this.beans = await this.$axios.$get("/beans").then(res => {
+      if (res.result) return res.data;
     });
+    this.getProvideDataPromise = this.$axios.$get("/data/provide").then(res => {
+      if (res.result) return res.data;
+    });
+    this.getStrongnessDataPromise = this.$axios
+      .$get("/data/strongness/" + this.pickedBeanSection2)
+      .then(res => {
+        if (res.result) return res.data;
+      });
+    this.getPositionDataPromise = this.$axios
+      .$get("/data/bean_position")
+      .then(res => {
+        if (res.result) return res.data;
+      });
+  },
+  watch: {
+    pickedBeanSection2(val) {
+      this.getStrongnessDataPromise = this.$axios
+        .$get("/data/strongness/" + val)
+        .then(res => {
+          return res.data;
+        });
+    }
   }
 };
 </script>

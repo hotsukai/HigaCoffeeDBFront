@@ -91,7 +91,7 @@ export default {
   },
 
   async created() {
-    const beanData = await this.propsDataPromise;
+    const beanData = await this.propsDataPromise
     for (let beanId in beanData) {
       const bean = beanData[beanId];
       this.data.labels.push(bean.name);
