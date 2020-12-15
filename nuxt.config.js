@@ -56,12 +56,20 @@ export default {
     "@nuxtjs/dotenv",
     "@nuxtjs/proxy"
   ],
+  proxy: {
+    "/api": {
+      target: process.env.BACKEND_URL,
+      pathRewrite: {
+        "^/api": ""
+      }
+    }
+  },
   axios: {
-    baseURL: process.env.API_URL,
+    prefix: "/api",
     credentials: true
+    // proxy: true は入れてはいけない
   },
 
- 
   /*
    ** Build configuration
    ** See https://nuxtjs.org/api/configuration-build/
@@ -76,6 +84,6 @@ export default {
     }
   },
   router: {
-    middleware: ["auth","logined", "notLogin"]
+    middleware: ["auth", "logined", "notLogin"]
   }
 };
