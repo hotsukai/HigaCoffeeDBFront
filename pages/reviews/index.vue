@@ -11,6 +11,7 @@
       </div>
     </form>
     <ReviewCards :reviews="reviews"></ReviewCards>
+    <div v-show="reviews.length === 0">条件に該当するレビューがまだありません</div>
   </div>
 </template>
 
