@@ -19,12 +19,22 @@
         <div>
           <label for="password">パスワード</label>
           <input
-            type="password"
+            :type="passwordType"
             id="password"
             v-model="password"
             class="input"
           />
+          <label for="password">パスワード2回目</label>
+          <input
+            :type="passwordType"
+            id="password"
+            v-model="password2"
+            class="input"
+          />
+          <label for="js-passcheck">パスワードを表示する</label>
+          <input type="checkbox" id="js-passcheck" v-model="showPassword" />
         </div>
+
         <button class="button is-primary" @click="submit()" type="button">
           登録
         </button>
@@ -43,10 +53,33 @@ export default {
       inputWatchWord: "",
       userName: "",
       password: "",
+      password2: "",
+      showPassword: false
     };
   },
   methods: {
     async submit() {
+      if (this.password !== this.password2) {
+        alert("パスワードが一致しません");
+        return;
+      }
+      if (this.password.length === 0) {
+        alert("パスワードを入力してください");
+        return;
+      }
+      if (this.userName.length === 0) {
+        alert("ユーザー名を入力してください");
+        return;
+      }
+      if (this.userName.length > 30) {
+        alert("ユーザー名が長すぎます");
+        return;
+      }
+      if (encodeURIComponent(this.password).replace(/%../g, "x").length > 50) {
+        alert("パスワードが長すぎます");
+        return;
+      }
+
       await this.$axios
         .$post("/auth/create_user", {
           username: this.userName,
@@ -69,6 +102,11 @@ export default {
           console.error("error 1 : ", err.message);
           return false;
         });
+    }
+  },
+  computed: {
+    passwordType() {
+      return this.showPassword ? "text" : "password";
     }
   }
 };
