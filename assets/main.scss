@@ -1,0 +1,30 @@
+$green:hsl(103, 30, 51); //#71A75B
+$red:hsl(16, 68, 51); //#C54F25
+$yellow:hsl(36, 71, 51);
+
+body {
+  font-size: 16px;
+  word-spacing: 1px;
+  -ms-text-size-adjust: 100%;
+  -webkit-text-size-adjust: 100%;
+  -moz-osx-font-smoothing: grayscale;
+  -webkit-font-smoothing: antialiased;
+  box-sizing: border-box;
+  background-color: hsla(0, 0, 95, 1);
+  color: hsla(0, 0, 0, 0.6);
+  font-family: 'Noto Sans JP', sans-serif;
+  font-weight: 300;
+}
+
+.disabled {
+  color: hsla(0, 0, 0, 0.38);
+}
+
+.title{
+  color: hsla(0, 0, 0, 0.87);
+  font-weight: 400;
+}
+
+a {
+  color: $green;
+}

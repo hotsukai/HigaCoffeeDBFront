@@ -51,7 +51,7 @@ export default {
    */
   modules: [
     // Doc: https://github.com/nuxt-community/modules/tree/master/packages/bulma
-    // "@nuxtjs/bulma",
+    "nuxt-webfontloader",
     "@nuxtjs/axios",
     "@nuxtjs/dotenv",
     "@nuxtjs/proxy"
@@ -59,6 +59,11 @@ export default {
   axios: {
     baseURL: process.env.API_URL,
     credentials: true
+  },
+  webfontloader: {
+    google: {
+      families: ["Noto+Sans+JP:wght@100;300"]
+    }
   },
 
   /*

@@ -16,6 +16,7 @@
     "@nuxtjs/proxy": "^2.0.1",
     "chart.js": "^2.9.3",
     "nuxt": "^2.14.0",
+    "nuxt-webfontloader": "^1.1.0",
     "sass": "^1.30.0",
     "sass-loader": "^10.1.0",
     "vue-chartjs": "^3.5.1",
