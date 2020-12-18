@@ -31,7 +31,7 @@ export default {
   /*
    ** Global CSS
    */
-  css: [],
+  css: ["bulma", "@/assets/main.scss"],
   /*
    ** Plugins to load before mounting the App
    ** https://nuxtjs.org/guide/plugins
@@ -51,7 +51,7 @@ export default {
    */
   modules: [
     // Doc: https://github.com/nuxt-community/modules/tree/master/packages/bulma
-    "@nuxtjs/bulma",
+    // "@nuxtjs/bulma",
     "@nuxtjs/axios",
     "@nuxtjs/dotenv",
     "@nuxtjs/proxy"
@@ -61,7 +61,6 @@ export default {
     credentials: true
   },
 
- 
   /*
    ** Build configuration
    ** See https://nuxtjs.org/api/configuration-build/
@@ -76,6 +75,6 @@ export default {
     }
   },
   router: {
-    middleware: ["auth","logined", "notLogin"]
+    middleware: ["auth", "logined", "notLogin"]
   }
 };

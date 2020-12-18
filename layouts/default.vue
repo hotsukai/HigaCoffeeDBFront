@@ -20,6 +20,6 @@ html {
   -webkit-font-smoothing: antialiased;
   box-sizing: border-box;
   background-color: #e1dfdb;
-  color: #212121;
+  color: hsla(0, 0, 0, 0.6);
 }
 </style>
