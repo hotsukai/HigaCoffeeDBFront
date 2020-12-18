@@ -10,22 +10,20 @@
         <div>
           <label for="password">パスワード</label>
           <input
-            type="password"
+            :type="passwordType"
             id="password"
             v-model="password"
             class="input"
           />
+          <label for="js-passcheck">パスワードを表示する</label>
+          <input type="checkbox" id="js-passcheck" v-model="showPassword" />
         </div>
         <button class="button is-primary" @click="submit()" type="button">
           ログイン
         </button>
-        <div v-show="isWordIncorrect">
-          <p>合言葉が間違っています</p>
-        </div>
       </form>
     </div>
     <nuxt-link to="/signup">登録がお済みでない場合</nuxt-link>
-
   </div>
 </template>
 
@@ -38,7 +36,7 @@ export default {
       userName: "",
       password: "",
       isSecretWordCorrect: false,
-      isWordIncorrect: false
+      showPassword: false
     };
   },
   methods: {
@@ -62,6 +60,11 @@ export default {
           console.error("error 1 : ", err.message);
           return false;
         });
+    }
+  },
+  computed: {
+    passwordType() {
+      return this.showPassword ? "text" : "password";
     }
   }
 };
