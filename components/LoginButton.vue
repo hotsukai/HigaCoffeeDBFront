@@ -1,7 +1,7 @@
 <template>
   <div>
     <div v-show="isLogin">
-      <button @click="logout" class="button">ログアウト</button>
+      <button @click="logout" type="button" class="button">ログアウト</button>
     </div>
     <div v-show="!isLogin">
       <nuxt-link to="/login" class="button">ログイン</nuxt-link>
