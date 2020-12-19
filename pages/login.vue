@@ -48,7 +48,10 @@ export default {
         })
         .then(response => {
           if (response.result) {
-            this.$store.commit("setUser", response.data);
+            this.$store.commit("setUser", {
+              user: response.data,
+              token: response.token
+            });
             alert("ログインしました");
             this.$router.push("/mypage");
           } else {

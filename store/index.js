@@ -3,11 +3,13 @@ export const state = () => ({
 });
 
 export const mutations = {
-  setUser(state, currentUser) {
-    state.currentUser = currentUser;
+  setUser(state, data) {
+    state.currentUser = data.user;
+    localStorage.setItem("authToken", data.token);
   },
   deleteUser(state) {
     state.currentUser = null;
+    localStorage.removeItem('authToken');
   }
 };
 
