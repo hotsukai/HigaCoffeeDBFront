@@ -36,7 +36,7 @@ export default {
    ** Plugins to load before mounting the App
    ** https://nuxtjs.org/guide/plugins
    */
-  plugins: ['@/plugins/axiosAuthHeader'],
+  plugins: ["@/plugins/axiosAuthHeader"],
   /*
    ** Auto import components
    ** See https://nuxtjs.org/api/configuration-components
@@ -54,18 +54,44 @@ export default {
     "nuxt-webfontloader",
     "@nuxtjs/axios",
     "@nuxtjs/dotenv",
-    "@nuxtjs/proxy"
+    "@nuxtjs/proxy",
+    // "@nuxtjs/auth-next"
   ],
   axios: {
-    baseURL: process.env.API_URL,
-    credentials: true
+    proxy: true,
+    prefix: "/api"
+  },
+  proxy: {
+    "/api/": {
+      target: process.env.API_URL,
+      pathRewrite: {
+        "^/api": "/"
+      }
+    }
   },
   webfontloader: {
     google: {
       families: ["Noto+Sans+JP:wght@100;300"]
     }
   },
-
+  // auth: {
+  //   redirect: {
+  //     login: "/login", 
+  //     logout: "/login",
+  //     callback: false, 
+  //     home: "/" 
+  //   },
+  //   strategies: {
+  //     local: {
+  //       endpoints: {
+  //         login: { url: "api/login", method: "post", propertyName: "token" },
+  //         login: { url: "api/login", method: "post", propertyName: "token" },
+  //         user: { url: "api/me", method: "get", propertyName: false },
+  //         logout: false
+  //       }
+  //     }
+  //   }
+  // },
   /*
    ** Build configuration
    ** See https://nuxtjs.org/api/configuration-build/

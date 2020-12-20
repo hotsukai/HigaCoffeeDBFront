@@ -4,12 +4,14 @@ export const state = () => ({
 
 export const mutations = {
   setUser(state, data) {
+    console.debug("set");
     state.currentUser = data.user;
     localStorage.setItem("authToken", data.token);
   },
   deleteUser(state) {
+    console.debug("delete");
     state.currentUser = null;
-    localStorage.removeItem('authToken');
+    localStorage.removeItem("authToken");
   }
 };
 
@@ -19,13 +21,20 @@ export const actions = {
       .$get(`/auth`)
       .then(response => {
         if (response.result) {
-          commit("setUser", response.data);
+          commit("setUser", {
+            user: response.data,
+            token: localStorage.getItem("authToken")
+          });
           return response.data;
         } else {
+          commit("deleteUser");
+
           return false;
         }
       })
       .catch(err => {
+        commit("deleteUser");
+
         console.error("error 1 : ", err.message);
         return false;
       });
