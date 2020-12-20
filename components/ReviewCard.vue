@@ -8,7 +8,7 @@
       </p>
       <p class="subtitle">
         コーヒーID : {{ review.coffee.id }}
-        <nuxt-link v-if="isLogin" :to="'/users/' + review.reviewer.id">{{
+        <nuxt-link v-if="review.reviewer && isLogin" :to="'/users/' + review.reviewer.id">{{
           review.reviewer.name
         }}</nuxt-link>
       </p>

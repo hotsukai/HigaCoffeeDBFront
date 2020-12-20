@@ -56,14 +56,14 @@
           </div>
         </div>
       </div>
-      <!--
+
       <GraphC
         v-if="pickedSection1 == 'upperC'"
-        :receivedDatas="allDatas"
+        :getPositionDataPromise="getPositionDataPromise"
       />
       <div v-if="pickedSection1 == 'lowerC'">
         <div v-if="isLogin">
-          <GraphC :receivedDatas="myDatas" />
+          <GraphC :getPositionDataPromise="getPositionDataPromise" />
         </div>
         <div v-else>
           <p>
@@ -72,7 +72,7 @@
             が必要です。
           </p>
         </div>
-      </div>-->
+      </div>
     </section>
     <hr />
     <section>
@@ -107,11 +107,15 @@
       <div v-if="getStrongnessDataPromise">
         <GraphB
           v-if="pickedSection2 == 'upperB' && pickedBeanSection2 !== ''"
-          :propsDataPromise="getStrongnessDataPromise" :isMine="false"
+          :propsDataPromise="getStrongnessDataPromise"
+          :isMine="false"
         />
         <div v-if="pickedSection2 == 'lowerB' && pickedBeanSection2 !== ''">
           <div v-if="isLogin">
-            <GraphB :propsDataPromise="getStrongnessDataPromise" :isMine="true"/>
+            <GraphB
+              :propsDataPromise="getStrongnessDataPromise"
+              :isMine="true"
+            />
           </div>
           <div v-else>
             <p>

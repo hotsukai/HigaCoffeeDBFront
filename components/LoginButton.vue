@@ -1,7 +1,7 @@
 <template>
   <div>
     <div v-show="isLogin">
-      <button @click="logout" class="button">ログアウト</button>
+      <button @click="logout" type="button" class="button">ログアウト</button>
     </div>
     <div v-show="!isLogin">
       <nuxt-link to="/login" class="button">ログイン</nuxt-link>
@@ -34,23 +34,28 @@ export default {
   },
 
   methods: {
-    async logout() {
-      await this.$axios
-        .$get(`/auth/logout`)
-        .then(response => {
-          if (response.result) {
-            this.$store.commit("deleteUser");
-            alert("ログアウトしました");
-            this.$router.push("/");
-            return true;
-          } else {
-            return false;
-          }
-        })
-        .catch(err => {
-          console.error("error 1 : ", err.message);
-          return false;
-        });
+    // async logout() {
+    //   await this.$axios
+    //     .$get(`/auth/logout`)
+    //     .then(response => {
+    //       if (response.result) {
+    //         this.$store.commit("deleteUser");
+    //         alert("ログアウトしました");
+    //         this.$router.push("/");
+    //         return true;
+    //       } else {
+    //         return false;
+    //       }
+    //     })
+    //     .catch(err => {
+    //       console.error("error 1 : ", err.message);
+    //       return false;
+    //     });
+    // }
+    logout() {
+      this.$store.commit("deleteUser");
+      alert("ログアウトしました");
+      // this.$router.push("/");
     }
   }
 };

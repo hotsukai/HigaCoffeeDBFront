@@ -53,7 +53,7 @@
           >
           <div class="buttons" v-show="!isLogin">
             <div>
-            <nuxt-link to="/signup" class="button">サインアップ</nuxt-link>
+              <nuxt-link to="/signup" class="button">サインアップ</nuxt-link>
             </div>
           </div>
           <div class="buttons">
@@ -134,17 +134,16 @@ export default {
 };
 </script>
 
-<style scoped>
+<style scoped lang="scss">
 .navbar {
   background-color: #303033;
-}
-
-.navbar-menu {
-  background-color: #303033;
+  .navbar-menu {
+    background-color: #303033;
+  }
 }
 
 .navbar-item {
-  color: #eee;
+  color: hsla(0, 0%, 100%, 1);
 }
 .navbar-burger {
   color: #eee;
@@ -155,6 +154,6 @@ export default {
 }
 
 .notActive {
-  color: #aaa;
+  color: hsla(0, 0, 100, 0.3);
 }
 </style>

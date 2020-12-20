@@ -9,8 +9,14 @@
         <input
           v-model="inputWatchWord"
           placeholder="合言葉は？？"
-          type="password"
+          :type="watchwordType"
           class="input"
+        />
+        <label for="js-watchWordcheck">合言葉を表示する</label>
+        <input
+          type="checkbox"
+          id="js-watchWordcheck"
+          v-model="showWatchword"
         />
         <div>
           <label for="userName">ユーザー名</label>
@@ -54,7 +60,8 @@ export default {
       userName: "",
       password: "",
       password2: "",
-      showPassword: false
+      showPassword: false,
+      showWatchword: false
     };
   },
   methods: {
@@ -107,6 +114,9 @@ export default {
   computed: {
     passwordType() {
       return this.showPassword ? "text" : "password";
+    },
+    watchwordType() {
+      return this.showWatchword ? "text" : "password";
     }
   }
 };

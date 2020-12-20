@@ -31,12 +31,12 @@ export default {
   /*
    ** Global CSS
    */
-  css: [],
+  css: ["bulma", "@/assets/main.scss"],
   /*
    ** Plugins to load before mounting the App
    ** https://nuxtjs.org/guide/plugins
    */
-  plugins: [],
+  plugins: ["@/plugins/axiosAuthHeader"],
   /*
    ** Auto import components
    ** See https://nuxtjs.org/api/configuration-components
@@ -51,10 +51,11 @@ export default {
    */
   modules: [
     // Doc: https://github.com/nuxt-community/modules/tree/master/packages/bulma
-    "@nuxtjs/bulma",
+    "nuxt-webfontloader",
     "@nuxtjs/axios",
     "@nuxtjs/dotenv",
-    "@nuxtjs/proxy"
+    "@nuxtjs/proxy",
+    // "@nuxtjs/auth-next"
   ],
   proxy: {
     "/api": {
@@ -65,9 +66,21 @@ export default {
     }
   },
   axios: {
-    prefix: "/api",
-    credentials: true
-    // proxy: true は入れてはいけない
+    proxy: true,
+    prefix: "/api"
+  },
+  proxy: {
+    "/api/": {
+      target: process.env.API_URL,
+      pathRewrite: {
+        "^/api": "/"
+      }
+    }
+  },
+  webfontloader: {
+    google: {
+      families: ["Noto+Sans+JP:wght@100;300"]
+    }
   },
 
   /*
