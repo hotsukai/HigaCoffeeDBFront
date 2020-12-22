@@ -14,7 +14,7 @@
             name="bitterness"
             v-model.number="bitterness"
             type="range"
-            step="1"
+            step="0.1"
             min="1"
             max="4"
           />
@@ -31,7 +31,7 @@
             name="strongness"
             v-model.number="strongness"
             type="range"
-            step="1"
+            step="0.1"
             min="1"
             max="4"
           />
@@ -48,7 +48,7 @@
             name="situation"
             v-model.number="situation"
             type="range"
-            step="1"
+            step="0.1"
             min="1"
             max="4"
           />
@@ -63,9 +63,9 @@
             name="wantRepeat"
             v-model.number="wantRepeat"
             type="range"
-            step="1"
+            step="0.1"
             min="1"
-            max="4"
+            max="3"
           />
           <label class="radio">また飲みたい!!</label>
         </div>
