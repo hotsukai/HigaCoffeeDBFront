@@ -2,7 +2,7 @@
   <div>
     <form>
       <div>
-        <label class="label">豆の種類</label>
+        <label class="label">豆の種類<Required/></label>
         <div class="select">
           <select v-model="selectedBean">
             <option
@@ -15,7 +15,7 @@
         </div>
       </div>
       <div>
-        <label class="label">抽出法</label>
+        <label class="label">抽出法<Required/></label>
         <div class="select">
           <select v-model.number="selectedExtractionMethod">
             <option
@@ -28,7 +28,7 @@
         </div>
       </div>
       <div v-show="selectedExtractionMethod == 1">
-        <label class="label">抽出時間</label>
+        <label class="label">抽出時間<Required/></label>
         <input
           v-model.number="selectedExtractionTime"
           type="number"
@@ -37,7 +37,7 @@
         />分
       </div>
       <div>
-        <label class="label">粉の量</label>
+        <label class="label">粉の量<Required/></label>
         <input
           v-model.number="selectedPowderAmount"
           type="number"
@@ -47,7 +47,7 @@
         />g
       </div>
       <div>
-        <label class="label">お湯の量</label>
+        <label class="label">お湯の量<Required/></label>
         <input
           v-model.number="selectedWaterAmount"
           type="number"
@@ -65,7 +65,7 @@
         />℃
       </div>
       <div>
-        <label class="label">飲む人</label>
+        <label class="label">飲む人<Required/></label>
         <div v-for="i in selectedDrinkers.length" :key="i">
           <!-- TODO: 重複をゆるさない -->
           <input

@@ -5,7 +5,7 @@
     <div>
       <form>
         <div>
-          <label class="label">苦さ</label>
+          <label class="label">苦さ<Required/></label>
           <p class="help">
             焙煎度合は一旦忘れて、「あなたがどう感じたか」を記してください。
           </p>
@@ -21,7 +21,7 @@
           <label class="radio">苦い</label>
         </div>
         <div>
-          <label class="label">濃さ</label>
+          <label class="label">濃さ<Required/></label>
           <p class="help">
             抽出時間は一旦忘れて、「あなたがどう感じたか」を記してください。
           </p>
@@ -38,7 +38,7 @@
           <label class="radio">濃い</label>
         </div>
         <div>
-          <label class="label">役割</label>
+          <label class="label">役割<Required/></label>
           <p class="help">
             「どういう時におすすめか」という観点で選んでください。
           </p>
@@ -55,7 +55,7 @@
           <label class="radio">眠気覚まし</label>
         </div>
         <div>
-          <label class="label">また飲みたい??</label>
+          <label class="label">また飲みたい??<Required/></label>
           <p class="help">ご遠慮なく！</p>
           <label class="radio">飲みたくない</label>
 
