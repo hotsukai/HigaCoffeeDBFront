@@ -37,7 +37,7 @@
           <input type="checkbox" id="js-passcheck" v-model="showPassword" />
         </div>
 
-        <button class="button is-primary" @click="submit()" type="button">
+        <button class="button" @click="submit()" type="button">
           登録
         </button>
       </form>

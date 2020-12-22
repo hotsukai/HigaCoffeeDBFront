@@ -31,7 +31,7 @@
           <span>
             <nuxt-link
               :to="'/reviews/create/' + coffee.id"
-              class="button is-primary"
+              class="button"
               >レビューを書く</nuxt-link
             >
           </span>
@@ -43,7 +43,7 @@
           <span>
             <nuxt-link
               :to="'reviews?coffeeId=' + coffee.id"
-              class="button is-primary"
+              class="button"
               >レビューを見る</nuxt-link
             >
           </span>

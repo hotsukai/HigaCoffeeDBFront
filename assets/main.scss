@@ -20,11 +20,16 @@ body {
   color: hsla(0, 0, 0, 0.38);
 }
 
-.title{
+.title {
   color: hsla(0, 0, 0, 0.87);
   font-weight: 400;
 }
 
 a {
   color: $green;
+}
+
+button.button {
+  background-color: $green;
+  color:#eeeeee
 }

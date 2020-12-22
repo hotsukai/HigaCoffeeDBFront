@@ -81,7 +81,7 @@
           @click="sendReview"
           v-bind:disabled="!isValid"
           type="button"
-          class="button is-primary"
+          class="button"
         >
           送信!!
         </button>
