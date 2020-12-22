@@ -34,28 +34,11 @@ export default {
   },
 
   methods: {
-    // async logout() {
-    //   await this.$axios
-    //     .$get(`/auth/logout`)
-    //     .then(response => {
-    //       if (response.result) {
-    //         this.$store.commit("deleteUser");
-    //         alert("ログアウトしました");
-    //         this.$router.push("/");
-    //         return true;
-    //       } else {
-    //         return false;
-    //       }
-    //     })
-    //     .catch(err => {
-    //       console.error("error 1 : ", err.message);
-    //       return false;
-    //     });
-    // }
     logout() {
       this.$store.commit("deleteUser");
+      // this.$router.push("/")
       alert("ログアウトしました");
-      // this.$router.push("/");
+      location.replace("/");
     }
   }
 };
