@@ -32,6 +32,9 @@ export default {
    ** Global CSS
    */
   css: ["bulma", "@/assets/main.scss"],
+  styleResources: {
+    scss: ["./assets/*.scss"]
+  },
   /*
    ** Plugins to load before mounting the App
    ** https://nuxtjs.org/guide/plugins
@@ -55,7 +58,7 @@ export default {
     "@nuxtjs/axios",
     "@nuxtjs/dotenv",
     "@nuxtjs/proxy",
-    // "@nuxtjs/auth-next"
+    "@nuxtjs/style-resources"
   ],
   proxy: {
     "/api": {
