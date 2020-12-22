@@ -132,7 +132,7 @@ export default {
       selectedExtractionTime: 3,
       selectedPowderAmount: 8.5,
       selectedWaterAmount: 100,
-      selectedWaterTemperature: 96,
+      selectedWaterTemperature: null,
       selectedMesh: null,
       beans: {},
       meshs: [],
@@ -169,8 +169,9 @@ export default {
         this.selectedPowderAmount <= 20 &&
         this.selectedWaterAmount >= 0 &&
         this.selectedWaterAmount <= 500 &&
-        this.selectedWaterTemperature >= 0 &&
-        this.selectedWaterTemperature <= 100 &&
+        ((this.selectedWaterTemperature >= 0 &&
+          this.selectedWaterTemperature <= 100) ||
+          this.selectedWaterTemperature === null) &&
         this.selectedDrinkers[0] !== "" &&
         this.selectedDrinkers[0] !== null
       );
