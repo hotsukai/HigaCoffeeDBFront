@@ -66,7 +66,7 @@
       </div>
       <div>
         <label class="label">飲む人<Required /></label>
-          <p class="help">IDかユーザー名を入力してください</p>
+        <p class="help">IDかユーザー名を入力してください</p>
 
         <div v-for="i in selectedDrinkers.length" :key="i">
           <input v-model.lazy="selectedDrinkers[i - 1]" list="userslist" />
@@ -82,10 +82,12 @@
             v-if="selectedDrinkers.length != 1"
             type="button"
             @click="deleteDrinker(i)"
+            class="button"
           >
             削除
           </button>
         </div>
+        <p class="warn">{{ userErrorMsg }}</p>
         <button
           v-if="selectedDrinkers.length < users.length"
           class="button"
@@ -102,12 +104,12 @@
           既定のレシピ通りに出来なかった場合はその旨を記してください（例：お湯を入れすぎた、抽出時間長すぎた）
         </p>
       </div>
-      <p v-show="!isValid" class="is-danger">入力に不備があります</p>
+      <p class="warn">{{ formErrorMsg }}</p>
       <button
         @click="sendCoffee"
         v-bind:disabled="!isValid"
         type="button"
-        class="button is-primary"
+        class="button"
       >
         送信!!
       </button>
@@ -132,7 +134,9 @@ export default {
       meshs: [],
       memo: "",
       users: [],
-      selectedDrinkersId: []
+      selectedDrinkersId: [],
+      userErrorMsg: "",
+      formErrorMsg: ""
     };
   },
 
@@ -149,7 +153,7 @@ export default {
 
   computed: {
     isValid() {
-      return (
+      if (
         // TODO: メッセージを丁寧にする
         this.selectedBean !== null &&
         this.selectedExtractionMethod !== "" &&
@@ -169,12 +173,16 @@ export default {
           this.selectedWaterTemperature === null) &&
         this.selectedDrinkersId.length > 0 &&
         this.selectedDrinkers[0] !== null
-      );
+      ) {
+        this.formErrorMsg = "";
+        return true;
+      }
     }
   },
   watch: {
     selectedDrinkers(val) {
       this.selectedDrinkersId = [];
+      this.userErrorMsg = "";
       val.forEach((drinkerNameOrId, index) => {
         const drinkerFindById = this.users.find(
           user => user.id == drinkerNameOrId
@@ -197,12 +205,17 @@ export default {
           this.selectedDrinkersId.push(drinkerFindByName.id);
           return;
         }
+        this.userErrorMsg = "ユーザーが存在しません";
       });
     }
   },
 
   methods: {
     sendCoffee() {
+      if (!this.isValid) {
+        this.formErrorMsg="入力に不備があります"
+        return;
+      }
       this.$axios
         .$post("/coffees", {
           beanId: this.selectedBean,
@@ -245,4 +258,8 @@ export default {
 };
 </script>
 
-<style></style>
+<style lang="scss">
+.warn {
+  color: $red;
+}
+</style>
