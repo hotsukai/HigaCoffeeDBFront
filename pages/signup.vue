@@ -13,11 +13,7 @@
           class="input"
         />
         <label for="js-watchWordcheck">合言葉を表示する</label>
-        <input
-          type="checkbox"
-          id="js-watchWordcheck"
-          v-model="showWatchword"
-        />
+        <input type="checkbox" id="js-watchWordcheck" v-model="showWatchword" />
         <div>
           <label for="userName">ユーザー名</label>
           <input type="text" id="userName" v-model="userName" class="input" />
@@ -95,7 +91,10 @@ export default {
         })
         .then(response => {
           if (response.result) {
-            this.$store.commit("setUser", response.data);
+            this.$store.commit("setUser", {
+              user: response.data,
+              token: response.token
+            });
             alert("ユーザーを登録しました");
             this.$router.push("/mypage");
             return true;
