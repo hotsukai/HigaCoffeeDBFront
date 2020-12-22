@@ -36,7 +36,6 @@ export default {
   methods: {
     logout() {
       this.$store.commit("deleteUser");
-      // this.$router.push("/")
       alert("ログアウトしました");
       location.replace("/");
     }

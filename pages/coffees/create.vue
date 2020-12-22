@@ -2,7 +2,7 @@
   <div>
     <form>
       <div>
-        <label class="label">豆の種類<Required/></label>
+        <label class="label">豆の種類<Required /></label>
         <div class="select">
           <select v-model="selectedBean">
             <option
@@ -15,7 +15,7 @@
         </div>
       </div>
       <div>
-        <label class="label">抽出法<Required/></label>
+        <label class="label">抽出法<Required /></label>
         <div class="select">
           <select v-model.number="selectedExtractionMethod">
             <option
@@ -28,7 +28,7 @@
         </div>
       </div>
       <div v-show="selectedExtractionMethod == 1">
-        <label class="label">抽出時間<Required/></label>
+        <label class="label">抽出時間<Required /></label>
         <input
           v-model.number="selectedExtractionTime"
           type="number"
@@ -37,7 +37,7 @@
         />分
       </div>
       <div>
-        <label class="label">粉の量<Required/></label>
+        <label class="label">粉の量<Required /></label>
         <input
           v-model.number="selectedPowderAmount"
           type="number"
@@ -47,7 +47,7 @@
         />g
       </div>
       <div>
-        <label class="label">お湯の量<Required/></label>
+        <label class="label">お湯の量<Required /></label>
         <input
           v-model.number="selectedWaterAmount"
           type="number"
@@ -65,20 +65,15 @@
         />℃
       </div>
       <div>
-        <label class="label">飲む人<Required/></label>
+        <label class="label">飲む人<Required /></label>
+          <p class="help">IDかユーザー名を入力してください</p>
+
         <div v-for="i in selectedDrinkers.length" :key="i">
-          <!-- TODO: 重複をゆるさない -->
-          <input
-            v-model.number="selectedDrinkers[i - 1]"
-            type="number"
-            list="userslist"
-            :min="usersMinId"
-            :max="usersMaxId"
-          />
+          <input v-model.lazy="selectedDrinkers[i - 1]" list="userslist" />
           <datalist id="userslist">
             もしくはリストから選択
-            <select v-model.number="selectedDrinkers[i - 1]">
-              <option v-for="user in users" :key="user.id" :value="user.id">{{
+            <select v-model="selectedDrinkers[i - 1]">
+              <option v-for="user in users" :key="user.id" :value="user.name">{{
                 user.name
               }}</option>
             </select>
@@ -90,7 +85,6 @@
           >
             削除
           </button>
-          <p class="help">IDを入力してください</p>
         </div>
         <button
           v-if="selectedDrinkers.length < users.length"
@@ -137,7 +131,8 @@ export default {
       beans: {},
       meshs: [],
       memo: "",
-      users: []
+      users: [],
+      selectedDrinkersId: []
     };
   },
 
@@ -172,19 +167,37 @@ export default {
         ((this.selectedWaterTemperature >= 0 &&
           this.selectedWaterTemperature <= 100) ||
           this.selectedWaterTemperature === null) &&
-        this.selectedDrinkers[0] !== "" &&
+        this.selectedDrinkersId.length > 0 &&
         this.selectedDrinkers[0] !== null
       );
-    },
-    usersMaxId() {
-      return this.users.reduce((accumulator, user) => {
-        return accumulator <= user.id ? user.id : accumulator;
-      }, 1);
-    },
-    usersMinId() {
-      return this.users.reduce((accumulator, user) => {
-        return accumulator >= user.id ? user.id : accumulator;
-      }, 1);
+    }
+  },
+  watch: {
+    selectedDrinkers(val) {
+      this.selectedDrinkersId = [];
+      val.forEach((drinkerNameOrId, index) => {
+        const drinkerFindById = this.users.find(
+          user => user.id == drinkerNameOrId
+        );
+        if (
+          drinkerFindById &&
+          !this.selectedDrinkersId.includes(drinkerFindById.id)
+        ) {
+          this.selectedDrinkersId.push(drinkerFindById.id);
+          this.selectedDrinkers[index] = drinkerFindById.name;
+          return;
+        }
+        const drinkerFindByName = this.users.find(
+          user => user.name == drinkerNameOrId
+        );
+        if (
+          drinkerFindByName &&
+          !this.selectedDrinkersId.includes(drinkerFindByName.id)
+        ) {
+          this.selectedDrinkersId.push(drinkerFindByName.id);
+          return;
+        }
+      });
     }
   },
 
@@ -193,7 +206,7 @@ export default {
       this.$axios
         .$post("/coffees", {
           beanId: this.selectedBean,
-          drinkerIds: this.selectedDrinkers,
+          drinkerIds: this.selectedDrinkersId,
           dripperId: this.$store.state.currentUser.id,
           extractionMethodId: this.selectedExtractionMethod,
           extractionTime: this.selectedExtractionTime,
