@@ -51,13 +51,13 @@
             :class="{ isSelected: isMypageSelected, notActive: !isLogin }"
             >マイページ</nuxt-link
           >
-          <div class="buttons" v-show="!isLogin">
-            <div>
-              <nuxt-link to="/signup" class="button">サインアップ</nuxt-link>
-            </div>
-          </div>
-          <div class="buttons">
+          <div class="navbar-item">
             <LoginButton />
+          </div>
+          <div class="navbar-item" v-show="!isLogin">
+            <div>
+              <button @click="$router.push('/signup')" type="button" class="button">サインアップ</button>
+            </div>
           </div>
         </div>
       </div>
