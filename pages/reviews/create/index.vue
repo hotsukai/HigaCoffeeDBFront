@@ -2,7 +2,7 @@
   <div>
     <h1 class="title">あなたあてのコーヒー</h1>
     <div v-show="isCoffeeExist">
-      <CoffeeCards :coffees="coffees" :showReview="false" :createReview="true"/>
+      <CoffeeCards :coffees="coffees" :showReview="false" :createReview="true" :showDetails="false"/>
     </div>
     <div v-show="!isCoffeeExist">あなたあてのコーヒーがありません。</div>
   </div>
