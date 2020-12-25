@@ -7,18 +7,18 @@
         </nuxt-link>
       </p>
       <p class="subtitle">
-        コーヒーID : {{ review.coffee.id }}
-        <nuxt-link v-if="review.reviewer && isLogin" :to="'/users/' + review.reviewer.id">{{
-          review.reviewer.name
-        }}</nuxt-link>
+        Review-ID : {{ review.id }}<br />
+        Reviewer :
+        <nuxt-link
+          v-if="review.reviewer && isLogin"
+          :to="'/users/' + review.reviewer.id"
+          >{{ review.reviewer.name }}</nuxt-link
+        >
       </p>
       <div class="columns">
         <div class="column">
           <ul>
-            <li>
-              レビュー登録日 : <ConvertTime :time="review.createdAt"/>
-            </li>
-
+            <li>レビュー登録 : <ConvertTime :time="review.createdAt" /></li>
             <li>苦さ : {{ review.bitterness }}</li>
             <li>濃さ : {{ review.strongness }}</li>
             <li>また飲みたいか : {{ repeatToJapanese }}</li>
@@ -29,13 +29,18 @@
 
         <div class="column" v-show="viewMore">
           <ul>
-            <li>コーヒー登録日 : <ConvertTime :time="review.coffee.createdAt"/></li>
-            <li>蒸らし時間 : {{ review.coffee.extractionTime }}min</li>
-            <li>粉の量 : {{ review.coffee.powderAmount }}g</li>
-            <li>水の量 : {{ review.coffee.waterAmount }}ml</li>
-            <li>メッシュ : {{ review.coffee.mesh }}</li>
-            <li>湯温 :{{ review.coffee.waterTemperature }}℃</li>
-            <li>抽出方法 :{{ review.coffee.extractionMethod.name }}</li>
+            <li>コーヒー登録 : <ConvertTime :time="coffee.createdAt" /></li>
+            <li v-if="coffee.dripper">
+              <UsersName :users="[coffee.dripper]">Dripper : </UsersName>
+            </li>
+            <li v-if="coffee.drinkers">
+              <UsersName :users="coffee.drinkers">Drinkers : </UsersName>
+            </li>
+            <li v-if="coffee.memo">
+              メモ:
+              {{ coffee.memo }}
+            </li>
+            <CoffeeDetails :coffee="coffee" />
           </ul>
         </div>
 
@@ -56,17 +61,19 @@ export default {
   data() {
     return {
       viewMore: false,
-      isLogin: false
+      isLogin: false,
+      coffee: {},
     };
   },
 
   methods: {
     toggleViewMore() {
       this.viewMore = !this.viewMore;
-    }
+    },
   },
 
   created() {
+    this.coffee = this.review.coffee;
     this.isLogin = this.$store.state.currentUser != null;
   },
 
@@ -81,11 +88,11 @@ export default {
         "リラックス",
         "ややリラックス",
         "やや眠気覚まし",
-        "眠気覚まし"
+        "眠気覚まし",
       ];
       return situation_japanese[parseInt(this.review.situation) - 1];
-    }
-  }
+    },
+  },
 };
 </script>
 

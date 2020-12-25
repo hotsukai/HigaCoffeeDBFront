@@ -2,42 +2,27 @@
   <div class="card" v-if="coffee">
     <div class="card-content">
       <p class="title">
-        {{ coffee.bean.name }}
+        <nuxt-link :to="'/reviews?bean=' + coffee.bean.id">
+          {{ coffee.bean.name }}
+        </nuxt-link>
       </p>
       <p class="subtitle">Coffee-ID : {{ coffee.id }}</p>
       <ul>
-        <li>登録された時間 : <ConvertTime :time="coffee.createdAt" /></li>
-        <li v-if="coffee.dripper">淹れた人 : {{ coffee.dripper.name }}</li>
+        <li>登録 : <ConvertTime :time="coffee.createdAt" /></li>
+        <li v-if="coffee.dripper">
+          <UsersName :users="[coffee.dripper]"
+            >Dripper : </UsersName
+          >
+        </li>
         <li v-if="coffee.drinkers">
-          飲む人 :
-          <span v-for="drinker in coffee.drinkers" :key="drinker.id"
-            >{{ drinker.name }},
-          </span>
+          <UsersName :users="coffee.drinkers">Drinkers : </UsersName>
+         
         </li>
         <li v-if="coffee.memo">
           メモ:
           {{ coffee.memo }}
         </li>
-        <li v-if="showDetails && coffee.extractionTime">
-          蒸らし時間 : {{ coffee.extractionTime }}min
-        </li>
-        <li v-if="showDetails && coffee.powderAmount">
-          粉の量 : {{ coffee.powderAmount }}g
-        </li>
-        <li v-if="showDetails && coffee.waterAmount">
-          水の量 : {{ coffee.waterAmount }}ml
-        </li>
-        <li v-if="showDetails && coffee.meshId">
-          メッシュ : {{ coffee.meshId }}
-        </li>
-        <li v-if="showDetails && coffee.waterTemperature">
-          湯温 :
-          {{ coffee.waterTemperature }}
-        </li>
-        <li v-if="showDetails && coffee.extractionMethod">
-          抽出方法 :
-          {{ coffee.extractionMethod.name }}
-        </li>
+        <CoffeeDetails v-if="showDetails" :coffee="coffee" />
       </ul>
     </div>
     <slot>
@@ -76,14 +61,14 @@ export default {
     coffee: Object,
     showReview: Boolean,
     createReview: Boolean,
-    showDetails: { type: Boolean, default: true }
+    showDetails: { type: Boolean, default: true },
   },
 
   computed: {
-    fullPath: function() {
+    fullPath: function () {
       return "/reviews/create/" + this.coffee.id;
-    }
-  }
+    },
+  },
 };
 </script>
 
