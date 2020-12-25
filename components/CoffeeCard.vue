@@ -4,7 +4,7 @@
       <p class="title">
         {{ coffee.bean.name }}
       </p>
-      <p class="subtitle">Coffee-ID: {{ coffee.id }}</p>
+      <p class="subtitle">Coffee-ID : {{ coffee.id }}</p>
       <ul>
         <li>登録された時間 : <ConvertTime :time="coffee.createdAt" /></li>
         <li v-if="coffee.dripper">淹れた人 : {{ coffee.dripper.name }}</li>

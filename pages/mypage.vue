@@ -1,6 +1,7 @@
 <template>
   <div v-if="user">
     <h1 class="title">{{ user.name }}のマイページ</h1>
+    <p class="subtitle">User-ID : {{ user.id }}</p>
     <p class="subtitle">あなたが書いたレビュー</p>
     <div v-show="isReviewExist">
       <ReviewCards :reviews="reviews" />
