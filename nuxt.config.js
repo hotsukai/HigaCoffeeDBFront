@@ -39,7 +39,7 @@ export default {
    ** Plugins to load before mounting the App
    ** https://nuxtjs.org/guide/plugins
    */
-  plugins: ["@/plugins/axiosAuthHeader"],
+  plugins: ["@/plugins/axiosAuthHeader",'~plugins/vue-js-toggle-button'],
   /*
    ** Auto import components
    ** See https://nuxtjs.org/api/configuration-components
@@ -58,7 +58,7 @@ export default {
     "@nuxtjs/axios",
     "@nuxtjs/dotenv",
     "@nuxtjs/proxy",
-    "@nuxtjs/style-resources"
+    "@nuxtjs/style-resources",
   ],
   proxy: {
     "/api": {
