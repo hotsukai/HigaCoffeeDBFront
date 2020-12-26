@@ -29,6 +29,7 @@
 
         <div class="column" v-show="viewMore">
           <ul>
+            <li>Coffee-ID : {{coffee.id}}</li>
             <li>コーヒー登録 : <ConvertTime :time="coffee.createdAt" /></li>
             <li v-if="coffee.dripper">
               <UsersName :users="[coffee.dripper]">Dripper : </UsersName>
