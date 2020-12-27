@@ -8,7 +8,7 @@
       </p>
       <p class="subtitle">Coffee-ID : {{ coffee.id }}</p>
       <ul>
-        <li>登録 : <ConvertTime :time="coffee.createdAt" /></li>
+        <li>抽出日 : <ConvertTime :time="coffee.createdAt" /></li>
         <li v-if="coffee.dripper">
           <UsersName :users="[coffee.dripper]">Dripper : </UsersName>
         </li>

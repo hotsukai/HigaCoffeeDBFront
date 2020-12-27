@@ -19,7 +19,7 @@
         <div class="column">
           <ul>
             <li class="date">
-              レビュー登録 : <ConvertTime :time="review.createdAt" />
+              記入日 : <ConvertTime :time="review.createdAt" />
             </li>
             <li>苦さ : {{ review.bitterness }}</li>
             <li>濃さ : {{ review.strongness }}</li>
@@ -27,43 +27,51 @@
             <li>役割 : {{ situationToJapanese }}</li>
             <li>備考・感想 : {{ review.feeling }}</li>
           </ul>
-        </div>
 
-        <modal-with-button  :modalKey="review.id">
-          <div class="columns">
-            <div class="column">
-              <ul>
-                <li class="date">
-                  レビュー登録 : <ConvertTime :time="review.createdAt" />
-                </li>
-                <li>苦さ : {{ review.bitterness }}</li>
-                <li>濃さ : {{ review.strongness }}</li>
-                <li>また飲みたいか : {{ repeatToJapanese }}</li>
-                <li>役割 : {{ situationToJapanese }}</li>
-                <li>備考・感想 : {{ review.feeling }}</li>
-              </ul>
-            </div>
-            <div class="column">
-              <ul>
-                <li>Coffee-ID : {{ coffee.id }}</li>
-                <li class="date">
-                  コーヒー登録 : <ConvertTime :time="coffee.createdAt" />
-                </li>
-                <li v-if="coffee.dripper">
-                  <UsersName :users="[coffee.dripper]">Dripper : </UsersName>
-                </li>
-                <li v-if="coffee.drinkers">
-                  <UsersName :users="coffee.drinkers">Drinkers : </UsersName>
-                </li>
-                <li v-if="coffee.memo">
-                  メモ:
-                  {{ coffee.memo }}
-                </li>
-                <CoffeeDetails :coffee="coffee" />
-              </ul>
-            </div>
-          </div>
-        </modal-with-button >
+          <modal-with-button :modalKey="review.id">
+            <template v-slot:open-button
+              ><i class="fas fa-coffee"></i
+            ></template>
+            <template v-slot:modal-inner-content>
+              <div class="columns">
+                <div class="column">
+                  <ul>
+                    <li class="date">
+                      記入日 : <ConvertTime :time="review.createdAt" />
+                    </li>
+                    <li>苦さ : {{ review.bitterness }}</li>
+                    <li>濃さ : {{ review.strongness }}</li>
+                    <li>また飲みたいか : {{ repeatToJapanese }}</li>
+                    <li>役割 : {{ situationToJapanese }}</li>
+                    <li>備考・感想 : {{ review.feeling }}</li>
+                  </ul>
+                </div>
+                <div class="column">
+                  <ul>
+                    <li>Coffee-ID : {{ coffee.id }}</li>
+                    <li class="date">
+                      抽出日 : <ConvertTime :time="coffee.createdAt" />
+                    </li>
+                    <li v-if="coffee.dripper">
+                      <UsersName :users="[coffee.dripper]"
+                        >Dripper :
+                      </UsersName>
+                    </li>
+                    <li v-if="coffee.drinkers">
+                      <UsersName :users="coffee.drinkers"
+                        >Drinkers :
+                      </UsersName>
+                    </li>
+                    <li v-if="coffee.memo">
+                      メモ:
+                      {{ coffee.memo }}
+                    </li>
+                    <CoffeeDetails :coffee="coffee" />
+                  </ul>
+                </div></div
+            ></template>
+          </modal-with-button>
+        </div>
       </div>
     </div>
   </div>
@@ -118,8 +126,5 @@ export default {
 }
 .title {
   font-size: 7vw;
-}
-.date {
-  font-size: 0.7em;
 }
 </style>

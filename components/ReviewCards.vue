@@ -3,7 +3,7 @@
     <li v-for="review in reviews" :key="review.id" class="horizonal-item">
       <ReviewCard :review="review" :key="'reviewCard-'+review.id"/>
     </li>
-    <button class="button">もっとみる</button>
+    <a class="view-more"><i class="fas fa-angle-double-right"></i></a>
   </ul>
 </template>
       
@@ -25,8 +25,10 @@ export default {
   width: 80%;
   margin: 1em;
 }
-.button {
+
+.view-more{
   display: inline-block;
-  margin-top: 30%;
+  margin-top: 2%;
+  font-size:3em;
 }
 </style>
