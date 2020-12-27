@@ -18,7 +18,9 @@
       <div class="columns">
         <div class="column">
           <ul>
-            <li  class="date">レビュー登録 : <ConvertTime :time="review.createdAt" /></li>
+            <li class="date">
+              レビュー登録 : <ConvertTime :time="review.createdAt" />
+            </li>
             <li>苦さ : {{ review.bitterness }}</li>
             <li>濃さ : {{ review.strongness }}</li>
             <li>また飲みたいか : {{ repeatToJapanese }}</li>
@@ -27,37 +29,50 @@
           </ul>
         </div>
 
-        <div class="column" v-show="viewMore">
-          <ul>
-            <li>Coffee-ID : {{coffee.id}}</li>
-            <li class="date">コーヒー登録 : <ConvertTime :time="coffee.createdAt" /></li>
-            <li v-if="coffee.dripper">
-              <UsersName :users="[coffee.dripper]">Dripper : </UsersName>
-            </li>
-            <li v-if="coffee.drinkers">
-              <UsersName :users="coffee.drinkers">Drinkers : </UsersName>
-            </li>
-            <li v-if="coffee.memo">
-              メモ:
-              {{ coffee.memo }}
-            </li>
-            <CoffeeDetails :coffee="coffee" />
-          </ul>
-        </div>
-
-        <button @click="toggleViewMore()" class="button" v-show="!viewMore">
-          くわしく見る
-        </button>
-        <button @click="toggleViewMore()" class="button" v-show="viewMore">
-          詳細を閉じる
-        </button>
+        <modal-with-button  :modalKey="review.id">
+          <div class="columns">
+            <div class="column">
+              <ul>
+                <li class="date">
+                  レビュー登録 : <ConvertTime :time="review.createdAt" />
+                </li>
+                <li>苦さ : {{ review.bitterness }}</li>
+                <li>濃さ : {{ review.strongness }}</li>
+                <li>また飲みたいか : {{ repeatToJapanese }}</li>
+                <li>役割 : {{ situationToJapanese }}</li>
+                <li>備考・感想 : {{ review.feeling }}</li>
+              </ul>
+            </div>
+            <div class="column">
+              <ul>
+                <li>Coffee-ID : {{ coffee.id }}</li>
+                <li class="date">
+                  コーヒー登録 : <ConvertTime :time="coffee.createdAt" />
+                </li>
+                <li v-if="coffee.dripper">
+                  <UsersName :users="[coffee.dripper]">Dripper : </UsersName>
+                </li>
+                <li v-if="coffee.drinkers">
+                  <UsersName :users="coffee.drinkers">Drinkers : </UsersName>
+                </li>
+                <li v-if="coffee.memo">
+                  メモ:
+                  {{ coffee.memo }}
+                </li>
+                <CoffeeDetails :coffee="coffee" />
+              </ul>
+            </div>
+          </div>
+        </modal-with-button >
       </div>
     </div>
   </div>
 </template>
 
 <script>
+import ModalWithButton from "./ModalWithButton.vue";
 export default {
+  components: { ModalWithButton },
   props: ["review"],
   data() {
     return {
@@ -101,10 +116,10 @@ export default {
 .card {
   margin-bottom: 1em;
 }
-.title{
+.title {
   font-size: 7vw;
 }
-.date{
+.date {
   font-size: 0.7em;
 }
 </style>

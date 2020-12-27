@@ -1,7 +1,7 @@
 <template>
   <ul class="horizonal-list">
     <li v-for="review in reviews" :key="review.id" class="horizonal-item">
-      <ReviewCard :review="review" />
+      <ReviewCard :review="review" :key="'reviewCard-'+review.id"/>
     </li>
     <button class="button">もっとみる</button>
   </ul>
