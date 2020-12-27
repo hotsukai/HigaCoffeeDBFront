@@ -18,7 +18,7 @@
       <div class="columns">
         <div class="column">
           <ul>
-            <li>レビュー登録 : <ConvertTime :time="review.createdAt" /></li>
+            <li  class="date">レビュー登録 : <ConvertTime :time="review.createdAt" /></li>
             <li>苦さ : {{ review.bitterness }}</li>
             <li>濃さ : {{ review.strongness }}</li>
             <li>また飲みたいか : {{ repeatToJapanese }}</li>
@@ -30,7 +30,7 @@
         <div class="column" v-show="viewMore">
           <ul>
             <li>Coffee-ID : {{coffee.id}}</li>
-            <li>コーヒー登録 : <ConvertTime :time="coffee.createdAt" /></li>
+            <li class="date">コーヒー登録 : <ConvertTime :time="coffee.createdAt" /></li>
             <li v-if="coffee.dripper">
               <UsersName :users="[coffee.dripper]">Dripper : </UsersName>
             </li>
@@ -100,5 +100,11 @@ export default {
 <style scoped>
 .card {
   margin-bottom: 1em;
+}
+.title{
+  font-size: 7vw;
+}
+.date{
+  font-size: 0.7em;
 }
 </style>
