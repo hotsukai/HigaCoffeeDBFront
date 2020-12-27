@@ -4,17 +4,16 @@
     <p class="subtitle">User-ID : {{ user.id }}</p>
     <p class="subtitle">あなたが書いたレビュー</p>
     <div v-show="isReviewExist">
-      <ReviewCards :reviews="reviews" />
-      <div class v-show="false">
-        <button @click="getMoreReview" class="button">もっと見る</button>
-      </div>
+      <ReviewCards :reviews="reviews" class="cards"/>
+    
     </div>
     <div v-show="!isReviewExist">
       <p>まだレビューがありません</p>
     </div>
+    <hr/>
     <p class="subtitle">あなたが淹れたコーヒー</p>
     <div v-show="isCoffeeExist">
-      <CoffeeCards :coffees="coffees" :showReview="true" :showDetails="true"></CoffeeCards>
+      <CoffeeCards :coffees="coffees" :showReview="true" :showDetails="true" class="cards"></CoffeeCards>
     </div>
     <div v-show="!isCoffeeExist">
       <p>まだコーヒーがありません</p>
@@ -73,8 +72,9 @@ export default {
 };
 </script>
 
-<style>
-.profile-img {
-  height: 3em;
+<style scoped>
+
+.cards{
+  margin-bottom: 2em;
 }
 </style>

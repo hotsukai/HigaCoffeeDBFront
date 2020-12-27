@@ -1,7 +1,7 @@
 <template>
   <ul class="horizonal-list">
     <li v-for="review in reviews" :key="review.id" class="horizonal-item">
-      <ReviewCard :review="review" :key="'reviewCard-'+review.id"/>
+      <ReviewCard :review="review" :key="'reviewCard-' + review.id" />
     </li>
     <a class="view-more"><i class="fas fa-angle-double-right"></i></a>
   </ul>
@@ -23,12 +23,13 @@ export default {
   /* 横スクロール用 */
   display: inline-block;
   width: 80%;
-  margin: 1em;
+  margin: 0em 1em;
+  vertical-align: top;
 }
 
-.view-more{
+.view-more {
   display: inline-block;
   margin-top: 2%;
-  font-size:3em;
+  font-size: 3em;
 }
 </style>

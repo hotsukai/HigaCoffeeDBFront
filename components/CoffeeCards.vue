@@ -8,8 +8,7 @@
         :showDetails="showDetails"
       ></CoffeeCard>
     </li>
-        <a class="view-more"><i class="fas fa-angle-double-right"></i></a>
-
+    <a class="view-more"><i class="fas fa-angle-double-right"></i></a>
   </ul>
 </template>
       
@@ -30,15 +29,15 @@ export default {
   -webkit-overflow-scrolling: touch;
 }
 .horizonal-item {
-  /* 横スクロール用 */
   display: inline-block;
   width: 80%;
   height: -webkit-fill-available;
-  margin: 1em;
+  margin: 0em 1em;
+  vertical-align: top;
 }
-.view-more{
+.view-more {
   display: inline-block;
   margin-top: 2%;
-  font-size:3em;
+  font-size: 3em;
 }
 </style>
