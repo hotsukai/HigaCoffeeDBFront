@@ -10,13 +10,10 @@
       <ul>
         <li>登録 : <ConvertTime :time="coffee.createdAt" /></li>
         <li v-if="coffee.dripper">
-          <UsersName :users="[coffee.dripper]"
-            >Dripper : </UsersName
-          >
+          <UsersName :users="[coffee.dripper]">Dripper : </UsersName>
         </li>
         <li v-if="coffee.drinkers">
           <UsersName :users="coffee.drinkers">Drinkers : </UsersName>
-         
         </li>
         <li v-if="coffee.memo">
           メモ:
@@ -72,4 +69,8 @@ export default {
 };
 </script>
 
-<style></style>
+<style>
+.title {
+  font-size: 7vw;
+}
+</style>
