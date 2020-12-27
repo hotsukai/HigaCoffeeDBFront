@@ -1,18 +1,19 @@
 <template>
   <ul class="horizonal-list">
-    <ul v-for="review in reviews" :key="review.id" class="horizonal-item">
+    <li v-for="review in reviews" :key="review.id" class="horizonal-item">
       <ReviewCard :review="review" />
-    </ul>
+    </li>
+    <button class="button">もっとみる</button>
   </ul>
 </template>
       
 <script>
 export default {
-  props: ["reviews"],
+  props: { reviews: Array },
 };
 </script>
       
-<style>
+<style scoped>
 .horizonal-list {
   overflow-x: auto;
   white-space: nowrap;
@@ -22,6 +23,10 @@ export default {
   /* 横スクロール用 */
   display: inline-block;
   width: 80%;
-  margin :1em;
+  margin: 1em;
+}
+.button {
+  display: inline-block;
+  margin-top: 30%;
 }
 </style>

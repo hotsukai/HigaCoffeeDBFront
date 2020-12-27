@@ -8,6 +8,7 @@
         :showDetails="showDetails"
       ></CoffeeCard>
     </li>
+    <button class="button">もっとみる</button>
   </ul>
 </template>
       
@@ -21,6 +22,21 @@ export default {
   },
 };
 </script>
-
-<style>
+<style scoped>
+.horizonal-list {
+  overflow-x: auto;
+  white-space: nowrap;
+  -webkit-overflow-scrolling: touch;
+}
+.horizonal-item {
+  /* 横スクロール用 */
+  display: inline-block;
+  width: 80%;
+  height: -webkit-fill-available;
+  margin: 1em;
+}
+.button {
+  display: inline-block;
+  margin-top: 30%;
+}
 </style>

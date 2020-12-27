@@ -14,12 +14,7 @@
     </div>
     <p class="subtitle">あなたが淹れたコーヒー</p>
     <div v-show="isCoffeeExist">
-      <CoffeeCards :coffees="coffees" :showReview="true"
-        ></CoffeeCards>
-      <!-- TODO: もっと見るボタン -->
-      <div class v-show="true">
-        <button @click="getMoreCoffee" class="button">もっと見る</button>
-      </div>
+      <CoffeeCards :coffees="coffees" :showReview="true" :showDetails="true"></CoffeeCards>
     </div>
     <div v-show="!isCoffeeExist">
       <p>まだコーヒーがありません</p>
@@ -33,7 +28,7 @@ export default {
     return {
       reviews: [],
       coffees: [],
-      user: {}
+      user: {},
     };
   },
 
@@ -46,18 +41,18 @@ export default {
     }
 
     const getReviews = await this.$axios.$get("/reviews", {
-      params: { reviewer: user.id }
+      params: { reviewer: user.id },
     });
 
     const getCoffees = await this.$axios.$get("/coffees", {
-      params: { dripper_id: user.id }
+      params: { dripper_id: user.id },
     });
     await Promise.all([getReviews, getCoffees])
-      .then(result => {
+      .then((result) => {
         this.reviews = result[0].data;
         this.coffees = result[1].data;
       })
-      .catch(e => {
+      .catch((e) => {
         console.warn("データの取得でエラーが発生しました : " + e);
       });
   },
@@ -68,13 +63,13 @@ export default {
     },
     isCoffeeExist() {
       return this.coffees.length > 0;
-    }
+    },
   },
 
   methods: {
     getMoreReview() {},
-    getMoreCoffee() {}
-  }
+    getMoreCoffee() {},
+  },
 };
 </script>
 
