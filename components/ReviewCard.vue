@@ -27,53 +27,49 @@
             <li>役割 : {{ situationToJapanese }}</li>
             <li>備考・感想 : {{ review.feeling }}</li>
           </ul>
-
-          <modal-with-button :modalKey="review.id">
-            <template v-slot:open-button
-              ><i class="fas fa-coffee"></i
-            ></template>
-            <template v-slot:modal-inner-content>
-              <div class="columns">
-                <div class="column">
-                  <ul>
-                    <li class="date">
-                      記入日 : <ConvertTime :time="review.createdAt" />
-                    </li>
-                    <li>苦さ : {{ review.bitterness }}</li>
-                    <li>濃さ : {{ review.strongness }}</li>
-                    <li>また飲みたいか : {{ repeatToJapanese }}</li>
-                    <li>役割 : {{ situationToJapanese }}</li>
-                    <li>備考・感想 : {{ review.feeling }}</li>
-                  </ul>
-                </div>
-                <div class="column">
-                  <ul>
-                    <li>Coffee-ID : {{ coffee.id }}</li>
-                    <li class="date">
-                      抽出日 : <ConvertTime :time="coffee.createdAt" />
-                    </li>
-                    <li v-if="coffee.dripper">
-                      <UsersName :users="[coffee.dripper]"
-                        >Dripper :
-                      </UsersName>
-                    </li>
-                    <li v-if="coffee.drinkers">
-                      <UsersName :users="coffee.drinkers"
-                        >Drinkers :
-                      </UsersName>
-                    </li>
-                    <li v-if="coffee.memo">
-                      メモ:
-                      {{ coffee.memo }}
-                    </li>
-                    <CoffeeDetails :coffee="coffee" />
-                  </ul>
-                </div></div
-            ></template>
-          </modal-with-button>
         </div>
       </div>
     </div>
+    <footer class="card-footer">
+      <modal-with-button :modalKey="review.id" class="card-footer-item">
+        <template v-slot:open-button><i class="fas fa-coffee"></i></template>
+        <template v-slot:modal-inner-content>
+          <div class="columns">
+            <div class="column">
+              <ul>
+                <li class="date">
+                  記入日 : <ConvertTime :time="review.createdAt" />
+                </li>
+                <li>苦さ : {{ review.bitterness }}</li>
+                <li>濃さ : {{ review.strongness }}</li>
+                <li>また飲みたいか : {{ repeatToJapanese }}</li>
+                <li>役割 : {{ situationToJapanese }}</li>
+                <li>備考・感想 : {{ review.feeling }}</li>
+              </ul>
+            </div>
+            <div class="column">
+              <ul>
+                <li>Coffee-ID : {{ coffee.id }}</li>
+                <li class="date">
+                  抽出日 : <ConvertTime :time="coffee.createdAt" />
+                </li>
+                <li v-if="coffee.dripper">
+                  <UsersName :users="[coffee.dripper]">Dripper : </UsersName>
+                </li>
+                <li v-if="coffee.drinkers">
+                  <UsersName :users="coffee.drinkers">Drinkers : </UsersName>
+                </li>
+                <li v-if="coffee.memo">
+                  メモ:
+                  {{ coffee.memo }}
+                </li>
+                <CoffeeDetails :coffee="coffee" />
+              </ul>
+            </div>
+          </div>
+        </template>
+      </modal-with-button>
+    </footer>
   </div>
 </template>
 
@@ -120,9 +116,18 @@ export default {
 };
 </script>
 
-<style scoped>
+<style lang="scss" scoped>
+// TODO: hoverしたときの
 .card {
   margin-bottom: 1em;
+  height: 400px;
+  .card-content {
+    height: 340px;
+  }
+  .card-footer {
+    height: 60px;
+  }
+ 
+  
 }
-
 </style>
