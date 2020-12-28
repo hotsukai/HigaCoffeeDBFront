@@ -71,14 +71,7 @@ export default {
     "@nuxtjs/proxy",
     "@nuxtjs/style-resources"
   ],
-  proxy: {
-    "/api": {
-      target: process.env.BACKEND_URL,
-      pathRewrite: {
-        "^/api": ""
-      }
-    }
-  },
+
   axios: {
     proxy: true,
     prefix: "/api"
