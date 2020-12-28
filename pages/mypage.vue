@@ -4,16 +4,20 @@
     <p class="subtitle">User-ID : {{ user.id }}</p>
     <p class="subtitle">あなたが書いたレビュー</p>
     <div v-show="isReviewExist">
-      <ReviewCards :reviews="reviews" class="cards"/>
-    
+      <ReviewCards :reviews="reviews" class="cards" />
     </div>
     <div v-show="!isReviewExist">
       <p>まだレビューがありません</p>
     </div>
-    <hr/>
+    <hr />
     <p class="subtitle">あなたが淹れたコーヒー</p>
     <div v-show="isCoffeeExist">
-      <CoffeeCards :coffees="coffees" :showReview="true" :showDetails="true" class="cards"></CoffeeCards>
+      <CoffeeCards
+        :coffees="coffees"
+        :showReview="true"
+        :showDetails="true"
+        class="cards"
+      ></CoffeeCards>
     </div>
     <div v-show="!isCoffeeExist">
       <p>まだコーヒーがありません</p>
@@ -21,13 +25,14 @@
   </div>
 </template>
 
-<script>
-export default {
+<script lang="ts">
+import Vue from 'vue'
+export default Vue.extend({
   data() {
     return {
-      reviews: [],
-      coffees: [],
-      user: {},
+      reviews: [] as Array<Object>,
+      coffees: [] as Array<Object>,
+      user: {} as Object,
     };
   },
 
@@ -57,10 +62,10 @@ export default {
   },
 
   computed: {
-    isReviewExist() {
+    isReviewExist():boolean {
       return this.reviews.length > 0;
     },
-    isCoffeeExist() {
+    isCoffeeExist():boolean {
       return this.coffees.length > 0;
     },
   },
@@ -69,12 +74,11 @@ export default {
     getMoreReview() {},
     getMoreCoffee() {},
   },
-};
+});
 </script>
 
 <style scoped>
-
-.cards{
+.cards {
   margin-bottom: 2em;
 }
 </style>
