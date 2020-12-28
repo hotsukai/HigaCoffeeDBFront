@@ -1,5 +1,5 @@
 <template>
-  <Slide :closeOnNavigation="true"  right>
+  <Slide :closeOnNavigation="true">
     <nuxt-link to="/data" :class="{ isSelected: isDataSelected }"
       ><i class="far fa-chart-bar"></i>　みる</nuxt-link
     >
@@ -131,7 +131,7 @@ export default {
     position: fixed;
     width: 36px;
     height: 30px;
-    left: 36px;
+    left: 1.5em;
     top: 25px;
     cursor: pointer;
     z-index: 100;
