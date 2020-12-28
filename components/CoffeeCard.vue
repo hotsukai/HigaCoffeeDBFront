@@ -1,37 +1,32 @@
 <template>
   <div class="card" v-if="coffee">
     <div class="card-content">
-      <p class="title">
-        {{ coffee.bean.name }}
+      <p class="title is-4">
+        <nuxt-link :to="'/reviews?bean=' + coffee.bean.id">
+          {{ coffee.bean.name }}
+        </nuxt-link>
       </p>
-      <p class="subtitle">ID: {{ coffee.id }}</p>
+      <p class="subtitle is-6">Coffee-ID : {{ coffee.id }}</p>
       <ul>
-        <li>登録された時間 : <ConvertTime :time="coffee.createdAt" /></li>
-        <li>蒸らし時間 : {{ coffee.extractionTime }}min</li>
-        <li>粉の量 : {{ coffee.powderAmount }}g</li>
-        <li>水の量 : {{ coffee.waterAmount }}ml</li>
-        <li>メッシュ : {{ coffee.meshId }}</li>
-        <li>
-          湯温 :
-          {{ coffee.waterTemperature }}
+        <li>抽出日 : <ConvertTime :time="coffee.createdAt" /></li>
+        <li v-if="coffee.dripper">
+          <UsersName :users="[coffee.dripper]">Dripper : </UsersName>
         </li>
-        <li>
-          抽出方法 :
-          {{ coffee.extractionMethodId }}
+        <li v-if="coffee.drinkers">
+          <UsersName :users="coffee.drinkers">Drinkers : </UsersName>
         </li>
-        <li>
+        <li v-if="coffee.memo">
           メモ:
           {{ coffee.memo }}
         </li>
+        <CoffeeDetails v-if="showDetails" :coffee="coffee" />
       </ul>
     </div>
     <slot>
       <footer class="card-footer">
         <p class="card-footer-item" v-show="createReview">
           <span>
-            <nuxt-link
-              :to="'/reviews/create/' + coffee.id"
-              class="button"
+            <nuxt-link :to="'/reviews/create/' + coffee.id" class="button"
               >レビューを書く</nuxt-link
             >
           </span>
@@ -41,9 +36,7 @@
           v-show="showReview && coffee.reviewId.length > 0"
         >
           <span>
-            <nuxt-link
-              :to="'reviews?coffeeId=' + coffee.id"
-              class="button"
+            <nuxt-link :to="'reviews?coffeeId=' + coffee.id" class="button"
               >レビューを見る</nuxt-link
             >
           </span>
@@ -61,14 +54,18 @@
 
 <script>
 export default {
-  props: ["coffee", "showReview","createReview"],
+  props: {
+    coffee: Object,
+    showReview: Boolean,
+    createReview: Boolean,
+    showDetails: { type: Boolean, default: true },
+  },
 
   computed: {
-    fullPath: function() {
+    fullPath: function () {
       return "/reviews/create/" + this.coffee.id;
-    }
-  }
+    },
+  },
 };
 </script>
 
-<style></style>

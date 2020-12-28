@@ -26,7 +26,13 @@ export default {
           'Higa Coffeeではデータを活用して、あなたの"ぴったりな一杯" を探すお手伝いをします。'
       }
     ],
-    link: [{ rel: "icon", type: "image/x-icon", href: "/favicon.ico" }]
+    link: [
+      { rel: "icon", type: "image/x-icon", href: "/favicon.ico" },
+      {
+        rel: "stylesheet",
+        href: "https://use.fontawesome.com/releases/v5.6.1/css/all.css"
+      }
+    ]
   },
   /*
    ** Global CSS
@@ -39,7 +45,12 @@ export default {
    ** Plugins to load before mounting the App
    ** https://nuxtjs.org/guide/plugins
    */
-  plugins: ["@/plugins/axiosAuthHeader"],
+  plugins: [
+    "~plugins/axiosAuthHeader",
+    "~plugins/vue-js-toggle-button",
+    "~plugins/vue-js-modal",
+    "~plugins/vue-burger-menu"
+  ],
   /*
    ** Auto import components
    ** See https://nuxtjs.org/api/configuration-components
@@ -60,14 +71,7 @@ export default {
     "@nuxtjs/proxy",
     "@nuxtjs/style-resources"
   ],
-  proxy: {
-    "/api": {
-      target: process.env.BACKEND_URL,
-      pathRewrite: {
-        "^/api": ""
-      }
-    }
-  },
+
   axios: {
     proxy: true,
     prefix: "/api"

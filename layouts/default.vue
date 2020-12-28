@@ -1,11 +1,15 @@
 <template>
   <!-- TODO:メタ情報 -->
   <div>
-    <Header />
+    <GlobalMenu />
     <div class="section">
       <Nuxt />
     </div>
   </div>
 </template>
 
-<style></style>
+<style>
+.section{
+  padding-top: 70px;
+}
+</style>
