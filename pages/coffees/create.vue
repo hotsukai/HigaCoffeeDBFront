@@ -5,12 +5,9 @@
         <label class="label">豆の種類<Required /></label>
         <div class="select">
           <select v-model="selectedBean">
-            <option
-              v-for="bean in beans"
-              :key="bean.id"
-              v-bind:value="bean.id"
-              >{{ bean.name }}</option
-            >
+            <option v-for="bean in beans" :key="bean.id" v-bind:value="bean.id">
+              {{ bean.name }}
+            </option>
           </select>
         </div>
       </div>
@@ -22,8 +19,9 @@
               v-for="method in extractionMethods"
               :key="method.id"
               :value="method.id"
-              >{{ method.name }}</option
             >
+              {{ method.name }}
+            </option>
           </select>
         </div>
       </div>
@@ -73,9 +71,9 @@
           <datalist id="userslist">
             もしくはリストから選択
             <select v-model="selectedDrinkers[i - 1]">
-              <option v-for="user in users" :key="user.id" :value="user.name">{{
-                user.name
-              }}</option>
+              <option v-for="user in users" :key="user.id" :value="user.name">
+                {{ user.name }}
+              </option>
             </select>
           </datalist>
           <button
@@ -87,7 +85,7 @@
             削除
           </button>
         </div>
-        <p class="warn">{{ userErrorMsg }}</p>
+        <p class="warn">{{ drinkerErrorMsg }}</p>
         <button
           v-if="selectedDrinkers.length < users.length"
           class="button"
@@ -135,8 +133,8 @@ export default {
       memo: "",
       users: [],
       selectedDrinkersId: [],
-      userErrorMsg: "",
-      formErrorMsg: ""
+      drinkerErrorMsg: "",
+      formErrorMsg: "",
     };
   },
 
@@ -160,7 +158,6 @@ export default {
         this.selectedExtractionTime !== "" &&
         this.selectedPowderAmount !== "" &&
         this.selectedWaterAmount !== "" &&
-        this.selectedWaterTemperature !== "" &&
         this.selectedMesh !== "" &&
         this.selectedExtractionTime >= 0 &&
         this.selectedExtractionTime <= 10 &&
@@ -170,22 +167,23 @@ export default {
         this.selectedWaterAmount <= 500 &&
         ((this.selectedWaterTemperature >= 0 &&
           this.selectedWaterTemperature <= 100) ||
-          this.selectedWaterTemperature === null) &&
+          this.selectedWaterTemperature === null ||
+          this.selectedWaterTemperature === "") &&
         this.selectedDrinkersId.length > 0 &&
         this.selectedDrinkers[0] !== null
       ) {
         this.formErrorMsg = "";
         return true;
       }
-    }
+    },
   },
   watch: {
     selectedDrinkers(val) {
       this.selectedDrinkersId = [];
-      this.userErrorMsg = "";
+      this.drinkerErrorMsg = "";
       val.forEach((drinkerNameOrId, index) => {
         const drinkerFindById = this.users.find(
-          user => user.id == drinkerNameOrId
+          (user) => user.id == drinkerNameOrId
         );
         if (
           drinkerFindById &&
@@ -196,7 +194,7 @@ export default {
           return;
         }
         const drinkerFindByName = this.users.find(
-          user => user.name == drinkerNameOrId
+          (user) => user.name == drinkerNameOrId
         );
         if (
           drinkerFindByName &&
@@ -205,15 +203,15 @@ export default {
           this.selectedDrinkersId.push(drinkerFindByName.id);
           return;
         }
-        this.userErrorMsg = "ユーザーが存在しません";
+        this.drinkerErrorMsg = "ユーザーが存在しません";
       });
-    }
+    },
   },
 
   methods: {
     sendCoffee() {
       if (!this.isValid) {
-        this.formErrorMsg="入力に不備があります"
+        this.formErrorMsg = "入力に不備があります";
         return;
       }
       this.$axios
@@ -227,9 +225,9 @@ export default {
           memo: this.memo,
           powderAmount: this.selectedPowderAmount,
           waterAmount: this.selectedWaterAmount,
-          waterTemperature: this.selectedWaterTemperature
+          waterTemperature: this.selectedWaterTemperature,
         })
-        .then(res => {
+        .then((res) => {
           if (res.result) {
             console.log(res.data);
             alert("コーヒーを登録しました。");
@@ -238,7 +236,7 @@ export default {
           }
           this.$router.push("/");
         })
-        .catch(err => {
+        .catch((err) => {
           console.error("コーヒーの登録に失敗しました" + err.message);
           alert("ERROR2:コーヒーの登録に失敗しました" + res.message);
           this.$router.push("/");
@@ -253,8 +251,8 @@ export default {
       if (this.selectedDrinkers.length > 1) {
         this.selectedDrinkers.splice(id - 1, 1);
       }
-    }
-  }
+    },
+  },
 };
 </script>
 

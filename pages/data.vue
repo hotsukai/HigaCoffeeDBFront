@@ -2,70 +2,59 @@
   <div>
     <section>
       <p class="title">セクション1 どの豆??</p>
-      <div>
-        <input
-          type="radio"
-          id="upperA"
-          value="upperA"
-          name="section1"
-          v-model="pickedSection1"
-        />
-        <label for="upperA">A:概要(団体)</label>
-        <input
-          type="radio"
-          id="upperC"
-          value="upperC"
-          name="section1"
-          v-model="pickedSection1"
-        />
-        <label for="upperC">C:濃さ(団体)</label>
-        <br />
-        <input
-          type="radio"
-          id="lowerA"
-          value="lowerA"
-          name="section1"
-          v-model="pickedSection1"
-        />
-        <label for="lowerA">a:概要(個人)</label>
-        <input
-          type="radio"
-          id="lowerC"
-          value="lowerC"
-          name="section1"
-          v-model="pickedSection1"
-        />
-        <label for="lowerC">c:濃さ(個人)</label>
-      </div>
+      <toggle-button
+        v-model="section1_1IsPersonal"
+        :value="false"
+        :width="70"
+        :height="30"
+        :labels="{ checked: 'わたし', unchecked: 'みんな' }"
+      />
       <div v-if="getProvideDataPromise">
         <GraphA
-          v-if="pickedSection1 == 'upperA'"
+          v-if="section1_1IsPersonal && isLogin"
+          :isMine="true"
+          :propsDataPromise="getProvideDataPromise"
+          key="mine-A-graph"
+        />
+        <!-- TODO:縮尺を揃える -->
+        <GraphA
+          v-else-if="!section1_1IsPersonal"
           :isMine="false"
           :propsDataPromise="getProvideDataPromise"
+          key="everyone-A-graph"
         />
-        <div v-if="pickedSection1 == 'lowerA'">
-          <div v-if="isLogin">
-            <GraphA :isMine="true" :propsDataPromise="getProvideDataPromise" />
-          </div>
-          <div v-else>
-            <p>
-              個人グラフを見るには
-              <nuxt-link to="/login"> ログイン </nuxt-link>
-              が必要です。
-            </p>
-          </div>
+
+        <div v-else class="require-login-message-area">
+          <p>
+            個人グラフを見るには
+            <nuxt-link to="/login"> ログイン </nuxt-link>
+            が必要です。
+          </p>
         </div>
       </div>
-
-      <GraphC
-        v-if="pickedSection1 == 'upperC'"
-        :getPositionDataPromise="getPositionDataPromise"
+    </section>
+    <section>
+      <toggle-button
+        v-model="section1_2IsPersonal"
+        :value="false"
+        :width="70"
+        :height="30"
+        :labels="{ checked: 'わたし', unchecked: 'みんな' }"
       />
-      <div v-if="pickedSection1 == 'lowerC'">
-        <div v-if="isLogin">
-          <GraphC :getPositionDataPromise="getPositionDataPromise" />
-        </div>
-        <div v-else>
+      <div v-if="getProvideDataPromise">
+        <GraphC
+          v-if="section1_2IsPersonal && isLogin"
+          :isMine="true"
+          :getPositionDataPromise="getPositionDataPromise"
+          key="mine-C-graph"
+        />
+        <GraphC
+          v-else-if="!section1_2IsPersonal"
+          :isMine="false"
+          :getPositionDataPromise="getPositionDataPromise"
+          key="everyone-C-graph"
+        />
+        <div v-else class="require-login-message-area">
           <p>
             個人グラフを見るには
             <nuxt-link to="/login"> ログイン </nuxt-link>
@@ -87,43 +76,33 @@
             {{ bean.name }}
           </option>
         </select>
-        <input
-          type="radio"
-          id="upperB"
-          value="upperB"
-          name="section2"
-          v-model="pickedSection2"
+        <toggle-button
+          v-model="section2IsPersonal"
+          :value="false"
+          :width="70"
+          :height="30"
+          :labels="{ checked: 'わたし', unchecked: 'みんな' }"
         />
-        <label for="upperB">B:濃度(全体)</label>
-        <input
-          type="radio"
-          id="lowerB"
-          value="lowerB"
-          name="section2"
-          v-model="pickedSection2"
-        />
-        <label for="lowerB">b:濃度(個人)</label>
       </div>
       <div v-if="getStrongnessDataPromise">
         <GraphB
-          v-if="pickedSection2 == 'upperB' && pickedBeanSection2 !== ''"
+          v-if="section2IsPersonal && isLogin"
+          :propsDataPromise="getStrongnessDataPromise"
+          :isMine="true"
+          key="mine-B-graph"
+        />
+        <GraphB
+          v-else-if="!section2IsPersonal"
           :propsDataPromise="getStrongnessDataPromise"
           :isMine="false"
+          key="everyone-B-graph"
         />
-        <div v-if="pickedSection2 == 'lowerB' && pickedBeanSection2 !== ''">
-          <div v-if="isLogin">
-            <GraphB
-              :propsDataPromise="getStrongnessDataPromise"
-              :isMine="true"
-            />
-          </div>
-          <div v-else>
-            <p>
-              個人グラフを見るには
-              <nuxt-link to="/login"> ログイン </nuxt-link>
-              が必要です。
-            </p>
-          </div>
+        <div v-else class="require-login-message-area">
+          <p>
+            個人グラフを見るには
+            <nuxt-link to="/login"> ログイン </nuxt-link>
+            が必要です。
+          </p>
         </div>
       </div>
     </section>
@@ -134,31 +113,34 @@
 export default {
   data() {
     return {
-      pickedSection1: "upperA",
-      pickedSection2: "upperB",
       pickedBeanSection2: 1,
       beans: {},
       getProvideDataPromise: null,
       getStrongnessDataPromise: null,
       getPositionDataPromise: null,
-      isLogin: this.$store.state.currentUser
+      isLogin: this.$store.state.currentUser,
+      section1_1IsPersonal: false,
+      section1_2IsPersonal: false,
+      section2IsPersonal: false,
     };
   },
   async created() {
-    this.beans = await this.$axios.$get("/beans").then(res => {
+    this.beans = await this.$axios.$get("/beans").then((res) => {
       if (res.result) return res.data;
     });
-    this.getProvideDataPromise = this.$axios.$get("/data/provide").then(res => {
-      if (res.result) return res.data;
-    });
+    this.getProvideDataPromise = this.$axios
+      .$get("/data/provide")
+      .then((res) => {
+        if (res.result) return res.data;
+      });
     this.getStrongnessDataPromise = this.$axios
       .$get("/data/strongness/" + this.pickedBeanSection2)
-      .then(res => {
+      .then((res) => {
         if (res.result) return res.data;
       });
     this.getPositionDataPromise = this.$axios
       .$get("/data/bean_position")
-      .then(res => {
+      .then((res) => {
         if (res.result) return res.data;
       });
   },
@@ -166,12 +148,18 @@ export default {
     pickedBeanSection2(val) {
       this.getStrongnessDataPromise = this.$axios
         .$get("/data/strongness/" + val)
-        .then(res => {
+        .then((res) => {
           return res.data;
         });
-    }
-  }
+    },
+  },
 };
 </script>
 
-<style></style>
+<style>
+.require-login-message-area {
+  height: 400px;
+  text-align: center;
+  background-color: white;
+}
+</style>
