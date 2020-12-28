@@ -4,7 +4,7 @@
     <p class="subtitle">User-ID : {{ user.id }}</p>
     <p class="subtitle">あなたが書いたレビュー</p>
     <div v-show="isReviewExist">
-      <ReviewCards :reviews="reviews" class="cards" />
+      <ReviewCards :reviews="reviews" :isHorizonal="true" class="cards" />
     </div>
     <div v-show="!isReviewExist">
       <p>まだレビューがありません</p>

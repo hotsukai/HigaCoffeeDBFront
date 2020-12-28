@@ -1,6 +1,10 @@
 <template>
-  <ul class="horizonal-list">
-    <li v-for="review in reviews" :key="review.id" class="horizonal-item">
+  <ul :class="{ 'horizonal-list': isHorizonal }">
+    <li
+      v-for="review in reviews"
+      :key="review.id"
+      :class="{ 'horizonal-item': isHorizonal }"
+    >
       <ReviewCard :review="review" :key="'reviewCard-' + review.id" />
     </li>
     <a class="view-more"><i class="fas fa-angle-double-right"></i></a>
@@ -9,7 +13,7 @@
       
 <script>
 export default {
-  props: { reviews: Array },
+  props: { reviews: Array, isHorizonal: { type: Boolean, default: false } },
 };
 </script>
       
@@ -22,9 +26,10 @@ export default {
 .horizonal-item {
   /* 横スクロール用 */
   display: inline-block;
-  width: 80%;
-  margin: 0em 1em;
   vertical-align: top;
+  width: 80%;
+  max-width: 25em;
+  margin: 0em 2em 1em 0em;
 }
 
 .view-more {

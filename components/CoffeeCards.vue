@@ -31,8 +31,8 @@ export default {
 .horizonal-item {
   display: inline-block;
   width: 80%;
-  height: -webkit-fill-available;
-  margin: 0em 1em;
+  max-width: 25em;
+  margin:0em 2em 1em 0em;
   vertical-align: top;
 }
 .view-more {

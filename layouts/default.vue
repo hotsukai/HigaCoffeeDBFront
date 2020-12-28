@@ -10,6 +10,6 @@
 
 <style>
 .section{
-  padding-top: 60px;
+  padding-top: 70px;
 }
 </style>
