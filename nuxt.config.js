@@ -46,9 +46,10 @@ export default {
    ** https://nuxtjs.org/guide/plugins
    */
   plugins: [
-    "@/plugins/axiosAuthHeader",
+    "~plugins/axiosAuthHeader",
     "~plugins/vue-js-toggle-button",
-    "~plugins/vue-js-modal"
+    "~plugins/vue-js-modal",
+    "~plugins/vue-burger-menu"
   ],
   /*
    ** Auto import components
