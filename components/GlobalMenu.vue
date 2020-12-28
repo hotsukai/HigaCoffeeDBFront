@@ -1,5 +1,8 @@
 <template>
   <Slide :closeOnNavigation="true">
+      <nuxt-link to="/" :class="{ isSelected: isDataSelected }"
+      ><i class="fas fa-home"></i>　トップ</nuxt-link
+    >
     <nuxt-link to="/data" :class="{ isSelected: isDataSelected }"
       ><i class="far fa-chart-bar"></i>　みる</nuxt-link
     >
@@ -104,26 +107,13 @@ export default {
 </script>
 
 <style scoped lang="scss">
-.navbar {
-  background-color: #303033;
-  .navbar-menu {
-    background-color: #303033;
-  }
-}
-
-.navbar-item {
-  color: hsla(0, 0%, 100%, 1);
-}
-.navbar-burger {
-  color: #eee;
-}
 
 .isSelected {
   font-weight: bold;
 }
 
 .notActive {
-  color: hsla(0, 0, 100, 0.3);
+ opacity: 0.3;
 }
 // <Slide>にスタイル指定。
 ::v-deep {

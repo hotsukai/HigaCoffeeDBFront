@@ -23,3 +23,8 @@ $ yarn start
 # generate static project
 $ yarn generate
 ```
+
+## ステージング環境
+stagingブランチは
+https://staging--higa-database.netlify.app/
+に自動デプロイされます。
