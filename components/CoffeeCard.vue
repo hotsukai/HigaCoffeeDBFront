@@ -1,12 +1,12 @@
 <template>
   <div class="card" v-if="coffee">
     <div class="card-content">
-      <p class="title">
+      <p class="title is-4">
         <nuxt-link :to="'/reviews?bean=' + coffee.bean.id">
           {{ coffee.bean.name }}
         </nuxt-link>
       </p>
-      <p class="subtitle">Coffee-ID : {{ coffee.id }}</p>
+      <p class="subtitle is-6">Coffee-ID : {{ coffee.id }}</p>
       <ul>
         <li>抽出日 : <ConvertTime :time="coffee.createdAt" /></li>
         <li v-if="coffee.dripper">
@@ -69,8 +69,3 @@ export default {
 };
 </script>
 
-<style>
-.title {
-  font-size: 7vw;
-}
-</style>

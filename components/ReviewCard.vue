@@ -1,12 +1,12 @@
 <template>
   <div class="card">
     <div class="card-content">
-      <p class="title">
+      <p class="title is-4">
         <nuxt-link :to="'/reviews?bean=' + review.coffee.bean.id">
           {{ review.coffee.bean.name }}
         </nuxt-link>
       </p>
-      <p class="subtitle">
+      <p class="subtitle is-6">
         Review-ID : {{ review.id }}<br />
         Reviewer :
         <nuxt-link
@@ -124,7 +124,5 @@ export default {
 .card {
   margin-bottom: 1em;
 }
-.title {
-  font-size: 7vw;
-}
+
 </style>
