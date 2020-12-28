@@ -1,5 +1,5 @@
 <template>
-  <Slide :closeOnNavigation="true" onOverlay right>
+  <Slide :closeOnNavigation="true"  right>
     <nuxt-link to="/data" :class="{ isSelected: isDataSelected }"
       ><i class="far fa-chart-bar"></i>　みる</nuxt-link
     >
@@ -134,6 +134,7 @@ export default {
     left: 36px;
     top: 25px;
     cursor: pointer;
+    z-index: 100;
   }
   .bm-burger-bars {
     background-color: #373a47;
