@@ -228,28 +228,37 @@ export default {
       this.selectedDrinkersId = [];
       this.drinkerErrorMsg = "";
       val.forEach((drinkerNameOrId, index) => {
-        const drinkerFindById = this.users.find(
-          (user) => user.id == drinkerNameOrId
-        );
-        if (
-          drinkerFindById &&
-          !this.selectedDrinkersId.includes(drinkerFindById.id)
-        ) {
-          this.selectedDrinkersId.push(drinkerFindById.id);
-          this.selectedDrinkers[index] = drinkerFindById.name;
-          return;
+        if (drinkerNameOrId) {
+          const drinkerFindById = this.users.find(
+            (user) => user.id == drinkerNameOrId
+          );
+          const drinkerFindByName = this.users.find(
+            (user) => user.name == drinkerNameOrId
+          );
+          if (
+            drinkerFindById &&
+            !this.selectedDrinkersId.includes(drinkerFindById.id)
+          ) {
+            this.selectedDrinkersId.push(drinkerFindById.id);
+            this.selectedDrinkers[index] = drinkerFindById.name;
+            return;
+          }
+          if (
+            drinkerFindByName &&
+            !this.selectedDrinkersId.includes(drinkerFindByName.id)
+          ) {
+            this.selectedDrinkersId.push(drinkerFindByName.id);
+            return;
+          }
+          if (
+            (drinkerFindById &&
+              this.selectedDrinkersId.includes(drinkerFindById.id)) ||
+            (drinkerFindByName &&
+              this.selectedDrinkersId.includes(drinkerFindByName.id))
+          )
+            this.drinkerErrorMsg = "ユーザーが重複しています";
+          else this.drinkerErrorMsg = "ユーザーが存在しません";
         }
-        const drinkerFindByName = this.users.find(
-          (user) => user.name == drinkerNameOrId
-        );
-        if (
-          drinkerFindByName &&
-          !this.selectedDrinkersId.includes(drinkerFindByName.id)
-        ) {
-          this.selectedDrinkersId.push(drinkerFindByName.id);
-          return;
-        }
-        this.drinkerErrorMsg = "ユーザーが存在しません";
       });
     },
   },
