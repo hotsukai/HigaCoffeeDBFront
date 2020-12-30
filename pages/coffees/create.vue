@@ -1,7 +1,7 @@
 <template>
   <div>
     <form>
-      <div>
+      <div class="form-field">
         <label class="label">豆の種類<Required /></label>
         <div class="select is-medium">
           <select v-model="selectedBean">
@@ -11,7 +11,7 @@
           </select>
         </div>
       </div>
-      <div>
+      <div class="form-field">
         <label class="label">抽出法<Required /></label>
         <div class="select is-medium">
           <select v-model.number="selectedExtractionMethod">
@@ -26,7 +26,7 @@
         </div>
       </div>
 
-      <div v-show="selectedExtractionMethod == 1">
+      <div v-show="selectedExtractionMethod == 1" class="form-field">
         <label class="label">抽出時間<Required /></label>
         <div class="field has-addons">
           <p class="control">
@@ -43,7 +43,7 @@
           </p>
         </div>
       </div>
-      <div>
+      <div class="form-field">
         <label class="label">粉の量<Required /></label>
         <div class="field has-addons">
           <p class="control">
@@ -61,7 +61,7 @@
           </p>
         </div>
       </div>
-      <div>
+      <div class="form-field">
         <label class="label">お湯の量<Required /></label>
         <div class="field has-addons">
           <p class="control">
@@ -78,7 +78,7 @@
           </p>
         </div>
       </div>
-      <div>
+      <div class="form-field">
         <label class="label">お湯の温度</label>
         <div class="field has-addons">
           <p class="control">
@@ -95,10 +95,9 @@
           </p>
         </div>
       </div>
-      <div>
+      <div class="form-field">
         <label class="label">飲む人<Required /></label>
         <p class="help">IDかユーザー名を入力してください</p>
-
         <div v-for="i in selectedDrinkers.length" :key="i">
           <div class="field has-addons">
             <p class="control">
@@ -139,10 +138,10 @@
           type="button"
           @click="addDrinker()"
         >
-          追加
+          ＋
         </button>
       </div>
-      <div>
+      <div class="form-field">
         <label class="label">メモ</label>
         <input class="input is-medium" type="text" v-model="memo" />
         <p class="help">
@@ -306,5 +305,9 @@ export default {
 <style lang="scss">
 .warn {
   color: $red;
+}
+
+.form-field {
+  margin-bottom: 1em;
 }
 </style>
