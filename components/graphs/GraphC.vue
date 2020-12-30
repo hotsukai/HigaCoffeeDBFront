@@ -44,12 +44,22 @@ export default {
                 min: 1,
                 stepSize: 1,
                 callback: function (label, index, labels) {
-                  let xLabels = ["浅い", "", "", "苦い"];
+                  let xLabels = ["苦くない", "", "", "苦い"];
                   return xLabels[label - 1];
                 },
               },
             },
           ],
+        },
+        tooltips: {
+          callbacks: {
+            title: (tooltipItem, data) => {
+              return data.labels[tooltipItem[0].datasetIndex];
+            },
+            label: (tooltipItem, data) => {
+              return `役割 : ${tooltipItem.xLabel} , 苦さ : ${tooltipItem.yLabel}`;
+            },
+          },
         },
       },
     };

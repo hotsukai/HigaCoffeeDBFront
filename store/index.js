@@ -4,12 +4,10 @@ export const state = () => ({
 
 export const mutations = {
   setUser(state, data) {
-    console.debug("set");
     state.currentUser = data.user;
     localStorage.setItem("authToken", data.token);
   },
   deleteUser(state) {
-    console.debug("delete");
     state.currentUser = null;
     localStorage.removeItem("authToken");
   }

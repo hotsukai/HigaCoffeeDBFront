@@ -69,7 +69,8 @@ export default {
     "@nuxtjs/axios",
     "@nuxtjs/dotenv",
     "@nuxtjs/proxy",
-    "@nuxtjs/style-resources"
+    "@nuxtjs/style-resources",
+    "@nuxtjs/toast"
   ],
 
   axios: {
@@ -88,6 +89,11 @@ export default {
     google: {
       families: ["Noto+Sans+JP:wght@100;300"]
     }
+  },
+  toast: {
+    // 右上にtoastを表示
+    position: "top-right",
+    duration: 3000
   },
 
   /*

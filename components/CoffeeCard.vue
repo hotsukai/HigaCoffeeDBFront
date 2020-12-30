@@ -46,11 +46,7 @@
   </div>
 </template>
 
-<style scoped>
-.card {
-  margin-bottom: 1em;
-}
-</style>
+
 
 <script>
 export default {
@@ -69,3 +65,15 @@ export default {
 };
 </script>
 
+<style lang="scss" scoped>
+.card {
+  margin-bottom: 1em;
+  height: 400px;
+  .card-content {
+    height:340px;
+  }
+  .card-footer-item {
+    height: 60px;
+  }
+}
+</style>

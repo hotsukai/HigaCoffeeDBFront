@@ -52,10 +52,10 @@ export default {
               user: response.data,
               token: response.token
             });
-            alert("ログインしました");
+            this.$toast.success("ログインしました");
             this.$router.push("/mypage");
           } else {
-            alert("ログインに失敗しました" + response.message);
+            this.$toast.error("ログインに失敗しました" + response.message);
             return false;
           }
         })
