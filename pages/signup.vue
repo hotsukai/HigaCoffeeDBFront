@@ -63,23 +63,23 @@ export default {
   methods: {
     async submit() {
       if (this.password !== this.password2) {
-        alert("パスワードが一致しません");
+        this.$toast.error("パスワードが一致しません");
         return;
       }
       if (this.password.length === 0) {
-        alert("パスワードを入力してください");
+        this.$toast.error("パスワードを入力してください");
         return;
       }
       if (this.userName.length === 0) {
-        alert("ユーザー名を入力してください");
+        this.$toast.error("ユーザー名を入力してください");
         return;
       }
       if (this.userName.length > 30) {
-        alert("ユーザー名が長すぎます");
+        this.$toast.error("ユーザー名が長すぎます");
         return;
       }
       if (encodeURIComponent(this.password).replace(/%../g, "x").length > 50) {
-        alert("パスワードが長すぎます");
+        this.$toast.error("パスワードが長すぎます");
         return;
       }
 
@@ -95,16 +95,16 @@ export default {
               user: response.data,
               token: response.token
             });
-            alert("ユーザーを登録しました");
+            this.$toast.success("ユーザーを登録しました");
             this.$router.push("/mypage");
             return true;
           } else {
-            alert("ユーザー登録に失敗しました : " + response.message);
+            this.$toast.error("ユーザー登録に失敗しました : " + response.message);
             return false;
           }
         })
         .catch(err => {
-          alert("ユーザー登録に失敗しました 1");
+          this.$toast.error("ユーザー登録に失敗しました 1");
           console.error("error 1 : ", err.message);
           return false;
         });

@@ -36,7 +36,7 @@ export default {
   methods: {
     logout() {
       this.$store.commit("deleteUser");
-      alert("ログアウトしました");
+     this.$toast.success("ログアウトしました");
       location.replace("/");
     }
   }

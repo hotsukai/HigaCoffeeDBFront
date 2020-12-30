@@ -45,10 +45,10 @@ export default {
       batch
         .commit()
         .then(function () {
-          alert("コーヒーを削除しました");
+          this.$toast.success("コーヒーを削除しました");
         })
         .catch(function (error) {
-          alert("コーヒーの削除に失敗しました", error);
+          this.$toast.error("コーヒーの削除に失敗しました", error);
           console.error("Error removing document: ", error);
         });
     },

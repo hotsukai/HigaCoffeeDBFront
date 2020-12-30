@@ -285,15 +285,15 @@ export default {
         .then((res) => {
           if (res.result) {
             console.log(res.data);
-            alert("コーヒーを登録しました。");
+            this.$toast.success("コーヒーを登録しました。");
           } else {
-            alert("ERROR1:コーヒーの登録に失敗しました" + res.message);
+            this.$toast.error("ERROR1:コーヒーの登録に失敗しました" + res.message);
           }
           this.$router.push("/");
         })
         .catch((err) => {
           console.error("コーヒーの登録に失敗しました" + err.message);
-          alert("ERROR2:コーヒーの登録に失敗しました" + res.message);
+          this.$toast.error("ERROR2:コーヒーの登録に失敗しました" + res.message);
           this.$router.push("/");
         });
     },

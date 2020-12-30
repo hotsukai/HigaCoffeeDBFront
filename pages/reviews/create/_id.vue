@@ -124,14 +124,14 @@ export default {
         })
         .then(res => {
           if (res.result) {
-            alert("レビューを作成しました");
+            this.$toast.success("レビューを作成しました");
           } else {
-            alert("レビューの作成に失敗しました" + res.message);
+            this.$toast.error("レビューの作成に失敗しました" + res.message);
           }
           this.$router.push("/mypage");
         })
         .catch(err => {
-          alert("レビューの作成に失敗しました" + res.message);
+          this.$toast.error("レビューの作成に失敗しました" + res.message);
           this.$router.push("/mypage");
         });
     }

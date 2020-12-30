@@ -15,6 +15,7 @@
     "@nuxtjs/bulma": "^1.3.0",
     "@nuxtjs/dotenv": "^1.4.1",
     "@nuxtjs/proxy": "^2.0.1",
+    "@nuxtjs/toast": "^3.3.1",
     "chart.js": "^2.9.3",
     "nuxt": "^2.14.0",
     "nuxt-webfontloader": "^1.1.0",
