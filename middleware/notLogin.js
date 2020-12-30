@@ -9,7 +9,7 @@ export default function({ route, store, redirect }) {
       route.name === "signup"
     )
   ) {
-    alert("会員登録が必要です。");
+    this.$toast.show("会員登録が必要です。");
     redirect("/signup");
   }
 }

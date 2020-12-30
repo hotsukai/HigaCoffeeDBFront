@@ -127,7 +127,6 @@ export default {
         return;
       }
       const item = event[0];
-      console.debug("item : ", item._index, item);
       if (confirm(this.data.labels[item._index] + "のレビューを読みますか"))
         this.$router.push("/reviews/?bean_id=" + (item._index + 1));
     }

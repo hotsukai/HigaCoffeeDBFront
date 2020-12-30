@@ -156,10 +156,13 @@ export default {
 };
 </script>
 
-<style>
+<style scoped lang="scss">
 .require-login-message-area {
   height: 400px;
-  text-align: center;
-  background-color: white;
+  display: table;
+  p {
+    display: table-cell;
+    vertical-align: middle;
+  }
 }
 </style>

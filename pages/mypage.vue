@@ -40,7 +40,7 @@ export default Vue.extend({
     let user = this.$store.state.currentUser;
     this.user = user;
     if (!user) {
-      alert("ログインしてください");
+      this.$toast.show("ログインしてください");
       this.$router.push("/login");
     }
 

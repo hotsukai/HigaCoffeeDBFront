@@ -39,11 +39,10 @@ export default {
 };
 </script>
 
-<style scoped>
+<style lang="scss" scoped>
 .modal-inner-box {
   margin: 1em;
 }
-.view-details {
-  margin-top: 0.5em;
-}
+
+
 </style>
