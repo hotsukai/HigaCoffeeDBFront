@@ -3,7 +3,7 @@
     <form>
       <div>
         <label class="label">豆の種類<Required /></label>
-        <div class="select">
+        <div class="select is-medium">
           <select v-model="selectedBean">
             <option v-for="bean in beans" :key="bean.id" v-bind:value="bean.id">
               {{ bean.name }}
@@ -13,7 +13,7 @@
       </div>
       <div>
         <label class="label">抽出法<Required /></label>
-        <div class="select">
+        <div class="select is-medium">
           <select v-model.number="selectedExtractionMethod">
             <option
               v-for="method in extractionMethods"
@@ -25,65 +25,112 @@
           </select>
         </div>
       </div>
+
       <div v-show="selectedExtractionMethod == 1">
         <label class="label">抽出時間<Required /></label>
-        <input
-          v-model.number="selectedExtractionTime"
-          type="number"
-          min="0"
-          max="10"
-        />分
+        <div class="field has-addons">
+          <p class="control">
+            <input
+              v-model.number="selectedExtractionTime"
+              type="number"
+              min="0"
+              max="10"
+              class="input is-medium"
+            />
+          </p>
+          <p class="control">
+            <a class="button is-static is-medium">分</a>
+          </p>
+        </div>
       </div>
       <div>
         <label class="label">粉の量<Required /></label>
-        <input
-          v-model.number="selectedPowderAmount"
-          type="number"
-          min="0"
-          max="20"
-          step="0.1"
-        />g
+        <div class="field has-addons">
+          <p class="control">
+            <input
+              v-model.number="selectedPowderAmount"
+              type="number"
+              min="0"
+              max="20"
+              step="0.1"
+              class="input is-medium"
+            />
+          </p>
+          <p class="control">
+            <a class="button is-static is-medium">g</a>
+          </p>
+        </div>
       </div>
       <div>
         <label class="label">お湯の量<Required /></label>
-        <input
-          v-model.number="selectedWaterAmount"
-          type="number"
-          min="0"
-          max="500"
-        />mL
+        <div class="field has-addons">
+          <p class="control">
+            <input
+              v-model.number="selectedWaterAmount"
+              type="number"
+              min="0"
+              max="500"
+              class="input is-medium"
+            />
+          </p>
+          <p class="control">
+            <a class="button is-static is-medium">mL</a>
+          </p>
+        </div>
       </div>
       <div>
         <label class="label">お湯の温度</label>
-        <input
-          v-model.number="selectedWaterTemperature"
-          type="number"
-          min="0"
-          max="100"
-        />℃
+        <div class="field has-addons">
+          <p class="control">
+            <input
+              v-model.number="selectedWaterTemperature"
+              type="number"
+              min="0"
+              max="100"
+              class="input is-medium"
+            />
+          </p>
+          <p class="control">
+            <a class="button is-static is-medium">℃</a>
+          </p>
+        </div>
       </div>
       <div>
         <label class="label">飲む人<Required /></label>
         <p class="help">IDかユーザー名を入力してください</p>
 
         <div v-for="i in selectedDrinkers.length" :key="i">
-          <input v-model.lazy="selectedDrinkers[i - 1]" list="userslist" />
-          <datalist id="userslist">
-            もしくはリストから選択
-            <select v-model="selectedDrinkers[i - 1]">
-              <option v-for="user in users" :key="user.id" :value="user.name">
-                {{ user.name }}
-              </option>
-            </select>
-          </datalist>
-          <button
-            v-if="selectedDrinkers.length != 1"
-            type="button"
-            @click="deleteDrinker(i)"
-            class="button"
-          >
-            削除
-          </button>
+          <div class="field has-addons">
+            <p class="control">
+              <input
+                v-model.lazy="selectedDrinkers[i - 1]"
+                list="userslist"
+                class="input is-medium"
+              />
+              <datalist id="userslist">
+                もしくはリストから選択
+                <select v-model="selectedDrinkers[i - 1]">
+                  <option
+                    v-for="user in users"
+                    :key="user.id"
+                    :value="user.name"
+                  >
+                    {{ user.name }}
+                  </option>
+                </select>
+              </datalist>
+            </p>
+            <p class="control">
+              <a
+                v-if="selectedDrinkers.length != 1"
+                type="button"
+                @click="deleteDrinker(i)"
+                class="button is-medium"
+              >
+                ×
+              </a>
+            </p>
+          </div>
         </div>
         <p class="warn">{{ drinkerErrorMsg }}</p>
         <button
@@ -97,7 +144,7 @@
       </div>
       <div>
         <label class="label">メモ</label>
-        <input class="input" type="text" v-model="memo" />
+        <input class="input is-medium" type="text" v-model="memo" />
         <p class="help">
           既定のレシピ通りに出来なかった場合はその旨を記してください（例：お湯を入れすぎた、抽出時間長すぎた）
         </p>
