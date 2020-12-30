@@ -1,32 +1,42 @@
 <template>
   <Slide :closeOnNavigation="true">
-      <nuxt-link to="/" :class="{ isSelected: isDataSelected }"
-      ><i class="fas fa-home"></i>　トップ</nuxt-link
+    <nuxt-link to="/" :class="{ isSelected: isDataSelected }" class="top">
+      トップ</nuxt-link
     >
-    <nuxt-link to="/data" :class="{ isSelected: isDataSelected }"
-      ><i class="far fa-chart-bar"></i>　みる</nuxt-link
+    <nuxt-link to="/data" :class="{ isSelected: isDataSelected }" class="data">
+      みる</nuxt-link
     >
 
-    <nuxt-link to="/reviews/" :class="{ isSelected: isReadReviewSelected }"
-      ><i class="fas fa-book"></i>　よむ</nuxt-link
+    <nuxt-link
+      to="/reviews/"
+      :class="{ isSelected: isReadReviewSelected }"
+      class="reviews"
+    >
+      よむ</nuxt-link
     >
 
     <nuxt-link
       to="/reviews/create"
       :class="{ isSelected: isCreateReviewSelected, notActive: !isLogin }"
-      ><i class="fas fa-pen"></i>　かく</nuxt-link
+      class="reviews-create"
+    >
+      かく</nuxt-link
     >
 
     <nuxt-link
       to="/coffees/create"
       :class="{ isSelected: isCreateCoffeeSelected, notActive: !isLogin }"
-      ><i class="fas fa-hourglass-half"></i>　いれる</nuxt-link
+      class="coffees-create"
+    >
+      いれる</nuxt-link
     >
 
     <nuxt-link
       to="/mypage"
       :class="{ isSelected: isMypageSelected, notActive: !isLogin }"
-      ><i class="fas fa-user"></i>　マイページ</nuxt-link
+      class="mypage"
+    >
+      マイページ</nuxt-link
     >
     <LoginButton />
     <div v-show="!isLogin">
@@ -107,13 +117,53 @@ export default {
 </script>
 
 <style scoped lang="scss">
-
 .isSelected {
   font-weight: bold;
 }
 
 .notActive {
- opacity: 0.3;
+  opacity: 0.3;
+}
+
+.top::before {
+  font-family: "Font Awesome 5 Free";
+  font-weight: 900;
+  margin-right: 0.3em;
+  content: "\f015";
+}
+
+.data::before {
+  font-family: "Font Awesome 5 Free";
+  margin-right: 0.3em;
+  font-weight: 900;
+  content: "\f080";
+}
+
+.reviews::before {
+  font-family: "Font Awesome 5 Free";
+  margin-right: 0.3em;
+  font-weight: 900;
+  content: "\f518";
+}
+
+.reviews-create::before {
+  font-family: "Font Awesome 5 Free";
+  margin-right: 0.3em;
+  font-weight: 900;
+  content: "\f304";
+}
+
+.coffees-create::before {
+  font-family: "Font Awesome 5 Free";
+  margin-right: 0.3em;
+  font-weight: 900;
+  content: "\f253";
+}
+.mypage::before {
+  font-family: "Font Awesome 5 Free";
+  margin-right: 0.3em;
+  font-weight: 900;
+  content: "\f007";
 }
 // <Slide>にスタイル指定。
 ::v-deep {
