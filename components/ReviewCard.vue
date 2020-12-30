@@ -8,12 +8,7 @@
       </p>
       <p class="subtitle is-6">
         Review-ID : {{ review.id }}<br />
-        Reviewer :
-        <nuxt-link
-          v-if="review.reviewer && isLogin"
-          :to="'/users/' + review.reviewer.id"
-          >{{ review.reviewer.name }}</nuxt-link
-        >
+        <UsersName v-if="review.reviewer" :users="[review.reviewer]">Reviewer : </UsersName>
       </p>
       <div class="columns">
         <div class="column">
@@ -127,7 +122,5 @@ export default {
   .card-footer {
     height: 60px;
   }
- 
-  
 }
 </style>

@@ -1,5 +1,5 @@
 <template>
-  <div>
+  <div v-if="users">
     <slot />
     <span v-for="(user,index) in users" :key="user.id">
       <span v-if="index!=0">,</span>
