@@ -11,13 +11,14 @@
   </ul>
 </template>
       
-<script>
-export default {
+<script lang="ts">
+import Vue from "vue";
+export default Vue.extend({
   props: {
-    reviews: { type: Array, default: new Array() },
+    reviews: { type: Array, default: () => [] },
     isHorizonal: { type: Boolean, default: false },
   },
-};
+});
 </script>
       
 <style scoped>

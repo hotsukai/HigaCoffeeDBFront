@@ -70,47 +70,49 @@
   </div>
 </template>
 
-<script>
+<script lang="ts">
 import ModalWithButton from "./ModalWithButton.vue";
-export default {
+import Vue from "vue";
+import { Coffee } from "~/types/models";
+export default Vue.extend({
   components: { ModalWithButton },
-  props: { review: { type: Object, required: "true", default: new Object() } },
-  data() {
+  props: { review: { type: Object, default: new Object() } },
+  data(): { viewMore: boolean; isLogin: boolean; coffee: Coffee | null } {
     return {
       viewMore: false,
       isLogin: false,
-      coffee: {},
+      coffee: null,
     };
   },
 
   computed: {
-    repeatToJapanese() {
-      const repeat_japanese = ["飲みたくない!!", "普通", "また飲みたい!"];
-      return repeat_japanese[parseInt(this.review.wantRepeat) - 1];
+    repeatToJapanese(): string {
+      const repeatJapanese = ["飲みたくない!!", "普通", "また飲みたい!"];
+      return repeatJapanese[parseInt(this.review.wantRepeat) - 1];
     },
 
-    situationToJapanese() {
-      const situation_japanese = [
+    situationToJapanese(): string {
+      const situationJapanese = [
         "リラックス",
         "ややリラックス",
         "やや眠気覚まし",
         "眠気覚まし",
       ];
-      return situation_japanese[parseInt(this.review.situation) - 1];
+      return situationJapanese[parseInt(this.review.situation) - 1];
     },
   },
 
-  created() {
+  created(): void {
     this.coffee = this.review.coffee;
     this.isLogin = this.$store.state.currentUser != null;
   },
 
   methods: {
-    toggleViewMore() {
+    toggleViewMore(): void {
       this.viewMore = !this.viewMore;
     },
   },
-};
+});
 </script>
 
 <style lang="scss" scoped>

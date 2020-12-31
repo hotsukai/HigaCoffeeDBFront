@@ -9,24 +9,27 @@
   </div>
 </template>
 
-<script>
-export default {
-  data() {
+<script lang="ts">
+import Vue from "vue";
+import { User } from "~/types/models";
+
+export default Vue.extend({
+  data(): { isLogin: boolean } {
     return {
-      isLogin: false
+      isLogin: false,
     };
   },
 
   computed: {
-    user() {
+    user(): User {
       return this.$store.state.currentUser;
-    }
+    },
   },
 
   watch: {
-    user(val) {
+    user(val: User) {
       this.isLogin = val !== null;
-    }
+    },
   },
 
   created() {
@@ -34,13 +37,13 @@ export default {
   },
 
   methods: {
-    logout() {
+    logout(): void {
       this.$store.commit("deleteUser");
-     this.$toast.success("ログアウトしました");
+      this.$toast.success("ログアウトしました");
       location.replace("/");
-    }
-  }
-};
+    },
+  },
+});
 </script>
 
 <style></style>

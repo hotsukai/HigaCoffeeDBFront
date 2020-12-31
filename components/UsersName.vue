@@ -10,12 +10,13 @@
   </div>
 </template>
 
-<script>
-export default {
+<script lang="ts">
+import Vue from "vue";
+export default Vue.extend({
   props: {
-    users: { type: Array, default: new Array() },
+    users: { type: Array, default: () => [] },
   },
-};
+});
 </script>
 
 <style>

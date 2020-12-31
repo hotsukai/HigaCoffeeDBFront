@@ -27,8 +27,8 @@
 
 <script lang="ts">
 // export type DataType = ;
-
-export default {
+import Vue from "vue";
+export default Vue.extend({
   data(): {
     userName: string;
     password: string;
@@ -73,5 +73,5 @@ export default {
         });
     },
   },
-};
+});
 </script>

@@ -48,8 +48,9 @@
 
 
 
-<script>
-export default {
+<script lang="ts">
+import Vue from "vue";
+export default Vue.extend({
   props: {
     coffee: { type: Object, default: new Object() },
     showReview: Boolean,
@@ -58,11 +59,11 @@ export default {
   },
 
   computed: {
-    fullPath: function () {
+    fullPath: function (): string {
       return "/reviews/create/" + this.coffee.id;
     },
   },
-};
+});
 </script>
 
 <style lang="scss" scoped>

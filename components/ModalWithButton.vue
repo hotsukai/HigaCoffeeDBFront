@@ -25,8 +25,9 @@
   </div>
 </template>
 
-<script>
-export default {
+<script lang="ts">
+import Vue from "vue";
+export default Vue.extend({
   props: { modalKey: { type: Number, required: true } },
   methods: {
     show() {
@@ -36,13 +37,11 @@ export default {
       this.$modal.hide("modal-content" + this.modalKey);
     },
   },
-};
+});
 </script>
 
 <style lang="scss" scoped>
 .modal-inner-box {
   margin: 1em;
 }
-
-
 </style>

@@ -12,16 +12,18 @@
   </ul>
 </template>
       
-<script>
-export default {
+<script lang="ts">
+import Vue from "vue";
+export default Vue.extend({
   props: {
-    coffees: { type: Array, default: new Array() },
+    coffees: { type: Array , default: () => [] },
     showReview: Boolean,
     createReview: Boolean,
     showDetails: Boolean,
   },
-};
+});
 </script>
+
 <style scoped>
 .horizonal-list {
   overflow-x: auto;

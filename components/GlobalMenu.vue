@@ -47,9 +47,19 @@
   </Slide>
 </template>
 
-<script>
-export default {
-  data: () => {
+<script lang="ts">
+import Vue from "vue";
+import { User } from "~/types/models";
+export default Vue.extend({
+  data(): {
+    isMenuActive: boolean;
+    isDataSelected: boolean;
+    isMypageSelected: boolean;
+    isCreateReviewSelected: boolean;
+    isCreateCoffeeSelected: boolean;
+    isReadReviewSelected: boolean;
+    isLogin: boolean;
+  } {
     return {
       isMenuActive: false,
       isDataSelected: false,
@@ -61,32 +71,32 @@ export default {
     };
   },
   computed: {
-    user() {
+    user(): User {
       return this.$store.state.currentUser;
     },
   },
 
   watch: {
-    $route() {
+    $route(): void {
       this.isMenuActive = false;
       this.changeSelectedPage();
     },
-    user(val) {
+    user(val: User): void {
       this.isLogin = val !== null;
     },
   },
 
-  created() {
+  created(): void {
     this.changeSelectedPage();
     this.isLogin = this.$store.state.currentUser !== null;
   },
 
   methods: {
-    toggleMenu() {
+    toggleMenu(): void {
       this.isMenuActive = !this.isMenuActive;
     },
 
-    changeSelectedPage() {
+    changeSelectedPage(): void {
       this.isDataSelected = false;
       this.isMypageSelected = false;
       this.isCreateReviewSelected = false;
@@ -113,7 +123,7 @@ export default {
       }
     },
   },
-};
+});
 </script>
 
 <style scoped lang="scss">
