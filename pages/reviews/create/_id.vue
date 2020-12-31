@@ -151,7 +151,7 @@ export default {
           this.$router.push("/mypage");
         })
         .catch((err) => {
-          this.$toast.error("レビューの作成に失敗しました" + res.message);
+          this.$toast.error("レビューの作成に失敗しました" + err.message);
           this.$router.push("/mypage");
         });
     },

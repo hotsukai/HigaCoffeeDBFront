@@ -4,7 +4,10 @@ import { Bar } from "vue-chartjs";
 export default {
   extends: Bar,
 
-  props: ["isMine", "propsDataPromise"],
+  props: {
+    isMine: { type: Boolean, default: false },
+    propsDataPromise: { type: Promise, default: null },
+  },
 
   data() {
     return {
@@ -23,7 +26,7 @@ export default {
               "rgba(155, 118, 83, 0.5)",
               "rgba(155, 118, 83, 0.5)",
               "rgba(155, 118, 83, 0.5)",
-              "rgba(155, 118, 83, 0.5)"
+              "rgba(155, 118, 83, 0.5)",
             ],
             borderColor: [
               "rgba(0,0,0, 1)",
@@ -33,9 +36,9 @@ export default {
               "rgba(0,0,0, 1)",
               "rgba(0,0,0, 1)",
               "rgba(0,0,0, 1)",
-              "rgba(0,0,0, 1)"
+              "rgba(0,0,0, 1)",
             ],
-            borderWidth: 1
+            borderWidth: 1,
           },
           {
             label: "レビュー数",
@@ -48,7 +51,7 @@ export default {
               "rgba(155, 118, 83, 1)",
               "rgba(155, 118, 83, 1)",
               "rgba(155, 118, 83, 1)",
-              "rgba(155, 118, 83, 1)"
+              "rgba(155, 118, 83, 1)",
             ],
             borderColor: [
               "rgba(0,0,0, 1)",
@@ -58,11 +61,11 @@ export default {
               "rgba(0,0,0, 1)",
               "rgba(0,0,0, 1)",
               "rgba(0,0,0, 1)",
-              "rgba(0,0,0, 1)"
+              "rgba(0,0,0, 1)",
             ],
-            borderWidth: 1
-          }
-        ]
+            borderWidth: 1,
+          },
+        ],
       },
       options: {
         responsive: true,
@@ -72,31 +75,31 @@ export default {
             {
               scaleLabel: {
                 display: true,
-                labelString: "豆の種類"
-              }
-            }
+                labelString: "豆の種類",
+              },
+            },
           ],
           yAxes: [
             {
               ticks: {
                 beginAtZero: true,
-                stepSize: 10
-              }
-            }
-          ]
+                stepSize: 10,
+              },
+            },
+          ],
         },
-        onClick: this.handler
-      }
+        onClick: this.handler,
+      },
     };
   },
   watch: {
     isDataLoaded() {
       this.renderChart(this.data, this.options);
-    }
+    },
   },
 
   async created() {
-    const beanData = await this.propsDataPromise
+    const beanData = await this.propsDataPromise;
     for (let beanId in beanData) {
       const bean = beanData[beanId];
       this.data.labels.push(bean.name);
@@ -129,7 +132,7 @@ export default {
       const item = event[0];
       if (confirm(this.data.labels[item._index] + "のレビューを読みますか"))
         this.$router.push("/reviews/?bean_id=" + (item._index + 1));
-    }
-  }
+    },
+  },
 };
 </script>

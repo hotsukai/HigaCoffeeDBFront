@@ -15,7 +15,7 @@
 <script>
 export default {
   props: {
-    coffees: Array,
+    coffees: { type: Array, default: new Array() },
     showReview: Boolean,
     createReview: Boolean,
     showDetails: Boolean,
@@ -32,7 +32,7 @@ export default {
   display: inline-block;
   width: 80%;
   max-width: 25em;
-  margin:0em 2em 1em 0em;
+  margin: 0em 2em 1em 0em;
   vertical-align: top;
 }
 .view-more {

@@ -1,6 +1,5 @@
 <script>
 import { Bubble } from "vue-chartjs";
-import Chart from "chart.js";
 export default {
   extends: Bubble,
   props: { getPositionDataPromise: Promise, isMine: Boolean },
@@ -25,7 +24,7 @@ export default {
                 max: 4,
                 min: 1,
                 stepSize: 1,
-                callback: function (label, index, labels) {
+                callback: function (label) {
                   let xLabels = ["リラックス", "", "", "目覚まし"];
                   return xLabels[label - 1];
                 },
@@ -43,7 +42,7 @@ export default {
                 max: 4,
                 min: 1,
                 stepSize: 1,
-                callback: function (label, index, labels) {
+                callback: function (label) {
                   let xLabels = ["苦くない", "", "", "苦い"];
                   return xLabels[label - 1];
                 },
@@ -56,8 +55,12 @@ export default {
             title: (tooltipItem, data) => {
               return data.labels[tooltipItem[0].datasetIndex];
             },
-            label: (tooltipItem, data) => {
-              return `役割 : ${tooltipItem.xLabel} , 苦さ : ${tooltipItem.yLabel}`;
+            label: (tooltipItem) => {
+              return `役割 : ${
+                Math.round(parseFloat(tooltipItem.xLabel) * 100) / 100
+              } , 苦さ : ${
+                Math.round(parseFloat(tooltipItem.yLabel) * 100) / 100
+              }`;
             },
           },
         },

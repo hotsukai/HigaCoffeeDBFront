@@ -51,7 +51,7 @@
 <script>
 export default {
   props: {
-    coffee: Object,
+    coffee: { type: Object, default: new Object() },
     showReview: Boolean,
     createReview: Boolean,
     showDetails: { type: Boolean, default: true },
@@ -70,7 +70,7 @@ export default {
   margin-bottom: 1em;
   height: 400px;
   .card-content {
-    height:340px;
+    height: 340px;
   }
   .card-footer-item {
     height: 60px;

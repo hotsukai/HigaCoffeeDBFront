@@ -13,7 +13,10 @@
       
 <script>
 export default {
-  props: { reviews: Array, isHorizonal: { type: Boolean, default: false } },
+  props: {
+    reviews: { type: Array, default: new Array() },
+    isHorizonal: { type: Boolean, default: false },
+  },
 };
 </script>
       

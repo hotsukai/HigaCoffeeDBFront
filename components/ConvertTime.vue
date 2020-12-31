@@ -4,7 +4,7 @@
 
 <script>
 export default {
-  props: ["time"],
+  props: { time: { type: String, default: "" } },
   computed: {
     convertJapaneseTime() {
       let date = new Date(this.time);
