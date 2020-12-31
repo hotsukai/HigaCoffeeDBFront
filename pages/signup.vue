@@ -37,38 +37,43 @@
           <input id="js-passcheck" v-model="showPassword" type="checkbox" />
         </div>
 
-        <button class="button" type="button" @click="submit()">
-          登録
-        </button>
+        <button class="button" type="button" @click="submit()">登録</button>
       </form>
     </div>
     <nuxt-link to="/login">登録がお済みの方はこちらへ</nuxt-link>
   </div>
 </template>
 
-<script>
-
-export default {
-  data() {
+<script lang="ts">
+import Vue from "vue";
+export default Vue.extend({
+  data(): {
+    inputWatchWord: string;
+    userName: string;
+    password: string;
+    password2: string;
+    showPassword: boolean;
+    showWatchword: boolean;
+  } {
     return {
       inputWatchWord: "",
       userName: "",
       password: "",
       password2: "",
       showPassword: false,
-      showWatchword: false
+      showWatchword: false,
     };
   },
   computed: {
-    passwordType() {
+    passwordType(): string {
       return this.showPassword ? "text" : "password";
     },
-    watchwordType() {
+    watchwordType(): string {
       return this.showWatchword ? "text" : "password";
-    }
+    },
   },
   methods: {
-    async submit() {
+    async submit(): Promise<void> {
       if (this.password !== this.password2) {
         this.$toast.error("パスワードが一致しません");
         return;
@@ -94,28 +99,30 @@ export default {
         .$post("/auth/create_user", {
           username: this.userName,
           password: this.password,
-          watchword: this.inputWatchWord
+          watchword: this.inputWatchWord,
         })
-        .then(response => {
+        .then((response) => {
           if (response.result) {
             this.$store.commit("setUser", {
               user: response.data,
-              token: response.token
+              token: response.token,
             });
             this.$toast.success("ユーザーを登録しました");
             this.$router.push("/mypage");
             return true;
           } else {
-            this.$toast.error("ユーザー登録に失敗しました : " + response.message);
+            this.$toast.error(
+              "ユーザー登録に失敗しました : " + response.message
+            );
             return false;
           }
         })
-        .catch(err => {
+        .catch((err) => {
           this.$toast.error("ユーザー登録に失敗しました 1");
           console.error("error 1 : ", err.message);
           return false;
         });
-    }
-  }
-};
+    },
+  },
+});
 </script>

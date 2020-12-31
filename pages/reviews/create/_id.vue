@@ -4,100 +4,106 @@
     <CoffeeCard :coffee="coffee" :show-details="false" style="height: auto"
       ><span></span
     ></CoffeeCard>
-      <form>
-        <div class="form-field">
-          <label class="label">苦さ<Required /></label>
-          <p class="help">
-            焙煎度合は一旦忘れて、「あなたがどう感じたか」を記してください。
-          </p>
-          <label class="radio">酸っぱい</label>
-          <input
-            v-model.number="bitterness"
-            name="bitterness"
-            type="range"
-            step="0.1"
-            min="1"
-            max="4"
-          />
-          <label class="radio">苦い</label>
-          <p class="range-number">{{ bitterness }}</p>
-        </div>
-        <div class="form-field">
-          <label class="label">濃さ<Required /></label>
-          <p class="help">
-            抽出時間は一旦忘れて、「あなたがどう感じたか」を記してください。
-          </p>
-          <label class="radio">薄い</label>
+    <form>
+      <div class="form-field">
+        <label class="label">苦さ<Required /></label>
+        <p class="help">
+          焙煎度合は一旦忘れて、「あなたがどう感じたか」を記してください。
+        </p>
+        <label class="radio">酸っぱい</label>
+        <input
+          v-model.number="bitterness"
+          name="bitterness"
+          type="range"
+          step="0.1"
+          min="1"
+          max="4"
+        />
+        <label class="radio">苦い</label>
+        <p class="range-number">{{ bitterness }}</p>
+      </div>
+      <div class="form-field">
+        <label class="label">濃さ<Required /></label>
+        <p class="help">
+          抽出時間は一旦忘れて、「あなたがどう感じたか」を記してください。
+        </p>
+        <label class="radio">薄い</label>
 
-          <input
-            v-model.number="strongness"
-            name="strongness"
-            type="range"
-            step="0.1"
-            min="1"
-            max="4"
-          />
-          <label class="radio">濃い</label>
-          <p class="range-number">{{ strongness }}</p>
+        <input
+          v-model.number="strongness"
+          name="strongness"
+          type="range"
+          step="0.1"
+          min="1"
+          max="4"
+        />
+        <label class="radio">濃い</label>
+        <p class="range-number">{{ strongness }}</p>
+      </div>
+      <div class="form-field">
+        <label class="label">役割<Required /></label>
+        <p class="help">
+          「どういう時におすすめか」という観点で選んでください。
+        </p>
+        <label class="radio">リラックス</label>
 
-        </div>
-        <div class="form-field">
-          <label class="label">役割<Required /></label>
-          <p class="help">
-            「どういう時におすすめか」という観点で選んでください。
-          </p>
-          <label class="radio">リラックス</label>
+        <input
+          v-model.number="situation"
+          name="situation"
+          type="range"
+          step="0.1"
+          min="1"
+          max="4"
+        />
+        <label class="radio">眠気覚まし</label>
+        <p class="range-number">{{ situation }}</p>
+      </div>
+      <div class="form-field">
+        <label class="label">また飲みたい??<Required /></label>
+        <p class="help">ご遠慮なく！</p>
+        <label class="radio">飲みたくない</label>
 
-          <input
-            v-model.number="situation"
-            name="situation"
-            type="range"
-            step="0.1"
-            min="1"
-            max="4"
-          />
-          <label class="radio">眠気覚まし</label>
-          <p class="range-number">{{ situation }}</p>
-
-        </div>
-        <div class="form-field">
-          <label class="label">また飲みたい??<Required /></label>
-          <p class="help">ご遠慮なく！</p>
-          <label class="radio">飲みたくない</label>
-
-          <input
-            v-model.number="wantRepeat"
-            name="wantRepeat"
-            type="range"
-            step="0.1"
-            min="1"
-            max="3"
-          />
-          <label class="radio">また飲みたい!!</label>
-          <p class="range-number">{{ wantRepeat }}</p>
-
-        </div>
-        <div class="form-field">
-          <label class="label">感想</label>
-          <p class="help">コーヒーについての感想を教えてください。</p>
-          <input v-model="feeling" class="input" type="text" />
-        </div>
-        <p v-show="!isValid" class="is-danger">入力に不備があります</p>
-        <button
-          :disabled="!isValid"
-          type="button"
-          class="button"
-          @click="sendReview"
-        >
-          送信!!
-        </button>
-      </form>
-    </div>
+        <input
+          v-model.number="wantRepeat"
+          name="wantRepeat"
+          type="range"
+          step="0.1"
+          min="1"
+          max="3"
+        />
+        <label class="radio">また飲みたい!!</label>
+        <p class="range-number">{{ wantRepeat }}</p>
+      </div>
+      <div class="form-field">
+        <label class="label">感想</label>
+        <p class="help">コーヒーについての感想を教えてください。</p>
+        <input v-model="feeling" class="input" type="text" />
+      </div>
+      <p v-show="!isValid" class="is-danger">入力に不備があります</p>
+      <button
+        :disabled="!isValid"
+        type="button"
+        class="button"
+        @click="sendReview"
+      >
+        送信!!
+      </button>
+    </form>
+  </div>
 </template>
 
-<script>
-export default {
-  data() {
+<script lang="ts">
+import { Coffee } from "~/types/models";
+import Vue from "vue";
+export default Vue.extend({
+  data(): {
+    bitterness: number;
+    strongness: number;
+    situation: number;
+    wantRepeat: number;
+    feeling: string;
+    coffee: Coffee | null;
+  } {
     return {
       bitterness: 1,
       strongness: 1,
@@ -109,7 +115,7 @@ export default {
   },
 
   computed: {
-    isValid() {
+    isValid(): boolean {
       return (
         this.bitterness <= 4 &&
         this.bitterness >= 0 &&
@@ -131,7 +137,8 @@ export default {
   },
 
   methods: {
-    async sendReview() {
+    async sendReview(): Promise<void> {
+      if (!this.coffee) return;
       await this.$axios
         .$post("/reviews", {
           bitterness: this.bitterness,
@@ -156,7 +163,7 @@ export default {
         });
     },
   },
-};
+});
 </script>
 
 <style lang="scss" scoped>
@@ -214,7 +221,7 @@ label.radio {
   margin-left: 45%;
 }
 
-.form-field{
+.form-field {
   margin-bottom: 1em;
 }
 </style>

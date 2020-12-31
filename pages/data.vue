@@ -68,11 +68,7 @@
       <p class="title">セクション2 どうやって淹れる??</p>
       <div>
         <select v-model="pickedBeanSection2" class="select">
-          <option
-            v-for="bean in beans"
-            :key="bean.id"
-            :value="bean.id"
-          >
+          <option v-for="bean in beans" :key="bean.id" :value="bean.id">
             {{ bean.name }}
           </option>
         </select>
@@ -109,12 +105,24 @@
   </div>
 </template>
 
-<script>
-export default {
-  data() {
+<script lang="ts">
+import { Bean } from "~/types/models";
+import Vue from "vue";
+export default Vue.extend({
+  data(): {
+    pickedBeanSection2: number;
+    beans: Bean | null;
+    getProvideDataPromise: Promise<any> | null;
+    getStrongnessDataPromise: Promise<any> | null;
+    getPositionDataPromise: Promise<any> | null;
+    isLogin: boolean;
+    section1_1IsPersonal: boolean;
+    section1_2IsPersonal: boolean;
+    section2IsPersonal: boolean;
+  } {
     return {
       pickedBeanSection2: 1,
-      beans: {},
+      beans: null,
       getProvideDataPromise: null,
       getStrongnessDataPromise: null,
       getPositionDataPromise: null,
@@ -125,35 +133,35 @@ export default {
     };
   },
   watch: {
-    pickedBeanSection2(val) {
+    pickedBeanSection2(val: number): void {
       this.getStrongnessDataPromise = this.$axios
         .$get("/data/strongness/" + val)
-        .then((res) => {
+        .then((res: any) => {
           return res.data;
         });
     },
   },
-  async created() {
-    this.beans = await this.$axios.$get("/beans").then((res) => {
+  async created():Promise<any>{
+    this.beans = await this.$axios.$get("/beans").then((res: { result: any; data: any; }) => {
       if (res.result) return res.data;
     });
     this.getProvideDataPromise = this.$axios
       .$get("/data/provide")
-      .then((res) => {
+      .then((res: { result: any; data: any; }) => {
         if (res.result) return res.data;
       });
     this.getStrongnessDataPromise = this.$axios
       .$get("/data/strongness/" + this.pickedBeanSection2)
-      .then((res) => {
+      .then((res: { result: any; data: any; }) => {
         if (res.result) return res.data;
       });
     this.getPositionDataPromise = this.$axios
       .$get("/data/bean_position")
-      .then((res) => {
+      .then((res: { result: any; data: any; }) => {
         if (res.result) return res.data;
       });
   },
-};
+});
 </script>
 
 <style scoped lang="scss">
