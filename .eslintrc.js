@@ -16,6 +16,7 @@
       // 個別のルールは`.prettierrc.js`に書く
       "eslint:recommended",
       "plugin:vue/recommended",
+      "@vue/typescript/recommended",
       "prettier",
       "prettier/vue",
     ],

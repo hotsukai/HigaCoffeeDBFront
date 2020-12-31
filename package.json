@@ -18,6 +18,9 @@
     "@nuxtjs/dotenv": "^1.4.1",
     "@nuxtjs/proxy": "^2.0.1",
     "@nuxtjs/toast": "^3.3.1",
+    "@typescript-eslint/eslint-plugin": "^4.11.1",
+    "@typescript-eslint/parser": "^4.11.1",
+    "@vue/eslint-config-typescript": "^7.0.0",
     "babel-eslint": "^10.1.0",
     "chart.js": "^2.9.3",
     "eslint-plugin-vue": "^7.4.0",
@@ -38,6 +41,8 @@
     "@nuxtjs/style-resources": "^1.0.0",
     "eslint": "^7.16.0",
     "eslint-config-prettier": "^7.1.0",
+    "eslint-loader": "^4.0.2",
+    "eslint-plugin-nuxt": "^2.0.0",
     "prettier": "^2.2.1"
   }
 }
