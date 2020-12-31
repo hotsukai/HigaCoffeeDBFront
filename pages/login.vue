@@ -18,43 +18,47 @@
           <label for="js-passcheck">パスワードを表示する</label>
           <input id="js-passcheck" v-model="showPassword" type="checkbox" />
         </div>
-        <button class="button" type="button" @click="submit()">
-          ログイン
-        </button>
+        <button class="button" type="button" @click="submit()">ログイン</button>
       </form>
     </div>
     <nuxt-link to="/signup">登録がお済みでない場合</nuxt-link>
   </div>
 </template>
 
-<script>
+<script lang="ts">
+// export type DataType = ;
 
 export default {
-  data() {
+  data(): {
+    userName: string;
+    password: string;
+    isSecretWordCorrect: boolean;
+    showPassword: boolean;
+  } {
     return {
       userName: "",
       password: "",
       isSecretWordCorrect: false,
-      showPassword: false
+      showPassword: false,
     };
   },
   computed: {
-    passwordType() {
+    passwordType(): string {
       return this.showPassword ? "text" : "password";
-    }
+    },
   },
   methods: {
-    async submit() {
+    async submit(): Promise<any> {
       this.$axios
         .$post("/auth/login", {
           username: this.userName,
-          password: this.password
+          password: this.password,
         })
-        .then(response => {
+        .then((response) => {
           if (response.result) {
             this.$store.commit("setUser", {
               user: response.data,
-              token: response.token
+              token: response.token,
             });
             this.$toast.success("ログインしました");
             this.$router.push("/mypage");
@@ -63,11 +67,11 @@ export default {
             return false;
           }
         })
-        .catch(err => {
+        .catch((err) => {
           console.error("error 1 : ", err.message);
           return false;
         });
-    }
-  }
+    },
+  },
 };
 </script>
