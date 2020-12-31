@@ -5,7 +5,7 @@
       :key="review.id"
       :class="{ 'horizonal-item': isHorizonal }"
     >
-      <ReviewCard :review="review" :key="'reviewCard-' + review.id" />
+      <ReviewCard :key="'reviewCard-' + review.id" :review="review" />
     </li>
     <a class="view-more"><i class="fas fa-angle-double-right"></i></a>
   </ul>

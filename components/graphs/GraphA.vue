@@ -89,6 +89,11 @@ export default {
       }
     };
   },
+  watch: {
+    isDataLoaded() {
+      this.renderChart(this.data, this.options);
+    }
+  },
 
   async created() {
     const beanData = await this.propsDataPromise
@@ -114,11 +119,6 @@ export default {
 
   mounted() {
     this.renderChart(this.data, this.options);
-  },
-  watch: {
-    isDataLoaded() {
-      this.renderChart(this.data, this.options);
-    }
   }, //TODO: storeに保存
 
   methods: {

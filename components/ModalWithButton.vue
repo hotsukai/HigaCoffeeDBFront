@@ -9,7 +9,7 @@
     <modal
       :name="'modal-content' + modalKey"
       :scrollable="true"
-      :clickToClose="true"
+      :click-to-close="true"
       width="80%"
       height="auto"
     >

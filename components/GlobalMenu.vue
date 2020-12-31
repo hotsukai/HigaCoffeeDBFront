@@ -1,5 +1,5 @@
 <template>
-  <Slide :closeOnNavigation="true">
+  <Slide :close-on-navigation="true">
     <nuxt-link to="/" :class="{ isSelected: isDataSelected }" class="top">
       トップ</nuxt-link
     >
@@ -40,7 +40,7 @@
     >
     <LoginButton />
     <div v-show="!isLogin">
-      <button @click="$router.push('/signup')" type="button" class="button">
+      <button type="button" class="button" @click="$router.push('/signup')">
         サインアップ
       </button>
     </div>
@@ -60,15 +60,25 @@ export default {
       isLogin: false,
     };
   },
-
-  created() {
-    this.changeSelectedPage();
-    this.isLogin = this.$store.state.currentUser !== null;
-  },
   computed: {
     user() {
       return this.$store.state.currentUser;
     },
+  },
+
+  watch: {
+    $route() {
+      this.isMenuActive = false;
+      this.changeSelectedPage();
+    },
+    user(val) {
+      this.isLogin = val !== null;
+    },
+  },
+
+  created() {
+    this.changeSelectedPage();
+    this.isLogin = this.$store.state.currentUser !== null;
   },
 
   methods: {
@@ -101,16 +111,6 @@ export default {
         default:
           break;
       }
-    },
-  },
-
-  watch: {
-    $route() {
-      this.isMenuActive = false;
-      this.changeSelectedPage();
-    },
-    user(val) {
-      this.isLogin = val !== null;
     },
   },
 };

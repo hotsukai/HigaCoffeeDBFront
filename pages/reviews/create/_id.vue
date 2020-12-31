@@ -1,7 +1,7 @@
 <template>
   <div>
     <h1 class="title">レビューを書く</h1>
-    <CoffeeCard :coffee="coffee" :showDetails="false" style="height: auto"
+    <CoffeeCard :coffee="coffee" :show-details="false" style="height: auto"
       ><span></span
     ></CoffeeCard>
       <form>
@@ -12,8 +12,8 @@
           </p>
           <label class="radio">酸っぱい</label>
           <input
-            name="bitterness"
             v-model.number="bitterness"
+            name="bitterness"
             type="range"
             step="0.1"
             min="1"
@@ -30,8 +30,8 @@
           <label class="radio">薄い</label>
 
           <input
-            name="strongness"
             v-model.number="strongness"
+            name="strongness"
             type="range"
             step="0.1"
             min="1"
@@ -49,8 +49,8 @@
           <label class="radio">リラックス</label>
 
           <input
-            name="situation"
             v-model.number="situation"
+            name="situation"
             type="range"
             step="0.1"
             min="1"
@@ -66,8 +66,8 @@
           <label class="radio">飲みたくない</label>
 
           <input
-            name="wantRepeat"
             v-model.number="wantRepeat"
+            name="wantRepeat"
             type="range"
             step="0.1"
             min="1"
@@ -80,14 +80,14 @@
         <div class="form-field">
           <label class="label">感想</label>
           <p class="help">コーヒーについての感想を教えてください。</p>
-          <input class="input" type="text" v-model="feeling" />
+          <input v-model="feeling" class="input" type="text" />
         </div>
         <p v-show="!isValid" class="is-danger">入力に不備があります</p>
         <button
-          @click="sendReview"
-          v-bind:disabled="!isValid"
+          :disabled="!isValid"
           type="button"
           class="button"
+          @click="sendReview"
         >
           送信!!
         </button>
@@ -106,6 +106,21 @@ export default {
       feeling: "",
       coffee: null,
     };
+  },
+
+  computed: {
+    isValid() {
+      return (
+        this.bitterness <= 4 &&
+        this.bitterness >= 0 &&
+        this.strongness <= 4 &&
+        this.strongness >= 0 &&
+        this.situation <= 4 &&
+        this.situation >= 0 &&
+        this.wantRepeat <= 3 &&
+        this.wantRepeat >= 0
+      );
+    },
   },
 
   async created() {
@@ -139,21 +154,6 @@ export default {
           this.$toast.error("レビューの作成に失敗しました" + res.message);
           this.$router.push("/mypage");
         });
-    },
-  },
-
-  computed: {
-    isValid() {
-      return (
-        this.bitterness <= 4 &&
-        this.bitterness >= 0 &&
-        this.strongness <= 4 &&
-        this.strongness >= 0 &&
-        this.situation <= 4 &&
-        this.situation >= 0 &&
-        this.wantRepeat <= 3 &&
-        this.wantRepeat >= 0
-      );
     },
   },
 };

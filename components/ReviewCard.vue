@@ -8,7 +8,9 @@
       </p>
       <p class="subtitle is-6">
         Review-ID : {{ review.id }}<br />
-        <UsersName v-if="review.reviewer" :users="[review.reviewer]">Reviewer : </UsersName>
+        <UsersName v-if="review.reviewer" :users="[review.reviewer]"
+          >Reviewer :
+        </UsersName>
       </p>
       <div class="columns">
         <div class="column">
@@ -26,9 +28,9 @@
       </div>
     </div>
     <footer class="card-footer">
-      <modal-with-button :modalKey="review.id" class="card-footer-item">
-        <template v-slot:open-button><i class="fas fa-coffee"></i></template>
-        <template v-slot:modal-inner-content>
+      <modal-with-button :modal-key="review.id" class="card-footer-item">
+        <template #open-button><i class="fas fa-coffee"></i></template>
+        <template #modal-inner-content>
           <div class="columns">
             <div class="column">
               <ul>
@@ -72,24 +74,13 @@
 import ModalWithButton from "./ModalWithButton.vue";
 export default {
   components: { ModalWithButton },
-  props: ["review"],
+  props: { review: { type: Object, required: "true", default: new Object() } },
   data() {
     return {
       viewMore: false,
       isLogin: false,
       coffee: {},
     };
-  },
-
-  methods: {
-    toggleViewMore() {
-      this.viewMore = !this.viewMore;
-    },
-  },
-
-  created() {
-    this.coffee = this.review.coffee;
-    this.isLogin = this.$store.state.currentUser != null;
   },
 
   computed: {
@@ -106,6 +97,17 @@ export default {
         "眠気覚まし",
       ];
       return situation_japanese[parseInt(this.review.situation) - 1];
+    },
+  },
+
+  created() {
+    this.coffee = this.review.coffee;
+    this.isLogin = this.$store.state.currentUser != null;
+  },
+
+  methods: {
+    toggleViewMore() {
+      this.viewMore = !this.viewMore;
     },
   },
 };

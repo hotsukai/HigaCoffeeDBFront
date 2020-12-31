@@ -2,7 +2,7 @@
   <div>
     <h1 class="title">あなたあてのコーヒー</h1>
     <div v-show="isCoffeeExist">
-      <CoffeeCards :coffees="coffees" :showReview="false" :createReview="true" :showDetails="false"/>
+      <CoffeeCards :coffees="coffees" :show-review="false" :create-review="true" :show-details="false"/>
     </div>
     <div v-show="!isCoffeeExist">あなたあてのコーヒーがありません。</div>
   </div>
@@ -16,6 +16,12 @@ export default {
     };
   },
 
+  computed: {
+    isCoffeeExist() {
+      return this.coffees.length > 0;
+    }
+  },
+
   async created() {
     let user = this.$store.state.currentUser
     this.coffees = await this.$axios.$get("/coffees", {
@@ -26,12 +32,6 @@ export default {
     }).then(res =>{
       return res.data
     });
-  },
-
-  computed: {
-    isCoffeeExist() {
-      return this.coffees.length > 0;
-    }
   }
 };
 </script>

@@ -5,20 +5,20 @@
       <form class="control">
         <div>
           <label for="userName">ユーザー名</label>
-          <input type="text" id="userName" v-model="userName" class="input" />
+          <input id="userName" v-model="userName" type="text" class="input" />
         </div>
         <div>
           <label for="password">パスワード</label>
           <input
-            :type="passwordType"
             id="password"
             v-model="password"
+            :type="passwordType"
             class="input"
           />
           <label for="js-passcheck">パスワードを表示する</label>
-          <input type="checkbox" id="js-passcheck" v-model="showPassword" />
+          <input id="js-passcheck" v-model="showPassword" type="checkbox" />
         </div>
-        <button class="button" @click="submit()" type="button">
+        <button class="button" type="button" @click="submit()">
           ログイン
         </button>
       </form>
@@ -38,6 +38,11 @@ export default {
       isSecretWordCorrect: false,
       showPassword: false
     };
+  },
+  computed: {
+    passwordType() {
+      return this.showPassword ? "text" : "password";
+    }
   },
   methods: {
     async submit() {
@@ -63,11 +68,6 @@ export default {
           console.error("error 1 : ", err.message);
           return false;
         });
-    }
-  },
-  computed: {
-    passwordType() {
-      return this.showPassword ? "text" : "password";
     }
   }
 };

@@ -5,7 +5,7 @@
         <label class="label">豆の種類<Required /></label>
         <div class="select is-medium">
           <select v-model="selectedBean">
-            <option v-for="bean in beans" :key="bean.id" v-bind:value="bean.id">
+            <option v-for="bean in beans" :key="bean.id" :value="bean.id">
               {{ bean.name }}
             </option>
           </select>
@@ -123,8 +123,8 @@
               <a
                 v-if="selectedDrinkers.length != 1"
                 type="button"
-                @click="deleteDrinker(i)"
                 class="button is-medium"
+                @click="deleteDrinker(i)"
               >
                 ×
               </a>
@@ -143,17 +143,17 @@
       </div>
       <div class="form-field">
         <label class="label">メモ</label>
-        <input class="input is-medium" type="text" v-model="memo" />
+        <input v-model="memo" class="input is-medium" type="text" />
         <p class="help">
           既定のレシピ通りに出来なかった場合はその旨を記してください（例：お湯を入れすぎた、抽出時間長すぎた）
         </p>
       </div>
       <p class="warn">{{ formErrorMsg }}</p>
       <button
-        @click="sendCoffee"
-        v-bind:disabled="!isValid"
+        :disabled="!isValid"
         type="button"
         class="button"
+        @click="sendCoffee"
       >
         送信!!
       </button>
@@ -184,17 +184,6 @@ export default {
     };
   },
 
-  async created() {
-    const beansAxios = this.$axios.$get("/beans");
-    const methodsAxios = this.$axios.$get("/extraction_methods");
-    const usersAxios = this.$axios.$get("/users");
-    const result = await Promise.all([beansAxios, methodsAxios, usersAxios]);
-
-    this.beans = result[0].data;
-    this.extractionMethods = result[1].data;
-    this.users = result[2].data;
-  },
-
   computed: {
     isValid() {
       if (
@@ -218,9 +207,8 @@ export default {
         this.selectedDrinkersId.length > 0 &&
         this.selectedDrinkers[0] !== null
       ) {
-        this.formErrorMsg = "";
         return true;
-      }
+      } else return false;
     },
   },
   watch: {
@@ -261,6 +249,22 @@ export default {
         }
       });
     },
+    isValid(val){
+      if (val) {
+        this.formErrorMsg=""
+      }
+    }
+  },
+
+  async created() {
+    const beansAxios = this.$axios.$get("/beans");
+    const methodsAxios = this.$axios.$get("/extraction_methods");
+    const usersAxios = this.$axios.$get("/users");
+    const result = await Promise.all([beansAxios, methodsAxios, usersAxios]);
+
+    this.beans = result[0].data;
+    this.extractionMethods = result[1].data;
+    this.users = result[2].data;
   },
 
   methods: {
@@ -287,13 +291,17 @@ export default {
             console.log(res.data);
             this.$toast.success("コーヒーを登録しました。");
           } else {
-            this.$toast.error("ERROR1:コーヒーの登録に失敗しました" + res.message);
+            this.$toast.error(
+              "ERROR1:コーヒーの登録に失敗しました" + res.message
+            );
           }
           this.$router.push("/");
         })
         .catch((err) => {
           console.error("コーヒーの登録に失敗しました" + err.message);
-          this.$toast.error("ERROR2:コーヒーの登録に失敗しました" + res.message);
+          this.$toast.error(
+            "ERROR2:コーヒーの登録に失敗しました" + err.message
+          );
           this.$router.push("/");
         });
     },

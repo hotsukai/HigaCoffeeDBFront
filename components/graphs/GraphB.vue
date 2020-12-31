@@ -96,16 +96,16 @@ export default {
     };
   },
 
-  async mounted() {
-    await this.setData();
-    this.renderChart(this.data, this.options);
-  },
-
   watch: {
     async propsDataPromise() {
       await this.setData();
       this.renderChart(this.data, this.options);
     },
+  },
+
+  async mounted() {
+    await this.setData();
+    this.renderChart(this.data, this.options);
   },
   methods: {
     async setData() {

@@ -1,11 +1,11 @@
 <template>
   <ul v-if="coffees" class="horizonal-list">
-    <li v-for="coffee in coffees" v-bind:key="coffee.id" class="horizonal-item">
+    <li v-for="coffee in coffees" :key="coffee.id" class="horizonal-item">
       <CoffeeCard
         :coffee="coffee"
-        :showReview="showReview"
-        :createReview="createReview"
-        :showDetails="showDetails"
+        :show-review="showReview"
+        :create-review="createReview"
+        :show-details="showDetails"
       ></CoffeeCard>
     </li>
     <a class="view-more"><i class="fas fa-angle-double-right"></i></a>

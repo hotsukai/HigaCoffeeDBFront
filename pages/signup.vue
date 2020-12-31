@@ -13,31 +13,31 @@
           class="input"
         />
         <label for="js-watchWordcheck">合言葉を表示する</label>
-        <input type="checkbox" id="js-watchWordcheck" v-model="showWatchword" />
+        <input id="js-watchWordcheck" v-model="showWatchword" type="checkbox" />
         <div>
           <label for="userName">ユーザー名</label>
-          <input type="text" id="userName" v-model="userName" class="input" />
+          <input id="userName" v-model="userName" type="text" class="input" />
         </div>
         <div>
           <label for="password">パスワード</label>
           <input
-            :type="passwordType"
             id="password"
             v-model="password"
+            :type="passwordType"
             class="input"
           />
           <label for="password">パスワード2回目</label>
           <input
-            :type="passwordType"
             id="password"
             v-model="password2"
+            :type="passwordType"
             class="input"
           />
           <label for="js-passcheck">パスワードを表示する</label>
-          <input type="checkbox" id="js-passcheck" v-model="showPassword" />
+          <input id="js-passcheck" v-model="showPassword" type="checkbox" />
         </div>
 
-        <button class="button" @click="submit()" type="button">
+        <button class="button" type="button" @click="submit()">
           登録
         </button>
       </form>
@@ -59,6 +59,14 @@ export default {
       showPassword: false,
       showWatchword: false
     };
+  },
+  computed: {
+    passwordType() {
+      return this.showPassword ? "text" : "password";
+    },
+    watchwordType() {
+      return this.showWatchword ? "text" : "password";
+    }
   },
   methods: {
     async submit() {
@@ -108,14 +116,6 @@ export default {
           console.error("error 1 : ", err.message);
           return false;
         });
-    }
-  },
-  computed: {
-    passwordType() {
-      return this.showPassword ? "text" : "password";
-    },
-    watchwordType() {
-      return this.showWatchword ? "text" : "password";
     }
   }
 };

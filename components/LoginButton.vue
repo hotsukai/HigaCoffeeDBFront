@@ -1,7 +1,7 @@
 <template>
   <div>
     <div v-show="isLogin">
-      <button @click="logout" type="button" class="button">ログアウト</button>
+      <button type="button" class="button" @click="logout">ログアウト</button>
     </div>
     <div v-show="!isLogin">
       <nuxt-link to="/login" class="button">ログイン</nuxt-link>
@@ -23,14 +23,14 @@ export default {
     }
   },
 
-  created() {
-    this.isLogin = this.$store.state.currentUser !== null;
-  },
-
   watch: {
     user(val) {
       this.isLogin = val !== null;
     }
+  },
+
+  created() {
+    this.isLogin = this.$store.state.currentUser !== null;
   },
 
   methods: {
