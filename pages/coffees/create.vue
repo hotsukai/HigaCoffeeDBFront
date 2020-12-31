@@ -163,22 +163,7 @@
 
 <script lang="ts">
 import Vue from "vue";
-export type User = {
-  id: number;
-  name: string;
-};
-export type ExtractionMethod = {
-  id: number;
-  name: string;
-};
-export type Beans = {
-  id: number;
-  name: string;
-};
-export type Mesh = {
-  id: number;
-  name: string;
-};
+import{ExtractionMethod,User,Bean,Mesh} from "~/types/models"
 export default Vue.extend({
   data(): {
     selectedBean: number | null;
@@ -190,7 +175,7 @@ export default Vue.extend({
     selectedWaterAmount: number;
     selectedWaterTemperature: number | null;
     selectedMesh: number | null;
-    beans: Beans | null;
+    beans: Bean | null;
     meshs: Mesh | null;
     memo: string;
     users: Array<User>;
