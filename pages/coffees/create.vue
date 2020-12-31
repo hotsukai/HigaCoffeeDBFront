@@ -161,21 +161,55 @@
   </div>
 </template>
 
-<script>
-export default {
-  data() {
+<script lang="ts">
+import Vue from "vue";
+export type User = {
+  id: number;
+  name: string;
+};
+export type ExtractionMethod = {
+  id: number;
+  name: string;
+};
+export type Beans = {
+  id: number;
+  name: string;
+};
+export type Mesh = {
+  id: number;
+  name: string;
+};
+export default Vue.extend({
+  data(): {
+    selectedBean: number | null;
+    extractionMethods: ExtractionMethod;
+    selectedDrinkers: Array<string>;
+    selectedExtractionMethod: number;
+    selectedExtractionTime: number;
+    selectedPowderAmount: number;
+    selectedWaterAmount: number;
+    selectedWaterTemperature: number | null;
+    selectedMesh: number | null;
+    beans: Beans | null;
+    meshs: Mesh | null;
+    memo: string;
+    users: Array<User>;
+    selectedDrinkersId: Array<number>;
+    drinkerErrorMsg: string;
+    formErrorMsg: string;
+  } {
     return {
       selectedBean: null,
-      extractionMethods: {},
-      selectedDrinkers: [null],
+      extractionMethods: { id: 0, name: "" },
+      selectedDrinkers: [],
       selectedExtractionMethod: 1,
       selectedExtractionTime: 3,
       selectedPowderAmount: 8.5,
       selectedWaterAmount: 100,
       selectedWaterTemperature: null,
       selectedMesh: null,
-      beans: {},
-      meshs: [],
+      beans: null,
+      meshs: null,
       memo: "",
       users: [],
       selectedDrinkersId: [],
@@ -185,43 +219,38 @@ export default {
   },
 
   computed: {
-    isValid() {
+    isValid(): boolean {
       if (
         // TODO: メッセージを丁寧にする
         this.selectedBean !== null &&
-        this.selectedExtractionMethod !== "" &&
-        this.selectedExtractionTime !== "" &&
-        this.selectedPowderAmount !== "" &&
-        this.selectedWaterAmount !== "" &&
-        this.selectedMesh !== "" &&
+        this.selectedExtractionMethod &&
         this.selectedExtractionTime >= 0 &&
         this.selectedExtractionTime <= 10 &&
         this.selectedPowderAmount >= 0 &&
         this.selectedPowderAmount <= 20 &&
         this.selectedWaterAmount >= 0 &&
         this.selectedWaterAmount <= 500 &&
-        ((this.selectedWaterTemperature >= 0 &&
+        ((this.selectedWaterTemperature &&
+          this.selectedWaterTemperature >= 0 &&
           this.selectedWaterTemperature <= 100) ||
-          this.selectedWaterTemperature === null ||
-          this.selectedWaterTemperature === "") &&
-        this.selectedDrinkersId.length > 0 &&
-        this.selectedDrinkers[0] !== null
+          this.selectedWaterTemperature === null) &&
+        this.selectedDrinkersId.length > 0
       ) {
         return true;
       } else return false;
     },
   },
   watch: {
-    selectedDrinkers(val) {
+    selectedDrinkers(val: Array<number | string>): void {
       this.selectedDrinkersId = [];
       this.drinkerErrorMsg = "";
-      val.forEach((drinkerNameOrId, index) => {
-        if (drinkerNameOrId) {
+      val.forEach((drinkerNameOrId: number | string, index: number) => {
+        if (drinkerNameOrId && this.users) {
           const drinkerFindById = this.users.find(
-            (user) => user.id == drinkerNameOrId
+            (user: User) => user.id == drinkerNameOrId
           );
           const drinkerFindByName = this.users.find(
-            (user) => user.name == drinkerNameOrId
+            (user: User) => user.name == drinkerNameOrId
           );
           if (
             drinkerFindById &&
@@ -249,14 +278,17 @@ export default {
         }
       });
     },
-    isValid(val){
+    selectedWaterTemperature(val: number | string): void {
+      if (val === "") this.selectedWaterTemperature = null;
+    },
+    isValid(val: boolean): void {
       if (val) {
-        this.formErrorMsg=""
+        this.formErrorMsg = "";
       }
-    }
+    },
   },
 
-  async created() {
+  async created(): Promise<void> {
     const beansAxios = this.$axios.$get("/beans");
     const methodsAxios = this.$axios.$get("/extraction_methods");
     const usersAxios = this.$axios.$get("/users");
@@ -268,7 +300,7 @@ export default {
   },
 
   methods: {
-    sendCoffee() {
+    sendCoffee(): void {
       if (!this.isValid) {
         this.formErrorMsg = "入力に不備があります";
         return;
@@ -286,7 +318,7 @@ export default {
           waterAmount: this.selectedWaterAmount,
           waterTemperature: this.selectedWaterTemperature,
         })
-        .then((res) => {
+        .then((res: { result: boolean; data: any; message: string }) => {
           if (res.result) {
             console.log(res.data);
             this.$toast.success("コーヒーを登録しました。");
@@ -297,7 +329,7 @@ export default {
           }
           this.$router.push("/");
         })
-        .catch((err) => {
+        .catch((err: { message: string }) => {
           console.error("コーヒーの登録に失敗しました" + err.message);
           this.$toast.error(
             "ERROR2:コーヒーの登録に失敗しました" + err.message
@@ -305,18 +337,18 @@ export default {
           this.$router.push("/");
         });
     },
-    addDrinker() {
+    addDrinker(): void {
       if (this.selectedDrinkers.length < this.users.length) {
-        this.selectedDrinkers.push(null);
+        this.selectedDrinkers.push("");
       }
     },
-    deleteDrinker(id) {
+    deleteDrinker(id: number): void {
       if (this.selectedDrinkers.length > 1) {
         this.selectedDrinkers.splice(id - 1, 1);
       }
     },
   },
-};
+});
 </script>
 
 <style lang="scss">
