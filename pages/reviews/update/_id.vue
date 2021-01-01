@@ -1,6 +1,6 @@
 <template>
   <div>
-    <h1 class="title">かく</h1>
+    <h1 class="title">かきなおす</h1>
     <CoffeeCard :coffee="coffee" :show-details="false" style="height: auto"
       ><span></span
     ></CoffeeCard>
@@ -140,7 +140,7 @@ export default Vue.extend({
     async sendReview(): Promise<void> {
       if (!this.coffee) return;
       await this.$axios
-        .$post("/reviews", {
+      .$put("/reviews"+this.$route.params.id, {
           bitterness: this.bitterness,
           coffeeId: this.coffee.id,
           feeling: this.feeling,

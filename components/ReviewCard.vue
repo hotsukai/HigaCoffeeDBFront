@@ -66,6 +66,17 @@
           </div>
         </template>
       </modal-with-button>
+      <div
+        v-if="currentUser.id === review.reviewer.id"
+        class="card-footer-item"
+      >
+        <button
+          class="button"
+          @click="$router.push('/reviews/update/' + review.id)"
+        >
+          <i class="fas fa-pen"></i>
+        </button>
+      </div>
     </footer>
   </div>
 </template>
@@ -73,15 +84,21 @@
 <script lang="ts">
 import ModalWithButton from "./ModalWithButton.vue";
 import Vue from "vue";
-import { Coffee } from "~/types/models";
+import { Coffee, User } from "~/types/models";
 export default Vue.extend({
   components: { ModalWithButton },
   props: { review: { type: Object, default: new Object() } },
-  data(): { viewMore: boolean; isLogin: boolean; coffee: Coffee | null } {
+  data(): {
+    viewMore: boolean;
+    isLogin: boolean;
+    coffee: Coffee | null;
+    currentUser: User | null;
+  } {
     return {
       viewMore: false,
       isLogin: false,
       coffee: null,
+      currentUser: this.$store.state.currentUser,
     };
   },
 
