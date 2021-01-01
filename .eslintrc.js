@@ -1,25 +1,26 @@
-
-  module.exports = {
-    root: true,
-    parser: "vue-eslint-parser",
-    parserOptions: {
-      parser: "babel-eslint",
-      sourceType: "module",
+module.exports = {
+  root: true,
+  parser: "vue-eslint-parser",
+  parserOptions: {
+    parser: "babel-eslint",
+    sourceType: "module",
+  },
+  env: {
+    browser: true,
+    node: true,
+    es6: true,
+  },
+  extends: ["eslint:recommended", "prettier"],
+  plugins: ["vue"],
+  rules: {},
+  overrides: [
+    {
+      files: ["*.vue", "*.ts"],
+      extends: [
+        "plugin:vue/recommended",
+        "@vue/typescript/recommended",
+        "prettier/vue",
+      ],
     },
-    env: {
-      browser: true,
-      node: true,
-      es6: true,
-    },
-    extends: [
-      // 上から順にルールが適用（上書き）されていく
-      // 個別のルールは`.prettierrc.js`に書く
-      "eslint:recommended",
-      "plugin:vue/recommended",
-      "@vue/typescript/recommended",
-      "prettier",
-      "prettier/vue",
-    ],
-    plugins: ["vue"],
-    rules: {},
-  };
+  ],
+};
