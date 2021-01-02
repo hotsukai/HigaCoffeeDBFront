@@ -67,7 +67,7 @@
         </template>
       </modal-with-button>
       <div
-        v-if="currentUser.id === review.reviewer.id"
+        v-if="review.reviewer && currentUser.id === review.reviewer.id"
         class="card-footer-item"
       >
         <button
