@@ -1,6 +1,7 @@
 <template>
   <div>
     <p class="title">レビューを読む</p>
+    <filter-button/>
     <form>
       <div class="select is-multiple">
         <select v-model="selectedBeans" multiple>

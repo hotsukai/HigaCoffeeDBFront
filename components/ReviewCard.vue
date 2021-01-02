@@ -1,5 +1,5 @@
 <template>
-  <div class="card">
+  <div v-if="review" class="card">
     <div class="card-content">
       <p class="title is-4">
         <nuxt-link :to="'/reviews?bean=' + review.coffee.bean.id">
