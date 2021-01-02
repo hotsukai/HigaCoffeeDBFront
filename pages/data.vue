@@ -12,16 +12,16 @@
       <div v-if="getProvideDataPromise">
         <GraphA
           v-if="section1_1IsPersonal && isLogin"
-          :isMine="true"
-          :propsDataPromise="getProvideDataPromise"
           key="mine-A-graph"
+          :is-mine="true"
+          :props-data-promise="getProvideDataPromise"
         />
         <!-- TODO:縮尺を揃える -->
         <GraphA
           v-else-if="!section1_1IsPersonal"
-          :isMine="false"
-          :propsDataPromise="getProvideDataPromise"
           key="everyone-A-graph"
+          :is-mine="false"
+          :props-data-promise="getProvideDataPromise"
         />
 
         <div v-else class="require-login-message-area">
@@ -44,15 +44,15 @@
       <div v-if="getProvideDataPromise">
         <GraphC
           v-if="section1_2IsPersonal && isLogin"
-          :isMine="true"
-          :getPositionDataPromise="getPositionDataPromise"
           key="mine-C-graph"
+          :is-mine="true"
+          :get-position-data-promise="getPositionDataPromise"
         />
         <GraphC
           v-else-if="!section1_2IsPersonal"
-          :isMine="false"
-          :getPositionDataPromise="getPositionDataPromise"
           key="everyone-C-graph"
+          :is-mine="false"
+          :get-position-data-promise="getPositionDataPromise"
         />
         <div v-else class="require-login-message-area">
           <p>
@@ -68,11 +68,7 @@
       <p class="title">セクション2 どうやって淹れる??</p>
       <div>
         <select v-model="pickedBeanSection2" class="select">
-          <option
-            v-for="bean in beans"
-            v-bind:key="bean.id"
-            v-bind:value="bean.id"
-          >
+          <option v-for="bean in beans" :key="bean.id" :value="bean.id">
             {{ bean.name }}
           </option>
         </select>
@@ -87,15 +83,15 @@
       <div v-if="getStrongnessDataPromise">
         <GraphB
           v-if="section2IsPersonal && isLogin"
-          :propsDataPromise="getStrongnessDataPromise"
-          :isMine="true"
           key="mine-B-graph"
+          :props-data-promise="getStrongnessDataPromise"
+          :is-mine="true"
         />
         <GraphB
           v-else-if="!section2IsPersonal"
-          :propsDataPromise="getStrongnessDataPromise"
-          :isMine="false"
           key="everyone-B-graph"
+          :props-data-promise="getStrongnessDataPromise"
+          :is-mine="false"
         />
         <div v-else class="require-login-message-area">
           <p>
@@ -109,12 +105,24 @@
   </div>
 </template>
 
-<script>
-export default {
-  data() {
+<script lang="ts">
+import { Bean } from "~/types/models";
+import Vue from "vue";
+export default Vue.extend({
+  data(): {
+    pickedBeanSection2: number;
+    beans: Bean | null;
+    getProvideDataPromise: Promise<any> | null;
+    getStrongnessDataPromise: Promise<any> | null;
+    getPositionDataPromise: Promise<any> | null;
+    isLogin: boolean;
+    section1_1IsPersonal: boolean;
+    section1_2IsPersonal: boolean;
+    section2IsPersonal: boolean;
+  } {
     return {
       pickedBeanSection2: 1,
-      beans: {},
+      beans: null,
       getProvideDataPromise: null,
       getStrongnessDataPromise: null,
       getPositionDataPromise: null,
@@ -124,36 +132,36 @@ export default {
       section2IsPersonal: false,
     };
   },
-  async created() {
-    this.beans = await this.$axios.$get("/beans").then((res) => {
-      if (res.result) return res.data;
-    });
-    this.getProvideDataPromise = this.$axios
-      .$get("/data/provide")
-      .then((res) => {
-        if (res.result) return res.data;
-      });
-    this.getStrongnessDataPromise = this.$axios
-      .$get("/data/strongness/" + this.pickedBeanSection2)
-      .then((res) => {
-        if (res.result) return res.data;
-      });
-    this.getPositionDataPromise = this.$axios
-      .$get("/data/bean_position")
-      .then((res) => {
-        if (res.result) return res.data;
-      });
-  },
   watch: {
-    pickedBeanSection2(val) {
+    pickedBeanSection2(val: number): void {
       this.getStrongnessDataPromise = this.$axios
         .$get("/data/strongness/" + val)
-        .then((res) => {
+        .then((res: any) => {
           return res.data;
         });
     },
   },
-};
+  async created():Promise<any>{
+    this.beans = await this.$axios.$get("/beans").then((res: { result: any; data: any; }) => {
+      if (res.result) return res.data;
+    });
+    this.getProvideDataPromise = this.$axios
+      .$get("/data/provide")
+      .then((res: { result: any; data: any; }) => {
+        if (res.result) return res.data;
+      });
+    this.getStrongnessDataPromise = this.$axios
+      .$get("/data/strongness/" + this.pickedBeanSection2)
+      .then((res: { result: any; data: any; }) => {
+        if (res.result) return res.data;
+      });
+    this.getPositionDataPromise = this.$axios
+      .$get("/data/bean_position")
+      .then((res: { result: any; data: any; }) => {
+        if (res.result) return res.data;
+      });
+  },
+});
 </script>
 
 <style scoped lang="scss">

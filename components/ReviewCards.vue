@@ -5,16 +5,20 @@
       :key="review.id"
       :class="{ 'horizonal-item': isHorizonal }"
     >
-      <ReviewCard :review="review" :key="'reviewCard-' + review.id" />
+      <ReviewCard :key="'reviewCard-' + review.id" :review="review" />
     </li>
     <a class="view-more"><i class="fas fa-angle-double-right"></i></a>
   </ul>
 </template>
       
-<script>
-export default {
-  props: { reviews: Array, isHorizonal: { type: Boolean, default: false } },
-};
+<script lang="ts">
+import Vue from "vue";
+export default Vue.extend({
+  props: {
+    reviews: { type: Array, default: () => [] },
+    isHorizonal: { type: Boolean, default: false },
+  },
+});
 </script>
       
 <style scoped>

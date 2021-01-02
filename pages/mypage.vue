@@ -4,7 +4,7 @@
     <p class="subtitle">User-ID : {{ user.id }}</p>
     <p class="subtitle">あなたが書いたレビュー</p>
     <div v-show="isReviewExist">
-      <ReviewCards :reviews="reviews" :isHorizonal="true" class="cards" />
+      <ReviewCards :reviews="reviews" :is-horizonal="true" class="cards" />
     </div>
     <div v-show="!isReviewExist">
       <p>まだレビューがありません</p>
@@ -14,8 +14,8 @@
     <div v-show="isCoffeeExist">
       <CoffeeCards
         :coffees="coffees"
-        :showReview="true"
-        :showDetails="true"
+        :show-review="true"
+        :show-details="true"
         class="cards"
       ></CoffeeCards>
     </div>
@@ -26,18 +26,33 @@
 </template>
 
 <script lang="ts">
-import Vue from 'vue'
+import Vue from "vue";
+import { User, Coffee, Review } from "~/types/models";
+
 export default Vue.extend({
-  data() {
+  data(): {
+    reviews: Array<Review>;
+    coffees: Array<Coffee>;
+    user: User | null;
+  } {
     return {
-      reviews: [] as Array<Object>,
-      coffees: [] as Array<Object>,
-      user: {} as Object,
+      reviews: [],
+      coffees: [],
+      user: null,
     };
   },
 
+  computed: {
+    isReviewExist(): boolean {
+      return this.reviews.length > 0;
+    },
+    isCoffeeExist(): boolean {
+      return this.coffees.length > 0;
+    },
+  },
+
   async created() {
-    let user = this.$store.state.currentUser;
+    let user: User = this.$store.state.currentUser;
     this.user = user;
     if (!user) {
       this.$toast.show("ログインしてください");
@@ -61,18 +76,13 @@ export default Vue.extend({
       });
   },
 
-  computed: {
-    isReviewExist():boolean {
-      return this.reviews.length > 0;
-    },
-    isCoffeeExist():boolean {
-      return this.coffees.length > 0;
-    },
-  },
-
   methods: {
-    getMoreReview() {},
-    getMoreCoffee() {},
+    getMoreReview() {
+      return;
+    },
+    getMoreCoffee() {
+      return;
+    },
   },
 });
 </script>

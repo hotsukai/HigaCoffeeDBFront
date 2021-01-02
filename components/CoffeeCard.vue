@@ -1,5 +1,5 @@
 <template>
-  <div class="card" v-if="coffee">
+  <div v-if="coffee" class="card">
     <div class="card-content">
       <p class="title is-4">
         <nuxt-link :to="'/reviews?bean=' + coffee.bean.id">
@@ -24,7 +24,7 @@
     </div>
     <slot>
       <footer class="card-footer">
-        <p class="card-footer-item" v-show="createReview">
+        <p v-show="createReview" class="card-footer-item">
           <span>
             <nuxt-link :to="'/reviews/create/' + coffee.id" class="button"
               >レビューを書く</nuxt-link
@@ -32,8 +32,8 @@
           </span>
         </p>
         <p
-          class="card-footer-item"
           v-show="showReview && coffee.reviewId.length > 0"
+          class="card-footer-item"
         >
           <span>
             <nuxt-link :to="'reviews?coffeeId=' + coffee.id" class="button"
@@ -48,21 +48,22 @@
 
 
 
-<script>
-export default {
+<script lang="ts">
+import Vue from "vue";
+export default Vue.extend({
   props: {
-    coffee: Object,
+    coffee: { type: Object, default: new Object() },
     showReview: Boolean,
     createReview: Boolean,
     showDetails: { type: Boolean, default: true },
   },
 
   computed: {
-    fullPath: function () {
+    fullPath: function (): string {
       return "/reviews/create/" + this.coffee.id;
     },
   },
-};
+});
 </script>
 
 <style lang="scss" scoped>
@@ -70,7 +71,7 @@ export default {
   margin-bottom: 1em;
   height: 400px;
   .card-content {
-    height:340px;
+    height: 340px;
   }
   .card-footer-item {
     height: 60px;

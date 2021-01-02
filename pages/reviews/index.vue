@@ -3,56 +3,65 @@
     <p class="title">レビューを読む</p>
     <form>
       <div class="select is-multiple">
-        <select multiple v-model="selectedBeans"
-          ><option v-for="bean in beans" :key="bean.id" :value="bean.id">{{
-            bean.name
-          }}</option></select
-        >
+        <select v-model="selectedBeans" multiple>
+          <option v-for="bean in beans" :key="bean.id" :value="bean.id">
+            {{ bean.name }}
+          </option>
+        </select>
       </div>
     </form>
     <ReviewCards :reviews="reviews"></ReviewCards>
-    <div v-show="reviews.length === 0">条件に該当するレビューがまだありません</div>
+    <div v-show="reviews.length === 0">
+      条件に該当するレビューがまだありません
+    </div>
   </div>
 </template>
 
-<script>
-// TODO:絞り込み条件を増やす
-export default {
-  data() {
+<script lang="ts">
+import Vue from "vue";
+import { Bean, Review } from "~/types/models";
+export default Vue.extend({
+  data(): {
+    reviews: Array<Review>;
+    beans: Array<Bean>;
+    selectedBeans: Array<number>;
+  } {
     return {
       reviews: [],
       beans: [],
-      selectedBeans: []
+      selectedBeans: [],
     };
   },
 
-  async created() {
-    const getBeans = await this.$axios
-      .$get("/beans")
-      .then(res => {
-        this.beans = res.data;
-        this.selectedBeans = Object.keys(this.beans);
-      })
-      .catch(e => {
-        console.warn("データの取得でエラーが発生しました : " + e);
-      });
-  },
-
   watch: {
-    async selectedBeans(val) {
+    async selectedBeans(val: Array<number>): Promise<any> {
       let beansParam = val.join();
       this.reviews = await this.$axios
         .$get("/reviews", {
           params: {
-            beans: beansParam
-          }
+            beans: beansParam,
+          },
         })
-        .then(res => {
+        .then((res: { data: Array<Review> }) => {
           return res.data;
         });
-    }
-  }
-};
+    },
+  },
+
+  async created(): Promise<any> {
+    await this.$axios
+      .$get("/beans")
+      .then((res: { data: Bean[] }) => {
+        this.beans = res.data;
+        this.selectedBeans = Object.keys(this.beans).map((key) =>
+          parseInt(key)
+        );
+      })
+      .catch((e: string) => {
+        console.warn("データの取得でエラーが発生しました : " + e);
+      });
+  },
+});
 </script>
 
 <style></style>

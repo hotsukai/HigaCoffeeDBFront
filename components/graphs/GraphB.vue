@@ -3,7 +3,10 @@ import { Bubble } from "vue-chartjs";
 
 export default {
   extends: Bubble,
-  props: ["propsDataPromise", "isMine"],
+  props: {
+    propsDataPromise: { type: Promise, default: null },
+    isMine: { type: Boolean, default: false },
+  },
 
   data() {
     return {
@@ -87,8 +90,12 @@ export default {
             title: (tooltipItem, data) => {
               return data.labels[tooltipItem[0].datasetIndex];
             },
-            label: (tooltipItem, data) => {
-              return `粉の量: ${tooltipItem.xLabel} g / 100ml, 抽出時間 : ${tooltipItem.yLabel} min`;
+            label: (tooltipItem) => {
+              return `粉の量: ${
+                Math.round(parseFloat(tooltipItem.xLabel) * 100) / 100
+              } g / 100ml, 抽出時間 : ${
+                Math.round(parseFloat(tooltipItem.yLabel) * 100) / 100
+              } min`;
             },
           },
         },
@@ -96,16 +103,16 @@ export default {
     };
   },
 
-  async mounted() {
-    await this.setData();
-    this.renderChart(this.data, this.options);
-  },
-
   watch: {
     async propsDataPromise() {
       await this.setData();
       this.renderChart(this.data, this.options);
     },
+  },
+
+  async mounted() {
+    await this.setData();
+    this.renderChart(this.data, this.options);
   },
   methods: {
     async setData() {

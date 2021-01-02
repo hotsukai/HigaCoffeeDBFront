@@ -1,5 +1,5 @@
 <template>
-  <Slide :closeOnNavigation="true">
+  <Slide :close-on-navigation="true">
     <nuxt-link to="/" :class="{ isSelected: isDataSelected }" class="top">
       トップ</nuxt-link
     >
@@ -40,16 +40,26 @@
     >
     <LoginButton />
     <div v-show="!isLogin">
-      <button @click="$router.push('/signup')" type="button" class="button">
+      <button type="button" class="button" @click="$router.push('/signup')">
         サインアップ
       </button>
     </div>
   </Slide>
 </template>
 
-<script>
-export default {
-  data: () => {
+<script lang="ts">
+import Vue from "vue";
+import { User } from "~/types/models";
+export default Vue.extend({
+  data(): {
+    isMenuActive: boolean;
+    isDataSelected: boolean;
+    isMypageSelected: boolean;
+    isCreateReviewSelected: boolean;
+    isCreateCoffeeSelected: boolean;
+    isReadReviewSelected: boolean;
+    isLogin: boolean;
+  } {
     return {
       isMenuActive: false,
       isDataSelected: false,
@@ -60,23 +70,33 @@ export default {
       isLogin: false,
     };
   },
-
-  created() {
-    this.changeSelectedPage();
-    this.isLogin = this.$store.state.currentUser !== null;
-  },
   computed: {
-    user() {
+    user(): User {
       return this.$store.state.currentUser;
     },
   },
 
+  watch: {
+    $route(): void {
+      this.isMenuActive = false;
+      this.changeSelectedPage();
+    },
+    user(val: User): void {
+      this.isLogin = val !== null;
+    },
+  },
+
+  created(): void {
+    this.changeSelectedPage();
+    this.isLogin = this.$store.state.currentUser !== null;
+  },
+
   methods: {
-    toggleMenu() {
+    toggleMenu(): void {
       this.isMenuActive = !this.isMenuActive;
     },
 
-    changeSelectedPage() {
+    changeSelectedPage(): void {
       this.isDataSelected = false;
       this.isMypageSelected = false;
       this.isCreateReviewSelected = false;
@@ -103,17 +123,7 @@ export default {
       }
     },
   },
-
-  watch: {
-    $route() {
-      this.isMenuActive = false;
-      this.changeSelectedPage();
-    },
-    user(val) {
-      this.isLogin = val !== null;
-    },
-  },
-};
+});
 </script>
 
 <style scoped lang="scss">

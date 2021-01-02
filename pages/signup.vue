@@ -13,55 +13,67 @@
           class="input"
         />
         <label for="js-watchWordcheck">合言葉を表示する</label>
-        <input type="checkbox" id="js-watchWordcheck" v-model="showWatchword" />
+        <input id="js-watchWordcheck" v-model="showWatchword" type="checkbox" />
         <div>
           <label for="userName">ユーザー名</label>
-          <input type="text" id="userName" v-model="userName" class="input" />
+          <input id="userName" v-model="userName" type="text" class="input" />
         </div>
         <div>
           <label for="password">パスワード</label>
           <input
-            :type="passwordType"
             id="password"
             v-model="password"
+            :type="passwordType"
             class="input"
           />
           <label for="password">パスワード2回目</label>
           <input
-            :type="passwordType"
             id="password"
             v-model="password2"
+            :type="passwordType"
             class="input"
           />
           <label for="js-passcheck">パスワードを表示する</label>
-          <input type="checkbox" id="js-passcheck" v-model="showPassword" />
+          <input id="js-passcheck" v-model="showPassword" type="checkbox" />
         </div>
 
-        <button class="button" @click="submit()" type="button">
-          登録
-        </button>
+        <button class="button" type="button" @click="submit()">登録</button>
       </form>
     </div>
     <nuxt-link to="/login">登録がお済みの方はこちらへ</nuxt-link>
   </div>
 </template>
 
-<script>
-import { Vue, Component } from "vue-property-decorator";
-
-export default {
-  data() {
+<script lang="ts">
+import Vue from "vue";
+export default Vue.extend({
+  data(): {
+    inputWatchWord: string;
+    userName: string;
+    password: string;
+    password2: string;
+    showPassword: boolean;
+    showWatchword: boolean;
+  } {
     return {
       inputWatchWord: "",
       userName: "",
       password: "",
       password2: "",
       showPassword: false,
-      showWatchword: false
+      showWatchword: false,
     };
   },
+  computed: {
+    passwordType(): string {
+      return this.showPassword ? "text" : "password";
+    },
+    watchwordType(): string {
+      return this.showWatchword ? "text" : "password";
+    },
+  },
   methods: {
-    async submit() {
+    async submit(): Promise<void> {
       if (this.password !== this.password2) {
         this.$toast.error("パスワードが一致しません");
         return;
@@ -87,36 +99,30 @@ export default {
         .$post("/auth/create_user", {
           username: this.userName,
           password: this.password,
-          watchword: this.inputWatchWord
+          watchword: this.inputWatchWord,
         })
-        .then(response => {
+        .then((response) => {
           if (response.result) {
             this.$store.commit("setUser", {
               user: response.data,
-              token: response.token
+              token: response.token,
             });
             this.$toast.success("ユーザーを登録しました");
             this.$router.push("/mypage");
             return true;
           } else {
-            this.$toast.error("ユーザー登録に失敗しました : " + response.message);
+            this.$toast.error(
+              "ユーザー登録に失敗しました : " + response.message
+            );
             return false;
           }
         })
-        .catch(err => {
+        .catch((err) => {
           this.$toast.error("ユーザー登録に失敗しました 1");
           console.error("error 1 : ", err.message);
           return false;
         });
-    }
-  },
-  computed: {
-    passwordType() {
-      return this.showPassword ? "text" : "password";
     },
-    watchwordType() {
-      return this.showWatchword ? "text" : "password";
-    }
-  }
-};
+  },
+});
 </script>

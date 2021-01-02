@@ -8,7 +8,9 @@
       </p>
       <p class="subtitle is-6">
         Review-ID : {{ review.id }}<br />
-        <UsersName v-if="review.reviewer" :users="[review.reviewer]">Reviewer : </UsersName>
+        <UsersName v-if="review.reviewer" :users="[review.reviewer]"
+          >Reviewer :
+        </UsersName>
       </p>
       <div class="columns">
         <div class="column">
@@ -26,9 +28,9 @@
       </div>
     </div>
     <footer class="card-footer">
-      <modal-with-button :modalKey="review.id" class="card-footer-item">
-        <template v-slot:open-button><i class="fas fa-coffee"></i></template>
-        <template v-slot:modal-inner-content>
+      <modal-with-button :modal-key="review.id" class="card-footer-item">
+        <template #open-button><i class="fas fa-coffee"></i></template>
+        <template #modal-inner-content>
           <div class="columns">
             <div class="column">
               <ul>
@@ -64,51 +66,70 @@
           </div>
         </template>
       </modal-with-button>
+      <div
+        v-if="currentUser.id === review.reviewer.id"
+        class="card-footer-item"
+      >
+        <button
+          class="button"
+          @click="$router.push('/reviews/update/' + review.id)"
+        >
+          <i class="fas fa-pen"></i>
+        </button>
+      </div>
     </footer>
   </div>
 </template>
 
-<script>
+<script lang="ts">
 import ModalWithButton from "./ModalWithButton.vue";
-export default {
+import Vue from "vue";
+import { Coffee, User } from "~/types/models";
+export default Vue.extend({
   components: { ModalWithButton },
-  props: ["review"],
-  data() {
+  props: { review: { type: Object, default: new Object() } },
+  data(): {
+    viewMore: boolean;
+    isLogin: boolean;
+    coffee: Coffee | null;
+    currentUser: User | null;
+  } {
     return {
       viewMore: false,
       isLogin: false,
-      coffee: {},
+      coffee: null,
+      currentUser: this.$store.state.currentUser,
     };
   },
 
-  methods: {
-    toggleViewMore() {
-      this.viewMore = !this.viewMore;
-    },
-  },
-
-  created() {
-    this.coffee = this.review.coffee;
-    this.isLogin = this.$store.state.currentUser != null;
-  },
-
   computed: {
-    repeatToJapanese() {
-      const repeat_japanese = ["飲みたくない!!", "普通", "また飲みたい!"];
-      return repeat_japanese[parseInt(this.review.wantRepeat) - 1];
+    repeatToJapanese(): string {
+      const repeatJapanese = ["飲みたくない!!", "普通", "また飲みたい!"];
+      return repeatJapanese[parseInt(this.review.wantRepeat) - 1];
     },
 
-    situationToJapanese() {
-      const situation_japanese = [
+    situationToJapanese(): string {
+      const situationJapanese = [
         "リラックス",
         "ややリラックス",
         "やや眠気覚まし",
         "眠気覚まし",
       ];
-      return situation_japanese[parseInt(this.review.situation) - 1];
+      return situationJapanese[parseInt(this.review.situation) - 1];
     },
   },
-};
+
+  created(): void {
+    this.coffee = this.review.coffee;
+    this.isLogin = this.$store.state.currentUser != null;
+  },
+
+  methods: {
+    toggleViewMore(): void {
+      this.viewMore = !this.viewMore;
+    },
+  },
+});
 </script>
 
 <style lang="scss" scoped>

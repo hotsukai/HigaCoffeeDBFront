@@ -5,52 +5,60 @@
       <form class="control">
         <div>
           <label for="userName">ユーザー名</label>
-          <input type="text" id="userName" v-model="userName" class="input" />
+          <input id="userName" v-model="userName" type="text" class="input" />
         </div>
         <div>
           <label for="password">パスワード</label>
           <input
-            :type="passwordType"
             id="password"
             v-model="password"
+            :type="passwordType"
             class="input"
           />
           <label for="js-passcheck">パスワードを表示する</label>
-          <input type="checkbox" id="js-passcheck" v-model="showPassword" />
+          <input id="js-passcheck" v-model="showPassword" type="checkbox" />
         </div>
-        <button class="button" @click="submit()" type="button">
-          ログイン
-        </button>
+        <button class="button" type="button" @click="submit()">ログイン</button>
       </form>
     </div>
     <nuxt-link to="/signup">登録がお済みでない場合</nuxt-link>
   </div>
 </template>
 
-<script>
-import { Vue, Component } from "vue-property-decorator";
-
-export default {
-  data() {
+<script lang="ts">
+// export type DataType = ;
+import Vue from "vue";
+export default Vue.extend({
+  data(): {
+    userName: string;
+    password: string;
+    isSecretWordCorrect: boolean;
+    showPassword: boolean;
+  } {
     return {
       userName: "",
       password: "",
       isSecretWordCorrect: false,
-      showPassword: false
+      showPassword: false,
     };
   },
+  computed: {
+    passwordType(): string {
+      return this.showPassword ? "text" : "password";
+    },
+  },
   methods: {
-    async submit() {
+    async submit(): Promise<any> {
       this.$axios
         .$post("/auth/login", {
           username: this.userName,
-          password: this.password
+          password: this.password,
         })
-        .then(response => {
+        .then((response) => {
           if (response.result) {
             this.$store.commit("setUser", {
               user: response.data,
-              token: response.token
+              token: response.token,
             });
             this.$toast.success("ログインしました");
             this.$router.push("/mypage");
@@ -59,16 +67,11 @@ export default {
             return false;
           }
         })
-        .catch(err => {
+        .catch((err) => {
           console.error("error 1 : ", err.message);
           return false;
         });
-    }
+    },
   },
-  computed: {
-    passwordType() {
-      return this.showPassword ? "text" : "password";
-    }
-  }
-};
+});
 </script>

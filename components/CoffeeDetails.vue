@@ -20,7 +20,7 @@
 <script>
 export default {
   props: {
-    coffee: Object,
+    coffee: {type:Object,default:new Object()},
   },
 };
 </script>
