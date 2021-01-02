@@ -1,7 +1,7 @@
 <template>
   <div>
     <h1 class="title">かきなおす</h1>
-    <CoffeeCard :coffee="coffee" :show-details="false" style="height: auto"
+    <CoffeeCard :coffee="coffee" :show-details="true" style="height: auto"
       ><span></span
     ></CoffeeCard>
     <form>
@@ -93,7 +93,7 @@
 </template>
 
 <script lang="ts">
-import { Coffee } from "~/types/models";
+import { Coffee, Review } from "~/types/models";
 import Vue from "vue";
 export default Vue.extend({
   data(): {
@@ -103,6 +103,7 @@ export default Vue.extend({
     wantRepeat: number;
     feeling: string;
     coffee: Coffee | null;
+    reviewId: number;
   } {
     return {
       bitterness: 1,
@@ -111,6 +112,7 @@ export default Vue.extend({
       wantRepeat: 1,
       feeling: "",
       coffee: null,
+      reviewId: parseInt(this.$route.params.id),
     };
   },
 
@@ -130,17 +132,23 @@ export default Vue.extend({
   },
 
   async created() {
-    let coffeeId = this.$route.params.id;
-    this.coffee = await this.$axios.$get("/coffees/" + coffeeId).then((res) => {
-      return res.data;
-    });
+     await this.$axios
+      .$get("/reviews/" + this.reviewId)
+      .then((res: { data: Review }) => {
+        this.bitterness = res.data.bitterness;
+        this.strongness = res.data.strongness;
+        this.situation = res.data.situation;
+        this.wantRepeat = res.data.wantRepeat;
+        this.feeling = res.data.feeling;
+        this.coffee=res.data.coffee;
+      });
   },
 
   methods: {
     async sendReview(): Promise<void> {
       if (!this.coffee) return;
       await this.$axios
-      .$put("/reviews"+this.$route.params.id, {
+        .$put("/reviews/" + this.$route.params.id, {
           bitterness: this.bitterness,
           coffeeId: this.coffee.id,
           feeling: this.feeling,
@@ -149,16 +157,16 @@ export default Vue.extend({
           reviewerId: this.$store.state.currentUser.id,
           wantRepeat: this.wantRepeat,
         })
-        .then((res) => {
+        .then((res: { result: boolean; message: string }) => {
           if (res.result) {
-            this.$toast.success("レビューを作成しました");
+            this.$toast.success("レビューを更新しました");
           } else {
-            this.$toast.error("レビューの作成に失敗しました" + res.message);
+            this.$toast.error("レビューの更新に失敗しました" + res.message);
           }
           this.$router.push("/mypage");
         })
         .catch((err) => {
-          this.$toast.error("レビューの作成に失敗しました" + err.message);
+          this.$toast.error("レビューの更新に失敗しました" + err.message);
           this.$router.push("/mypage");
         });
     },
