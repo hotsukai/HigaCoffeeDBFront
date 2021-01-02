@@ -5,6 +5,7 @@
     <div class="section">
       <Nuxt />
     </div>
+    <p>この環境はステージング環境です</p>
   </div>
 </template>
 
