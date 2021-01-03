@@ -17,12 +17,14 @@
   </div>
 </template>
 
-<script>
-export default {
+<script lang="ts">
+import Vue, { PropType } from "vue";
+import { Coffee } from "~/types/models";
+export default Vue.extend({
   props: {
-    coffee: {type:Object,default:new Object()},
+    coffee: { type: Object as PropType<Coffee>, default: new Object() },
   },
-};
+});
 </script>
 
 <style>

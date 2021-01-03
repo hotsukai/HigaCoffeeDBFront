@@ -83,11 +83,13 @@
 
 <script lang="ts">
 import ModalWithButton from "./ModalWithButton.vue";
-import Vue from "vue";
-import { Coffee, User } from "~/types/models";
+import Vue, { PropType } from "vue";
+import { Coffee, User, Review } from "~/types/models";
 export default Vue.extend({
   components: { ModalWithButton },
-  props: { review: { type: Object, default: new Object() } },
+  props: {
+    review: { type: Object as PropType<Review>, default: null },
+  },
   data(): {
     viewMore: boolean;
     isLogin: boolean;
@@ -103,9 +105,9 @@ export default Vue.extend({
   },
 
   computed: {
-    repeatToJapanese(): string {
+    repeatToJapanese(): string | null {
       const repeatJapanese = ["飲みたくない!!", "普通", "また飲みたい!"];
-      return repeatJapanese[parseInt(this.review.wantRepeat) - 1];
+      return repeatJapanese[this.review.wantRepeat - 1];
     },
 
     situationToJapanese(): string {
@@ -115,7 +117,7 @@ export default Vue.extend({
         "やや眠気覚まし",
         "眠気覚まし",
       ];
-      return situationJapanese[parseInt(this.review.situation) - 1];
+      return situationJapanese[this.review.situation - 1];
     },
   },
 
