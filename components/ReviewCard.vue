@@ -20,9 +20,9 @@
             </li>
             <li>苦さ : {{ review.bitterness }}</li>
             <li>濃さ : {{ review.strongness }}</li>
-            <li>また飲みたいか : {{ repeatToJapanese }}</li>
-            <li>役割 : {{ situationToJapanese }}</li>
-            <li>備考・感想 : {{ review.feeling }}</li>
+            <li>また飲みたいか : {{ review.wantRepeat }}</li>
+            <li>役割 : {{ review.situation }}</li>
+            <li v-if="review.feeling">備考・感想 : {{ review.feeling }}</li>
           </ul>
         </div>
       </div>
@@ -39,9 +39,9 @@
                 </li>
                 <li>苦さ : {{ review.bitterness }}</li>
                 <li>濃さ : {{ review.strongness }}</li>
-                <li>また飲みたいか : {{ repeatToJapanese }}</li>
-                <li>役割 : {{ situationToJapanese }}</li>
-                <li>備考・感想 : {{ review.feeling }}</li>
+                <li>また飲みたいか : {{ review.wantRepeat }}</li>
+                <li>役割 : {{ review.situation }}</li>
+                <li v-if="review.feeling">備考・感想 : {{ review.feeling }}</li>
               </ul>
             </div>
             <div class="column">
@@ -74,7 +74,7 @@
           class="button"
           @click="$router.push('/reviews/update/' + review.id)"
         >
-          <i class="fas fa-pen"></i>
+          <i class="fas fa-edit"></i>
         </button>
       </div>
     </footer>
@@ -102,23 +102,6 @@ export default Vue.extend({
       coffee: null,
       currentUser: this.$store.state.currentUser,
     };
-  },
-
-  computed: {
-    repeatToJapanese(): string | null {
-      const repeatJapanese = ["飲みたくない!!", "普通", "また飲みたい!"];
-      return repeatJapanese[this.review.wantRepeat - 1];
-    },
-
-    situationToJapanese(): string {
-      const situationJapanese = [
-        "リラックス",
-        "ややリラックス",
-        "やや眠気覚まし",
-        "眠気覚まし",
-      ];
-      return situationJapanese[this.review.situation - 1];
-    },
   },
 
   created(): void {
