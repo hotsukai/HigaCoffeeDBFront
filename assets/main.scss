@@ -1,8 +1,8 @@
-$green:hsla(103, 30, 51,1); //#71A75B
-$darkGreen:hsla(103, 10, 51,1); 
-$red:hsl(16, 68, 51); //#C54F25
-$yellow:hsl(36, 71, 51);
-$white:#eeeeee;
+$green: hsla(103, 30, 51, 1); //#71A75B
+$darkGreen: hsla(103, 10, 51, 1);
+$red: hsl(16, 68, 51); //#C54F25
+$yellow: hsl(36, 71, 51);
+$white: #eeeeee;
 
 body {
   font-size: 16px;
@@ -14,8 +14,24 @@ body {
   box-sizing: border-box;
   background-color: hsla(0, 0, 95, 1);
   color: hsla(0, 0, 0, 0.6);
-  font-family: 'Noto Sans JP', sans-serif;
+  font-family: "Noto Sans JP", sans-serif;
   font-weight: 300;
+}
+.vue-slider-dot-tooltip-inner {
+  font-size: 14px;
+  white-space: nowrap;
+  padding: 2px 5px;
+  min-width: 20px;
+  text-align: center;
+  color: #fff;
+  border-radius: 5px;
+  border-color: $green !important;
+  background-color: $green !important;
+  box-sizing: content-box;
+}
+.vue-slider-process {
+  background-color: $green !important;
+  border-radius: 15px;
 }
 
 .disabled {
@@ -33,5 +49,5 @@ a {
 
 button.button {
   background-color: $green;
-  color:#eeeeee
+  color: #eeeeee;
 }
