@@ -49,7 +49,7 @@ export default Vue.extend({
     },
   },
 
-  async created(): Promise<any> {
+  async created(): Promise<void> {
     await this.$axios
       .$get("/beans")
       .then((res: { data: Bean[] }) => {

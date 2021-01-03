@@ -1,4 +1,4 @@
-$green: hsla(103, 30, 51, 1); //#71A75B
+$mainColor: hsla(103, 30, 51, 1); //#71A75B
 $darkGreen: hsla(103, 10, 51, 1);
 $red: hsl(16, 68, 51); //#C54F25
 $yellow: hsl(36, 71, 51);
@@ -25,12 +25,12 @@ body {
   text-align: center;
   color: #fff;
   border-radius: 5px;
-  border-color: $green !important;
-  background-color: $green !important;
+  border-color: $mainColor !important;
+  background-color: $mainColor !important;
   box-sizing: content-box;
 }
 .vue-slider-process {
-  background-color: $green !important;
+  background-color: $mainColor !important;
   border-radius: 15px;
 }
 
@@ -44,10 +44,10 @@ body {
 }
 
 a {
-  color: $green;
+  color: $mainColor;
 }
 
 button.button {
-  background-color: $green;
+  background-color: $mainColor;
   color: #eeeeee;
 }
