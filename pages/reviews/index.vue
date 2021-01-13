@@ -6,7 +6,7 @@
       <div class="select is-multiple">
         <select v-model="selectedBeans" multiple>
           <option v-for="bean in beans" :key="bean.id" :value="bean.id">
-            {{ bean.name }}
+            {{ bean.fullName }}
           </option>
         </select>
       </div>

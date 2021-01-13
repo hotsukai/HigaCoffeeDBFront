@@ -3,7 +3,7 @@
     <div class="card-content">
       <p class="title is-4">
         <nuxt-link :to="'/reviews?bean=' + coffee.bean.id">
-          {{ coffee.bean.name }}
+          {{ coffee.bean.fullName }}
         </nuxt-link>
       </p>
       <p class="subtitle is-6">Coffee-ID : {{ coffee.id }}</p>

@@ -69,7 +69,7 @@
       <div>
         <select v-model="pickedBeanSection2" class="select">
           <option v-for="bean in beans" :key="bean.id" :value="bean.id">
-            {{ bean.name }}
+            {{ bean.fullName }}
           </option>
         </select>
         <toggle-button
