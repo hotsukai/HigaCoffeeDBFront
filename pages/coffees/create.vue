@@ -4,11 +4,7 @@
       <div class="form-field">
         <label class="label">豆の種類<Required /></label>
         <div class="select is-medium">
-          <select v-model="selectedBean">
-            <option v-for="bean in beans" :key="bean.id" :value="bean.id">
-              {{ bean.name }}
-            </option>
-          </select>
+          <bean-selector :beans="beans"></bean-selector>
         </div>
       </div>
       <div class="form-field">
@@ -163,8 +159,10 @@
 
 <script lang="ts">
 import Vue from "vue";
+import BeanSelector from "~/components/BeanSelector.vue";
 import { ExtractionMethod, User, Bean, Mesh } from "~/types/models";
 export default Vue.extend({
+  components: { BeanSelector },
   data(): {
     selectedBean: number | null;
     extractionMethods: ExtractionMethod;

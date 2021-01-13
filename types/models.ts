@@ -12,10 +12,6 @@ export type ExtractionMethod = {
 export type Bean = {
   id: number;
   name: string;
-};
-export type Mesh = {
-  id: number;
-  name: string;
   detail: string;
   roast: {
     id: number;
@@ -25,6 +21,11 @@ export type Mesh = {
     id: number;
     name: string;
   };
+};
+
+export type Mesh = {
+  id: number;
+  name: string;
 };
 
 export type Coffee = {
