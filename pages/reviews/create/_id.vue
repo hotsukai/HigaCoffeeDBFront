@@ -4,10 +4,7 @@
     <coffee-card :coffee="coffee" :show-details="false" style="height: auto"
       ><span></span
     ></coffee-card>
-    <review-form
-      :coffee="coffee"
-      @reviewFromForm="sendReview"
-    ></review-form>
+    <review-form :coffee="coffee" @reviewFromForm="sendReview"></review-form>
   </div>
 </template>
 
@@ -34,6 +31,11 @@ export default Vue.extend({
       .$get("/coffees/" + this.coffeeId)
       .then((res) => {
         return res.data;
+      })
+      .catch((e) => {
+        alert("エラーが発生しました。" + e);
+        console.error("エラーが発生しました。" + e);
+        this.$router.push("/");
       });
   },
 

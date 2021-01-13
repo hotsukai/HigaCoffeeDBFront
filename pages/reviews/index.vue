@@ -1,7 +1,7 @@
 <template>
   <div>
     <p class="title">レビューを読む</p>
-    <filter-button/>
+    <filter-button />
     <form>
       <div class="select is-multiple">
         <select v-model="selectedBeans" multiple>
@@ -45,6 +45,11 @@ export default Vue.extend({
         })
         .then((res: { data: Array<Review> }) => {
           return res.data;
+        })
+        .catch((e: string) => {
+          alert("エラーが発生しました。" + e);
+          console.error("エラーが発生しました。" + e);
+          this.$router.push("/");
         });
     },
   },

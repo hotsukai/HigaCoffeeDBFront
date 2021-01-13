@@ -37,6 +37,11 @@ export default Vue.extend({
       .then((res: { data: Review }) => {
         this.review = res.data;
         this.coffee = res.data.coffee;
+      })
+      .catch((e) => {
+        alert("エラーが発生しました。" + e);
+        console.error("エラーが発生しました。" + e);
+        this.$router.push("/");
       });
   },
 

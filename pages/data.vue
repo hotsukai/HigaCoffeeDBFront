@@ -138,27 +138,54 @@ export default Vue.extend({
         .$get("/data/strongness/" + val)
         .then((res: any) => {
           return res.data;
+        })
+        .catch((e: string) => {
+          alert("エラーが発生しました。" + e);
+          console.error("エラーが発生しました。" + e);
+          this.$router.push("/");
         });
     },
   },
-  async created():Promise<any>{
-    this.beans = await this.$axios.$get("/beans").then((res: { result: any; data: any; }) => {
-      if (res.result) return res.data;
-    });
+  async created(): Promise<any> {
+    this.beans = await this.$axios
+      .$get("/beans")
+      .then((res: { result: boolean; data: any }) => {
+        if (res.result) return res.data;
+      })
+      .catch((e: string) => {
+        alert("エラーが発生しました。" + e);
+        console.error("エラーが発生しました。" + e);
+        this.$router.push("/");
+      });
     this.getProvideDataPromise = this.$axios
       .$get("/data/provide")
-      .then((res: { result: any; data: any; }) => {
+      .then((res: { result: boolean; data: any }) => {
         if (res.result) return res.data;
+      })
+      .catch((e: string) => {
+        alert("エラーが発生しました。" + e);
+        console.error("エラーが発生しました。" + e);
+        this.$router.push("/");
       });
     this.getStrongnessDataPromise = this.$axios
       .$get("/data/strongness/" + this.pickedBeanSection2)
-      .then((res: { result: any; data: any; }) => {
+      .then((res: { result: boolean; data: any }) => {
         if (res.result) return res.data;
+      })
+      .catch((e: string) => {
+        alert("エラーが発生しました。" + e);
+        console.error("エラーが発生しました。" + e);
+        this.$router.push("/");
       });
     this.getPositionDataPromise = this.$axios
       .$get("/data/bean_position")
-      .then((res: { result: any; data: any; }) => {
+      .then((res: { result: boolean; data: any }) => {
         if (res.result) return res.data;
+      })
+      .catch((e: string) => {
+        alert("エラーが発生しました。" + e);
+        console.error("エラーが発生しました。" + e);
+        this.$router.push("/");
       });
   },
 });
