@@ -13,10 +13,11 @@
 </template>
       
 <script lang="ts">
-import Vue from "vue";
+import Vue, { PropType } from "vue";
+import { Coffee } from "~/types/models";
 export default Vue.extend({
   props: {
-    coffees: { type: Array , default: () => [] },
+    coffees: { type: Array as PropType<Coffee[]>, default: null },
     showReview: Boolean,
     createReview: Boolean,
     showDetails: Boolean,

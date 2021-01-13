@@ -1,6 +1,7 @@
 <template>
   <div>
     <p class="title">レビューを読む</p>
+    <filter-button />
     <form>
       <div class="select is-multiple">
         <select v-model="selectedBeans" multiple>
@@ -34,7 +35,7 @@ export default Vue.extend({
   },
 
   watch: {
-    async selectedBeans(val: Array<number>): Promise<any> {
+    async selectedBeans(val: Array<number>): Promise<void> {
       let beansParam = val.join();
       this.reviews = await this.$axios
         .$get("/reviews", {
@@ -44,11 +45,16 @@ export default Vue.extend({
         })
         .then((res: { data: Array<Review> }) => {
           return res.data;
+        })
+        .catch((e: string) => {
+          alert("エラーが発生しました。" + e);
+          console.error("エラーが発生しました。" + e);
+          this.$router.push("/");
         });
     },
   },
 
-  async created(): Promise<any> {
+  async created(): Promise<void> {
     await this.$axios
       .$get("/beans")
       .then((res: { data: Bean[] }) => {

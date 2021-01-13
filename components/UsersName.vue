@@ -11,10 +11,11 @@
 </template>
 
 <script lang="ts">
-import Vue from "vue";
+import Vue, { PropType } from "vue";
+import { User } from "~/types/models";
 export default Vue.extend({
   props: {
-    users: { type: Array, default: () => [] },
+    users: { type: Array as PropType<User[]>, default: () => [] },
   },
 });
 </script>

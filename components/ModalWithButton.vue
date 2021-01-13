@@ -28,7 +28,7 @@
 <script lang="ts">
 import Vue from "vue";
 export default Vue.extend({
-  props: { modalKey: { type: Number, required: true } },
+  props: { modalKey: { type: String, required: true } },
   methods: {
     show() {
       this.$modal.show("modal-content" + this.modalKey);

@@ -163,7 +163,7 @@
 
 <script lang="ts">
 import Vue from "vue";
-import{ExtractionMethod,User,Bean,Mesh} from "~/types/models"
+import { ExtractionMethod, User, Bean, Mesh } from "~/types/models";
 export default Vue.extend({
   data(): {
     selectedBean: number | null;
@@ -277,11 +277,17 @@ export default Vue.extend({
     const beansAxios = this.$axios.$get("/beans");
     const methodsAxios = this.$axios.$get("/extraction_methods");
     const usersAxios = this.$axios.$get("/users");
-    const result = await Promise.all([beansAxios, methodsAxios, usersAxios]);
-
-    this.beans = result[0].data;
-    this.extractionMethods = result[1].data;
-    this.users = result[2].data;
+    await Promise.all([beansAxios, methodsAxios, usersAxios])
+      .then((result) => {
+        this.beans = result[0].data;
+        this.extractionMethods = result[1].data;
+        this.users = result[2].data;
+      })
+      .catch((e) => {
+        alert("エラーが発生しました。" + e);
+        console.error("エラーが発生しました。" + e);
+        this.$router.push("/");
+      });
   },
 
   methods: {

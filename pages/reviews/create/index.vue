@@ -40,6 +40,11 @@ export default Vue.extend({
       })
       .then((res) => {
         return res.data;
+      })
+      .catch((e) => {
+        alert("エラーが発生しました。" + e);
+        console.error("エラーが発生しました。" + e);
+        this.$router.push("/");
       });
   },
 });

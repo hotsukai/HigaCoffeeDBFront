@@ -50,7 +50,8 @@ export default {
     "~plugins/axiosAuthHeader",
     "~plugins/vue-js-toggle-button",
     "~plugins/vue-js-modal",
-    "~plugins/vue-burger-menu"
+    "~plugins/vue-burger-menu",
+    "~plugins/vue-slider-component",
   ],
   /*
    ** Auto import components
