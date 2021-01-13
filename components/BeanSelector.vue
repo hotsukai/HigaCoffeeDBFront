@@ -1,13 +1,19 @@
 <template>
   <div v-if="beans" class="field is-grouped">
     <select v-model="selectedOriginId" class="control">
-      <option v-for="origin in beanOrigins" :key="'origin-' + origin.id" :value="origin.id">
+      <option
+        v-for="origin in beanOrigins"
+        :key="'origin-' + origin.id"
+        :value="origin.id"
+      >
         {{ origin.name }}
       </option>
     </select>
     <select v-model="selectedBean" class="control">
-      <option v-show="!selectedOriginId" disabled>産地を選択してください</option> 
-      <option v-for="bean in selectedOriginsBean" :key="'bean-' + bean.id">
+      <option v-show="!selectedOriginId" disabled>
+        産地を選択してください
+      </option>
+      <option v-for="bean in selectedOriginsBean" :key="'bean-' + bean.id" :value="bean">
         {{ bean.roast.name }}
       </option>
     </select>
@@ -21,7 +27,10 @@ export default Vue.extend({
   props: {
     beans: { type: Array as PropType<Bean[]>, default: null },
   },
-  data(): { selectedBean: Bean | null; selectedOriginId: Bean["origin"]["id"] | null } {
+  data(): {
+    selectedBean: Bean | null;
+    selectedOriginId: Bean["origin"]["id"] | null;
+  } {
     return {
       selectedBean: null,
       selectedOriginId: null,
@@ -45,6 +54,11 @@ export default Vue.extend({
       return this.beans.filter(
         (bean) => bean.origin.id == this.selectedOriginId
       );
+    },
+  },
+  watch: {
+    selectedBean(): void {
+      this.$emit("selectedBean", this.selectedBean);
     },
   },
 });

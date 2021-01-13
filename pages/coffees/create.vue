@@ -4,7 +4,10 @@
       <div class="form-field">
         <label class="label">豆の種類<Required /></label>
         <div class="select is-medium">
-          <bean-selector :beans="beans"></bean-selector>
+          <bean-selector
+            :beans="beans"
+            @selectedBean="emittedBean"
+          ></bean-selector>
         </div>
       </div>
       <div class="form-field">
@@ -164,7 +167,7 @@ import { ExtractionMethod, User, Bean, Mesh } from "~/types/models";
 export default Vue.extend({
   components: { BeanSelector },
   data(): {
-    selectedBean: number | null;
+    selectedBean: Bean | null;
     extractionMethods: ExtractionMethod;
     selectedDrinkers: Array<string>;
     selectedExtractionMethod: number;
@@ -296,7 +299,7 @@ export default Vue.extend({
       }
       this.$axios
         .$post("/coffees", {
-          beanId: this.selectedBean,
+          beanId: this.selectedBean?.id,
           drinkerIds: this.selectedDrinkersId,
           dripperId: this.$store.state.currentUser.id,
           extractionMethodId: this.selectedExtractionMethod,
@@ -335,6 +338,10 @@ export default Vue.extend({
       if (this.selectedDrinkers.length > 1) {
         this.selectedDrinkers.splice(id - 1, 1);
       }
+    },
+    emittedBean(bean: Bean): void {
+      console.debug("emitted : ", bean);
+      this.selectedBean = bean;
     },
   },
 });
