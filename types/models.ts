@@ -16,6 +16,15 @@ export type Bean = {
 export type Mesh = {
   id: number;
   name: string;
+  detail: string;
+  roast: {
+    id: number;
+    name: string;
+  };
+  origin: {
+    id: number;
+    name: string;
+  };
 };
 
 export type Coffee = {
