@@ -35,7 +35,7 @@ export default Vue.extend({
   },
 
   watch: {
-    async selectedBeans(val: Array<number>): Promise<any> {
+    async selectedBeans(val: Array<number>): Promise<void> {
       let beansParam = val.join();
       this.reviews = await this.$axios
         .$get("/reviews", {

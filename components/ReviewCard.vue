@@ -28,7 +28,10 @@
       </div>
     </div>
     <footer class="card-footer">
-      <modal-with-button :modal-key="review.id" class="card-footer-item">
+      <modal-with-button
+        :modal-key="'review-' + review.id"
+        class="card-footer-item"
+      >
         <template #open-button><i class="fas fa-coffee"></i></template>
         <template #modal-inner-content>
           <div class="columns">
