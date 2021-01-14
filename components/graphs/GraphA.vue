@@ -102,7 +102,7 @@ export default {
     const beanData = await this.propsDataPromise;
     for (let beanId in beanData) {
       const bean = beanData[beanId];
-      this.data.labels.push(bean.name);
+      this.data.labels.push(bean.fullName);
       if (this.isMine) {
         this.data.datasets[0].data.push(
           bean.usersDripCount ? bean.usersDripCount : 0
