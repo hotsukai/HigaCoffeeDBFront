@@ -117,10 +117,14 @@ export default Vue.extend({
             return false;
           }
         })
-        .catch((err) => {
-          this.$toast.error("ユーザー登録に失敗しました 1");
-          console.error("error 1 : ", err.message);
-          return false;
+        .catch((e: { response: { message: string } }) => {
+          console.error(
+            "エラーが発生しました。" + JSON.stringify(e.response, null, 2)
+          );
+          this.$toast.error(
+            "ユーザー登録に失敗しました :" + e.response.message
+          );
+          this.$router.push("/");
         });
     },
   },

@@ -67,10 +67,13 @@ export default Vue.extend({
             return false;
           }
         })
-        .catch((err) => {
-          console.error("error 1 : ", err.message);
-          return false;
-        });
+        .catch((e: { response: { message: string; }; }) => {
+        this.$toast.error("エラーが発生しました。" + e.response.message);
+        console.error(
+          "エラーが発生しました。" + JSON.stringify(e.response, null, 2)
+        );
+        this.$router.push("/");
+      });
     },
   },
 });
