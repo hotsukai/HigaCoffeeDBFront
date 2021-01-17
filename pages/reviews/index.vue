@@ -46,9 +46,11 @@ export default Vue.extend({
         .then((res: { data: Array<Review> }) => {
           return res.data;
         })
-        .catch((e: string) => {
-          alert("エラーが発生しました。" + e);
-          console.error("エラーが発生しました。" + e);
+        .catch((e: { response: { message: string } }) => {
+          this.$toast.error("エラーが発生しました。" + e.response.message);
+          console.error(
+            "エラーが発生しました。" + JSON.stringify(e.response, null, 2)
+          );
           this.$router.push("/");
         });
     },
@@ -63,8 +65,12 @@ export default Vue.extend({
           parseInt(key)
         );
       })
-      .catch((e: string) => {
-        console.warn("データの取得でエラーが発生しました : " + e);
+      .catch((e: { response: { message: string } }) => {
+        this.$toast.error("エラーが発生しました。" + e.response.message);
+        console.error(
+          "エラーが発生しました。" + JSON.stringify(e.response, null, 2)
+        );
+        this.$router.push("/");
       });
   },
 });

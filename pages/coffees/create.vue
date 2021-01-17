@@ -284,9 +284,11 @@ export default Vue.extend({
         this.extractionMethods = result[1].data;
         this.users = result[2].data;
       })
-      .catch((e) => {
-        alert("エラーが発生しました。" + e);
-        console.error("エラーが発生しました。" + e);
+      .catch((e: { response: { message: string } }) => {
+        this.$toast.error("エラーが発生しました。" + e.response.message);
+        console.error(
+          "エラーが発生しました。" + JSON.stringify(e.response, null, 2)
+        );
         this.$router.push("/");
       });
   },
@@ -321,10 +323,10 @@ export default Vue.extend({
           }
           this.$router.push("/");
         })
-        .catch((err: { message: string }) => {
-          console.error("コーヒーの登録に失敗しました" + err.message);
-          this.$toast.error(
-            "ERROR2:コーヒーの登録に失敗しました" + err.message
+        .catch((e: { response: { message: string } }) => {
+          this.$toast.error("エラーが発生しました。" + e.response.message);
+          console.error(
+            "エラーが発生しました。" + JSON.stringify(e.response, null, 2)
           );
           this.$router.push("/");
         });

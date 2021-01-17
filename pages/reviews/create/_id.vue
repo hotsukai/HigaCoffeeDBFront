@@ -32,9 +32,11 @@ export default Vue.extend({
       .then((res) => {
         return res.data;
       })
-      .catch((e) => {
-        alert("エラーが発生しました。" + e);
-        console.error("エラーが発生しました。" + e);
+      .catch((e: { response: { message: string } }) => {
+        this.$toast.error("エラーが発生しました。" + e.response.message);
+        console.error(
+          "エラーが発生しました。" + JSON.stringify(e.response, null, 2)
+        );
         this.$router.push("/");
       });
   },
@@ -61,10 +63,12 @@ export default Vue.extend({
           }
           this.$router.push("/mypage");
         })
-        .catch((err) => {
-          this.$toast.error("レビューの作成に失敗しました" + err.message);
-          console.error(err.message);
-          this.$router.push("/mypage");
+        .catch((e: { response: { message: string } }) => {
+          this.$toast.error("エラーが発生しました。" + e.response.message);
+          console.error(
+            "エラーが発生しました。" + JSON.stringify(e.response, null, 2)
+          );
+          this.$router.push("/");
         });
     },
   },

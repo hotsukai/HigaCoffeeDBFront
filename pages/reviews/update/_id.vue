@@ -38,9 +38,11 @@ export default Vue.extend({
         this.review = res.data;
         this.coffee = res.data.coffee;
       })
-      .catch((e) => {
-        alert("エラーが発生しました。" + e);
-        console.error("エラーが発生しました。" + e);
+      .catch((e: { response: { message: string } }) => {
+        this.$toast.error("エラーが発生しました。" + e.response.message);
+        console.error(
+          "エラーが発生しました。" + JSON.stringify(e.response, null, 2)
+        );
         this.$router.push("/");
       });
   },
@@ -65,9 +67,12 @@ export default Vue.extend({
           }
           this.$router.push("/mypage");
         })
-        .catch((err) => {
-          this.$toast.error("レビューの更新に失敗しました" + err.message);
-          this.$router.push("/mypage");
+        .catch((e: { response: { message: string } }) => {
+          this.$toast.error("エラーが発生しました。" + e.response.message);
+          console.error(
+            "エラーが発生しました。" + JSON.stringify(e.response, null, 2)
+          );
+          this.$router.push("/");
         });
     },
   },

@@ -71,8 +71,12 @@ export default Vue.extend({
         this.reviews = result[0].data;
         this.coffees = result[1].data;
       })
-      .catch((e) => {
-        console.warn("データの取得でエラーが発生しました : " + e);
+      .catch((e: { response: { message: string; }; }) => {
+        this.$toast.error("エラーが発生しました。" + e.response.message);
+        console.error(
+          "エラーが発生しました。" + JSON.stringify(e.response, null, 2)
+        );
+        this.$router.push("/");
       });
   },
 
