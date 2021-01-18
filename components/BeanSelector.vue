@@ -1,22 +1,30 @@
 <template>
-  <div v-if="beans" class="field is-grouped">
-    <select v-model="selectedOriginId" class="control">
-      <option
-        v-for="origin in beanOrigins"
-        :key="'origin-' + origin.id"
-        :value="origin.id"
-      >
-        {{ origin.name }}
-      </option>
-    </select>
-    <select v-model="selectedBean" class="control">
-      <option v-show="!selectedOriginId" disabled>
-        産地を選択してください
-      </option>
-      <option v-for="bean in selectedOriginsBean" :key="'bean-' + bean.id" :value="bean">
-        {{ bean.roast.name }}
-      </option>
-    </select>
+  <div v-if="beans" class="field">
+    <div class="select is-medium">
+      <select v-model="selectedOriginId">
+        <option
+          v-for="origin in beanOrigins"
+          :key="'origin-' + origin.id"
+          :value="origin.id"
+        >
+          {{ origin.name }}
+        </option>
+      </select>
+    </div>
+    <div class="select is-medium">
+      <select v-model="selectedBean">
+        <option v-show="!selectedOriginId" disabled>
+          産地を選択してください
+        </option>
+        <option
+          v-for="bean in selectedOriginsBean"
+          :key="'bean-' + bean.id"
+          :value="bean"
+        >
+          {{ bean.roast.name }}
+        </option>
+      </select>
+    </div>
   </div>
 </template>
 
