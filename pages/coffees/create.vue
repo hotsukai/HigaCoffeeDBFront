@@ -1,9 +1,9 @@
 <template>
-  <div>
+  <div class="container">
     <form>
       <div class="form-field">
         <label class="label">豆の種類<Required /></label>
-        <div class="select is-medium">
+        <div>
           <bean-selector
             :beans="beans"
             @selectedBean="emittedBean"

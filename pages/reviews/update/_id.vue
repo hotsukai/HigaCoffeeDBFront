@@ -1,5 +1,5 @@
 <template>
-  <div>
+  <div class="container">
     <h1 class="title">かきなおす</h1>
     <CoffeeCard :coffee="coffee" :show-details="true" style="height: auto"
       ><span></span
