@@ -26,13 +26,11 @@ export const actions = {
           return response.data;
         } else {
           commit("deleteUser");
-
           return false;
         }
       })
       .catch(err => {
         commit("deleteUser");
-
         console.error("error 1 : ", err.message);
         return false;
       });

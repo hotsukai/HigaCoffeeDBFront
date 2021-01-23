@@ -3,7 +3,7 @@
     <div class="card-content">
       <p class="title is-4">
         <nuxt-link :to="'/reviews?bean=' + coffee.bean.id">
-          {{ coffee.bean.name }}
+          {{ coffee.bean.fullName }}
         </nuxt-link>
       </p>
       <p class="subtitle is-6">Coffee-ID : {{ coffee.id }}</p>
@@ -49,10 +49,11 @@
 
 
 <script lang="ts">
-import Vue from "vue";
+import Vue, { PropType } from "vue";
+import { Coffee } from "~/types/models";
 export default Vue.extend({
   props: {
-    coffee: { type: Object, default: new Object() },
+    coffee: { type: Object as PropType<Coffee>, default: null },
     showReview: Boolean,
     createReview: Boolean,
     showDetails: { type: Boolean, default: true },

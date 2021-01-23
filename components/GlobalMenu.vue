@@ -31,12 +31,12 @@
       いれる</nuxt-link
     >
 
-    <nuxt-link
-      to="/mypage"
+    <a
       :class="{ isSelected: isMypageSelected, notActive: !isLogin }"
       class="mypage"
+      @click="toMypage"
     >
-      マイページ</nuxt-link
+      マイページ</a
     >
     <LoginButton />
     <div v-show="!isLogin">
@@ -106,7 +106,7 @@ export default Vue.extend({
         case "data":
           this.isDataSelected = true;
           break;
-        case "mypage":
+        case "'users/' + this.$store.state.currentUser.id":
           this.isMypageSelected = true;
           break;
         case "reviews-create":
@@ -120,6 +120,14 @@ export default Vue.extend({
           break;
         default:
           break;
+      }
+    },
+    toMypage(): void {
+      if (this.$store.state.currentUser)
+        this.$router.push("/users/" + this.$store.state.currentUser.id);
+      else {
+        this.$toast.show("ログインが必要です");
+        this.$router.push("/login");
       }
     },
   },

@@ -1,4 +1,4 @@
-export default function({ route, store, redirect }) {
+export default function({ route, store, redirect ,$toast}) {
   if (
     !store.state.currentUser &&
     !(
@@ -9,7 +9,7 @@ export default function({ route, store, redirect }) {
       route.name === "signup"
     )
   ) {
-    this.$toast.show("会員登録が必要です。");
+    $toast.show("ログインが必要です。");
     redirect("/signup");
   }
 }

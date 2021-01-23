@@ -1,11 +1,12 @@
 <template>
   <div>
     <p class="title">レビューを読む</p>
+    <filter-button />
     <form>
       <div class="select is-multiple">
         <select v-model="selectedBeans" multiple>
           <option v-for="bean in beans" :key="bean.id" :value="bean.id">
-            {{ bean.name }}
+            {{ bean.fullName }}
           </option>
         </select>
       </div>
@@ -34,7 +35,7 @@ export default Vue.extend({
   },
 
   watch: {
-    async selectedBeans(val: Array<number>): Promise<any> {
+    async selectedBeans(val: Array<number>): Promise<void> {
       let beansParam = val.join();
       this.reviews = await this.$axios
         .$get("/reviews", {
@@ -44,11 +45,18 @@ export default Vue.extend({
         })
         .then((res: { data: Array<Review> }) => {
           return res.data;
+        })
+        .catch((e: { response: { message: string } }) => {
+          this.$toast.error("エラーが発生しました。" + e.response.message);
+          console.error(
+            "エラーが発生しました。" + JSON.stringify(e.response, null, 2)
+          );
+          this.$router.push("/");
         });
     },
   },
 
-  async created(): Promise<any> {
+  async created(): Promise<void> {
     await this.$axios
       .$get("/beans")
       .then((res: { data: Bean[] }) => {
@@ -57,8 +65,12 @@ export default Vue.extend({
           parseInt(key)
         );
       })
-      .catch((e: string) => {
-        console.warn("データの取得でエラーが発生しました : " + e);
+      .catch((e: { response: { message: string } }) => {
+        this.$toast.error("エラーが発生しました。" + e.response.message);
+        console.error(
+          "エラーが発生しました。" + JSON.stringify(e.response, null, 2)
+        );
+        this.$router.push("/");
       });
   },
 });

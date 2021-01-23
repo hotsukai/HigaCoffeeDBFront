@@ -1,9 +1,9 @@
 <template>
-  <div class="card">
+  <div v-if="review" class="card">
     <div class="card-content">
       <p class="title is-4">
         <nuxt-link :to="'/reviews?bean=' + review.coffee.bean.id">
-          {{ review.coffee.bean.name }}
+          {{ review.coffee.bean.fullName }}
         </nuxt-link>
       </p>
       <p class="subtitle is-6">
@@ -20,15 +20,18 @@
             </li>
             <li>苦さ : {{ review.bitterness }}</li>
             <li>濃さ : {{ review.strongness }}</li>
-            <li>また飲みたいか : {{ repeatToJapanese }}</li>
-            <li>役割 : {{ situationToJapanese }}</li>
-            <li>備考・感想 : {{ review.feeling }}</li>
+            <li>また飲みたいか : {{ review.wantRepeat }}</li>
+            <li>役割 : {{ review.situation }}</li>
+            <li v-if="review.feeling">備考・感想 : {{ review.feeling }}</li>
           </ul>
         </div>
       </div>
     </div>
     <footer class="card-footer">
-      <modal-with-button :modal-key="review.id" class="card-footer-item">
+      <modal-with-button
+        :modal-key="'review-' + review.id"
+        class="card-footer-item"
+      >
         <template #open-button><i class="fas fa-coffee"></i></template>
         <template #modal-inner-content>
           <div class="columns">
@@ -39,9 +42,9 @@
                 </li>
                 <li>苦さ : {{ review.bitterness }}</li>
                 <li>濃さ : {{ review.strongness }}</li>
-                <li>また飲みたいか : {{ repeatToJapanese }}</li>
-                <li>役割 : {{ situationToJapanese }}</li>
-                <li>備考・感想 : {{ review.feeling }}</li>
+                <li>また飲みたいか : {{ review.wantRepeat }}</li>
+                <li>役割 : {{ review.situation }}</li>
+                <li v-if="review.feeling">備考・感想 : {{ review.feeling }}</li>
               </ul>
             </div>
             <div class="column">
@@ -74,7 +77,7 @@
           class="button"
           @click="$router.push('/reviews/update/' + review.id)"
         >
-          <i class="fas fa-pen"></i>
+          <i class="fas fa-edit"></i>
         </button>
       </div>
     </footer>
@@ -83,11 +86,13 @@
 
 <script lang="ts">
 import ModalWithButton from "./ModalWithButton.vue";
-import Vue from "vue";
-import { Coffee, User } from "~/types/models";
+import Vue, { PropType } from "vue";
+import { Coffee, User, Review } from "~/types/models";
 export default Vue.extend({
   components: { ModalWithButton },
-  props: { review: { type: Object, default: new Object() } },
+  props: {
+    review: { type: Object as PropType<Review>, default: null },
+  },
   data(): {
     viewMore: boolean;
     isLogin: boolean;
@@ -100,23 +105,6 @@ export default Vue.extend({
       coffee: null,
       currentUser: this.$store.state.currentUser,
     };
-  },
-
-  computed: {
-    repeatToJapanese(): string {
-      const repeatJapanese = ["飲みたくない!!", "普通", "また飲みたい!"];
-      return repeatJapanese[parseInt(this.review.wantRepeat) - 1];
-    },
-
-    situationToJapanese(): string {
-      const situationJapanese = [
-        "リラックス",
-        "ややリラックス",
-        "やや眠気覚まし",
-        "眠気覚まし",
-      ];
-      return situationJapanese[parseInt(this.review.situation) - 1];
-    },
   },
 
   created(): void {

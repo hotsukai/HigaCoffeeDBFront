@@ -1,14 +1,13 @@
 <template>
-  <div>
+  <div class="container">
     <form>
       <div class="form-field">
         <label class="label">豆の種類<Required /></label>
-        <div class="select is-medium">
-          <select v-model="selectedBean">
-            <option v-for="bean in beans" :key="bean.id" :value="bean.id">
-              {{ bean.name }}
-            </option>
-          </select>
+        <div>
+          <bean-selector
+            :beans="beans"
+            @selectedBean="emittedBean"
+          ></bean-selector>
         </div>
       </div>
       <div class="form-field">
@@ -163,10 +162,12 @@
 
 <script lang="ts">
 import Vue from "vue";
-import{ExtractionMethod,User,Bean,Mesh} from "~/types/models"
+import BeanSelector from "~/components/BeanSelector.vue";
+import { ExtractionMethod, User, Bean, Mesh } from "~/types/models";
 export default Vue.extend({
+  components: { BeanSelector },
   data(): {
-    selectedBean: number | null;
+    selectedBean: Bean | null;
     extractionMethods: ExtractionMethod;
     selectedDrinkers: Array<string>;
     selectedExtractionMethod: number;
@@ -277,11 +278,19 @@ export default Vue.extend({
     const beansAxios = this.$axios.$get("/beans");
     const methodsAxios = this.$axios.$get("/extraction_methods");
     const usersAxios = this.$axios.$get("/users");
-    const result = await Promise.all([beansAxios, methodsAxios, usersAxios]);
-
-    this.beans = result[0].data;
-    this.extractionMethods = result[1].data;
-    this.users = result[2].data;
+    await Promise.all([beansAxios, methodsAxios, usersAxios])
+      .then((result) => {
+        this.beans = result[0].data;
+        this.extractionMethods = result[1].data;
+        this.users = result[2].data;
+      })
+      .catch((e: { response: { message: string } }) => {
+        this.$toast.error("エラーが発生しました。" + e.response.message);
+        console.error(
+          "エラーが発生しました。" + JSON.stringify(e.response, null, 2)
+        );
+        this.$router.push("/");
+      });
   },
 
   methods: {
@@ -292,7 +301,7 @@ export default Vue.extend({
       }
       this.$axios
         .$post("/coffees", {
-          beanId: this.selectedBean,
+          beanId: this.selectedBean?.id,
           drinkerIds: this.selectedDrinkersId,
           dripperId: this.$store.state.currentUser.id,
           extractionMethodId: this.selectedExtractionMethod,
@@ -314,10 +323,10 @@ export default Vue.extend({
           }
           this.$router.push("/");
         })
-        .catch((err: { message: string }) => {
-          console.error("コーヒーの登録に失敗しました" + err.message);
-          this.$toast.error(
-            "ERROR2:コーヒーの登録に失敗しました" + err.message
+        .catch((e: { response: { message: string } }) => {
+          this.$toast.error("エラーが発生しました。" + e.response.message);
+          console.error(
+            "エラーが発生しました。" + JSON.stringify(e.response, null, 2)
           );
           this.$router.push("/");
         });
@@ -331,6 +340,10 @@ export default Vue.extend({
       if (this.selectedDrinkers.length > 1) {
         this.selectedDrinkers.splice(id - 1, 1);
       }
+    },
+    emittedBean(bean: Bean): void {
+      console.debug("emitted : ", bean);
+      this.selectedBean = bean;
     },
   },
 });

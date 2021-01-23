@@ -12,7 +12,17 @@ export type ExtractionMethod = {
 export type Bean = {
   id: number;
   name: string;
+  detail: string;
+  roast: {
+    id: number;
+    name: string;
+  };
+  origin: {
+    id: number;
+    name: string;
+  };
 };
+
 export type Mesh = {
   id: number;
   name: string;
@@ -35,7 +45,7 @@ export type Coffee = {
 };
 
 export type Review = {
-  id: number;
+  id: number | null;
   bitterness: number;
   coffee: Coffee;
   feeling: string;
@@ -43,6 +53,6 @@ export type Review = {
   situation: number;
   strongness: number;
   wantRepeat: number;
-  createdAt: Date;
-  updatedAt: Date;
+  createdAt: Date | null;
+  updatedAt: Date | null;
 };

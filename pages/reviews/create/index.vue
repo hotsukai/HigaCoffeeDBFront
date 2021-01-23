@@ -40,6 +40,13 @@ export default Vue.extend({
       })
       .then((res) => {
         return res.data;
+      })
+      .catch((e: { response: { message: string } }) => {
+        this.$toast.error("エラーが発生しました。" + e.response.message);
+        console.error(
+          "エラーが発生しました。" + JSON.stringify(e.response, null, 2)
+        );
+        this.$router.push("/");
       });
   },
 });
