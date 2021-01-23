@@ -1,5 +1,5 @@
 <template>
-  <div>
+  <div class="container">
     <h1 class="title">かきなおす</h1>
     <CoffeeCard :coffee="coffee" :show-details="true" style="height: auto"
       ><span></span
@@ -65,7 +65,7 @@ export default Vue.extend({
           } else {
             this.$toast.error("レビューの更新に失敗しました" + res.message);
           }
-          this.$router.push("/mypage");
+          this.$router.push('/users/' + this.$store.state.currentUser.id);
         })
         .catch((e: { response: { message: string } }) => {
           this.$toast.error("エラーが発生しました。" + e.response.message);

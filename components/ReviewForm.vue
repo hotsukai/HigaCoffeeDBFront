@@ -7,12 +7,19 @@
       </p>
       <vue-slider
         v-model.number="bitterness"
-        :marks="bitternessMark"
         :contained="true"
         :max="4"
         :min="1"
         :interval="0.1"
       />
+      <nav class="level is-mobile slide-bar-label">
+        <div class="level-left">
+          <p class="level-item">苦くない</p>
+        </div>
+        <div class="level-right">
+          <p class="level-item">苦い</p>
+        </div>
+      </nav>
     </div>
     <div class="form-field">
       <label class="label">濃さ<Required /></label>
@@ -21,37 +28,57 @@
       </p>
       <vue-slider
         v-model.number="strongness"
-        :marks="strongnessMark"
         :contained="true"
         :max="4"
         :min="1"
         :interval="0.1"
       />
+      <nav class="level is-mobile slide-bar-label">
+        <div class="level-left">
+          <p class="level-item">薄い</p>
+        </div>
+        <div class="level-right">
+          <p class="level-item">濃い</p>
+        </div>
+      </nav>
     </div>
     <div class="form-field">
       <label class="label">役割<Required /></label>
       <p class="help">「どういう時におすすめか」という観点で選んでください。</p>
       <vue-slider
         v-model="situation"
-        :marks="situationMark"
         :contained="true"
         :max="4"
         :min="1"
         :interval="0.1"
       />
+      <nav class="level is-mobile slide-bar-label">
+        <div class="level-left">
+          <p class="level-item">リラックス</p>
+        </div>
+        <div class="level-right">
+          <p class="level-item">眠気覚まし</p>
+        </div>
+      </nav>
     </div>
     <div class="form-field">
       <label class="label">また飲みたい??<Required /></label>
       <p class="help">ご遠慮なく！</p>
-
       <vue-slider
         v-model.number="wantRepeat"
-        :marks="wantRepeatMark"
         :contained="true"
         :interval="0.1"
         :min="1"
         :max="3"
       />
+      <nav class="level is-mobile slide-bar-label">
+        <div class="level-left">
+          <p class="level-item">飲みたくない</p>
+        </div>
+        <div class="level-right">
+          <p class="level-item">飲みたい</p>
+        </div>
+      </nav>
     </div>
     <div class="form-field-last">
       <label class="label">感想</label>
@@ -86,10 +113,6 @@ export default Vue.extend({
     situation: number;
     wantRepeat: number;
     feeling: string;
-    bitternessMark: { [s: string]: string };
-    strongnessMark: { [s: string]: string };
-    situationMark: { [s: string]: string };
-    wantRepeatMark: { [s: string]: string };
   } {
     return {
       bitterness: 1,
@@ -97,23 +120,6 @@ export default Vue.extend({
       situation: 1,
       wantRepeat: 1,
       feeling: "",
-      bitternessMark: {
-        // TODO:  文字寄せをマシにする
-        "1": "　　　　苦くない",
-        "4": "苦い　　",
-      },
-      strongnessMark: {
-        "1": "　　薄い",
-        "4": "濃い　　",
-      },
-      situationMark: {
-        "1": "　　　　　リラックス",
-        "4": "眠気覚まし　　　　　",
-      },
-      wantRepeatMark: {
-        "1": "　　　　　　飲みなくない",
-        "3": "また飲みたい　　　　　　",
-      },
     };
   },
 
@@ -167,8 +173,11 @@ export default Vue.extend({
 <style lang="scss" scoped>
 .form-field {
   margin-bottom: 4em;
+  .slide-bar-label {
+    font-size: 14px;
+  }
 }
-.form-field-last{
+.form-field-last {
   margin-bottom: 2em;
 }
 </style>
