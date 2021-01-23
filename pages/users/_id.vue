@@ -34,11 +34,13 @@ export default Vue.extend({
     reviews: Array<Review>;
     coffees: Array<Coffee>;
     user: User | null;
+    isCurrentUser: boolean;
   } {
     return {
       reviews: [],
       coffees: [],
       user: null,
+      isCurrentUser: false,
     };
   },
 
@@ -58,6 +60,7 @@ export default Vue.extend({
         return res.data;
       });
     this.user = user;
+    this.isCurrentUser = user.id == this.$store.state.currentUser.id;
 
     const getReviews = await this.$axios.$get("/reviews", {
       params: { reviewer: user.id },

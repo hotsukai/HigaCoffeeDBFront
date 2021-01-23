@@ -24,23 +24,23 @@ export default {
         hid: "description",
         name: "description",
         content:
-          'Higa Coffeeではデータを活用して、あなたの"ぴったりな一杯" を探すお手伝いをします。'
-      }
+          'Higa Coffeeではデータを活用して、あなたの"ぴったりな一杯" を探すお手伝いをします。',
+      },
     ],
     link: [
       { rel: "icon", type: "image/x-icon", href: "/favicon.ico" },
       {
         rel: "stylesheet",
-        href: "https://use.fontawesome.com/releases/v5.6.1/css/all.css"
-      }
-    ]
+        href: "https://use.fontawesome.com/releases/v5.6.1/css/all.css",
+      },
+    ],
   },
   /*
    ** Global CSS
    */
   css: ["bulma", "@/assets/main.scss"],
   styleResources: {
-    scss: ["./assets/*.scss"]
+    scss: ["./assets/*.scss"],
   },
   /*
    ** Plugins to load before mounting the App
@@ -72,30 +72,30 @@ export default {
     "@nuxtjs/dotenv",
     "@nuxtjs/proxy",
     "@nuxtjs/style-resources",
-    "@nuxtjs/toast"
+    "@nuxtjs/toast",
   ],
 
   axios: {
     proxy: true,
-    prefix: "/api"
+    prefix: "/api",
   },
   proxy: {
     "/api/": {
       target: process.env.API_URL,
       pathRewrite: {
-        "^/api": "/"
-      }
-    }
+        "^/api": "/",
+      },
+    },
   },
   webfontloader: {
     google: {
-      families: ["Noto+Sans+JP:wght@100;300"]
-    }
+      families: ["Noto+Sans+JP:wght@100;300"],
+    },
   },
   toast: {
     // 右上にtoastを表示
     position: "top-right",
-    duration: 3000
+    duration: 3000,
   },
 
   /*
@@ -106,12 +106,12 @@ export default {
     postcss: {
       preset: {
         features: {
-          customProperties: false
-        }
-      }
-    }
+          customProperties: false,
+        },
+      },
+    },
   },
   router: {
-    middleware: ["auth", "logined", "notLogin"]
-  }
+    middleware: ["auth", "logined", "notLogin", "mypage"],
+  },
 };
