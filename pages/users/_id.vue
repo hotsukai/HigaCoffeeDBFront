@@ -1,6 +1,7 @@
 <template>
   <div v-if="user">
-    <h1 class="title">{{ user.name }}</h1>
+    <h1 v-show="!isCurrentUser" class="title">{{ user.name }}</h1>
+    <h1 v-show="isCurrentUser" class="title">{{ user.name }}(マイページ)</h1>
     <p class="subtitle">User-ID : {{ user.id }}</p>
     <p class="subtitle">レビュー</p>
     <div v-show="isReviewExist">

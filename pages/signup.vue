@@ -108,7 +108,7 @@ export default Vue.extend({
               token: response.token,
             });
             this.$toast.success("ユーザーを登録しました");
-            this.$router.push("/mypage");
+            this.$router.push("/users/" + this.$store.state.currentUser.id);
             return true;
           } else {
             this.$toast.error(

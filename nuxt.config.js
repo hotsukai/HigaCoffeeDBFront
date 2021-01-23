@@ -112,6 +112,6 @@ export default {
     },
   },
   router: {
-    middleware: ["auth", "logined", "notLogin", "mypage"],
+    middleware: ["auth", "logined", "notLogin"],
   },
 };

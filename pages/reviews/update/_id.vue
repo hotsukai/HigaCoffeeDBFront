@@ -65,7 +65,7 @@ export default Vue.extend({
           } else {
             this.$toast.error("レビューの更新に失敗しました" + res.message);
           }
-          this.$router.push("/mypage");
+          this.$router.push('/users/' + this.$store.state.currentUser.id);
         })
         .catch((e: { response: { message: string } }) => {
           this.$toast.error("エラーが発生しました。" + e.response.message);
