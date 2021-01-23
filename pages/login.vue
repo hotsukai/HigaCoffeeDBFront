@@ -61,19 +61,18 @@ export default Vue.extend({
               token: response.token,
             });
             this.$toast.success("ログインしました");
-            this.$router.push('/users/' + this.$store.state.currentUser.id);
+            this.$router.push("/users/" + this.$store.state.currentUser.id);
           } else {
             this.$toast.error("ログインに失敗しました" + response.message);
             return false;
           }
         })
-        .catch((e: { response: { message: string; }; }) => {
-        this.$toast.error("エラーが発生しました。" + e.response.message);
-        console.error(
-          "エラーが発生しました。" + JSON.stringify(e.response, null, 2)
-        );
-        this.$router.push("/");
-      });
+        .catch((e: { response: { data: { message: string } } }) => {
+          this.$toast.error("エラーが発生しました。" + e.response.data.message);
+          console.error(
+            "エラーが発生しました。" + JSON.stringify(e.response, null, 2)
+          );
+        });
     },
   },
 });
