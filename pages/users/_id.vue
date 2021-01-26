@@ -5,7 +5,13 @@
     <p class="subtitle">User-ID : {{ user.id }}</p>
     <p class="subtitle">レビュー</p>
     <div v-show="isReviewExist">
-      <review-cards :reviews="reviews" :is-horizonal="true" class="cards" />
+      <review-cards
+        :reviews="reviews"
+        :is-horizonal="true"
+        :exist-more="reviewExistMore"
+        class="cards"
+        @view-more-button-click="getMoreReviews()"
+      />
     </div>
     <div v-show="!isReviewExist">
       <p>まだレビューがありません</p>
@@ -17,9 +23,9 @@
         :coffees="coffees"
         :show-review="true"
         :show-details="true"
-        @view-more-button-click="getMoreCoffee()"
         :exist-more="coffeeExistMore"
         class="cards"
+        @view-more-button-click="getMoreCoffees()"
       />
     </div>
     <div v-show="!isCoffeeExist">
@@ -34,7 +40,9 @@ import CoffeeCards from "~/components/CoffeeCards.vue";
 import ReviewCards from "~/components/ReviewCards.vue";
 import { User, Coffee, Review } from "~/types/models";
 
-export default Vue.extend({
+export default Vue.extend(
+  {
+    // IMO: この2つのコンポーネントは共通化できそう
   components: { CoffeeCards, ReviewCards },
   data(): {
     reviews: Array<Review>;
@@ -42,7 +50,7 @@ export default Vue.extend({
     user: User | null;
     isCurrentUser: boolean;
     coffeeExistMore: boolean;
-    coffeeOffset: number;
+    reviewExistMore: boolean;
   } {
     return {
       reviews: [],
@@ -50,6 +58,7 @@ export default Vue.extend({
       user: null,
       isCurrentUser: false,
       coffeeExistMore: false,
+      reviewExistMore: false,
     };
   },
 
@@ -82,6 +91,7 @@ export default Vue.extend({
       .then((result) => {
         this.reviews = result[0].data;
         this.coffees = result[1].data;
+        this.reviewExistMore = result[0].existMore;
         this.coffeeExistMore = result[1].existMore;
       })
       .catch((e: { response: { message: string } }) => {
@@ -97,7 +107,7 @@ export default Vue.extend({
     getMoreReview() {
       return;
     },
-    async getMoreCoffee(): Promise<void> {
+    async getMoreCoffees(): Promise<void> {
       if (!this.user || !this.coffeeExistMore) return;
       this.$axios
         .$get("/coffees", {
@@ -106,6 +116,17 @@ export default Vue.extend({
         .then((res) => {
           this.coffees.push(...res.data);
           this.coffeeExistMore = res.existMore;
+        });
+    },
+    async getMoreReviews(): Promise<void> {
+      if (!this.user || !this.reviewExistMore) return;
+      this.$axios
+        .$get("/reviews", {
+          params: { reviewer: this.user.id, offset: this.reviews.length },
+        })
+        .then((res) => {
+          this.reviews.push(...res.data);
+          this.reviewExistMore = res.existMore;
         });
     },
   },
