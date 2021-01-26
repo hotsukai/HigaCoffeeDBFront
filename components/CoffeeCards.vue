@@ -10,7 +10,7 @@
     </li>
     <li v-show="existMore" class="view-more-box horizonal-item">
       <div class="view-more">
-        <a>
+        <a @click="viewMore">
           <i class="fas fa-angle-double-right"></i>
         </a>
       </div>
@@ -29,6 +29,11 @@ export default Vue.extend({
     showDetails: Boolean,
     existMore: { type: Boolean, default: false },
   },
+  methods:{
+    viewMore():void{
+      this.$emit("view-more-button-click")
+    }
+  }
 });
 </script>
 

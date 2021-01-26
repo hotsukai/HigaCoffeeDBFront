@@ -17,6 +17,7 @@
         :coffees="coffees"
         :show-review="true"
         :show-details="true"
+        @view-more-button-click="getMoreCoffee()"
         :exist-more="coffeeExistMore"
         class="cards"
       />
@@ -41,6 +42,7 @@ export default Vue.extend({
     user: User | null;
     isCurrentUser: boolean;
     coffeeExistMore: boolean;
+    coffeeOffset: number;
   } {
     return {
       reviews: [],
@@ -95,8 +97,16 @@ export default Vue.extend({
     getMoreReview() {
       return;
     },
-    getMoreCoffee() {
-      return;
+    async getMoreCoffee(): Promise<void> {
+      if (!this.user || !this.coffeeExistMore) return;
+      this.$axios
+        .$get("/coffees", {
+          params: { dripper_id: this.user.id, offset: this.coffees.length },
+        })
+        .then((res) => {
+          this.coffees.push(...res.data);
+          this.coffeeExistMore = res.existMore;
+        });
     },
   },
 });
