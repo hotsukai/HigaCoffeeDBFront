@@ -5,7 +5,7 @@
     <p class="subtitle">User-ID : {{ user.id }}</p>
     <p class="subtitle">レビュー</p>
     <div v-show="isReviewExist">
-      <ReviewCards :reviews="reviews" :is-horizonal="true" class="cards" />
+      <review-cards :reviews="reviews" :is-horizonal="true" class="cards" />
     </div>
     <div v-show="!isReviewExist">
       <p>まだレビューがありません</p>
@@ -13,12 +13,13 @@
     <hr />
     <p class="subtitle">コーヒー</p>
     <div v-show="isCoffeeExist">
-      <CoffeeCards
+      <coffee-cards
         :coffees="coffees"
         :show-review="true"
         :show-details="true"
+        :exist-more="coffeeExistMore"
         class="cards"
-      ></CoffeeCards>
+      />
     </div>
     <div v-show="!isCoffeeExist">
       <p>まだコーヒーがありません</p>
@@ -28,20 +29,25 @@
 
 <script lang="ts">
 import Vue from "vue";
+import CoffeeCards from "~/components/CoffeeCards.vue";
+import ReviewCards from "~/components/ReviewCards.vue";
 import { User, Coffee, Review } from "~/types/models";
 
 export default Vue.extend({
+  components: { CoffeeCards, ReviewCards },
   data(): {
     reviews: Array<Review>;
     coffees: Array<Coffee>;
     user: User | null;
     isCurrentUser: boolean;
+    coffeeExistMore: boolean;
   } {
     return {
       reviews: [],
       coffees: [],
       user: null,
       isCurrentUser: false,
+      coffeeExistMore: false,
     };
   },
 
@@ -74,6 +80,7 @@ export default Vue.extend({
       .then((result) => {
         this.reviews = result[0].data;
         this.coffees = result[1].data;
+        this.coffeeExistMore = result[1].existMore;
       })
       .catch((e: { response: { message: string } }) => {
         this.$toast.error("エラーが発生しました。" + e.response.message);
