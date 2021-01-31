@@ -84,9 +84,10 @@
             <input
               v-model.number="selectedWaterTemperature"
               type="number"
-              min="0"
+              min="60"
               max="100"
               class="input is-medium"
+              step="0.1"
             />
           </p>
           <p class="control">
@@ -217,7 +218,7 @@ export default Vue.extend({
         this.selectedWaterAmount >= 0 &&
         this.selectedWaterAmount <= 500 &&
         ((this.selectedWaterTemperature &&
-          this.selectedWaterTemperature >= 0 &&
+          this.selectedWaterTemperature >= 60 &&
           this.selectedWaterTemperature <= 100) ||
           this.selectedWaterTemperature === null) &&
         this.selectedDrinkersId.length > 0
