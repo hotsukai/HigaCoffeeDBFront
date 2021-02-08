@@ -151,7 +151,7 @@ export default Vue.extend({
   async created(): Promise<any> {
     this.beans = await this.$axios
       .$get("/beans")
-      .then((res: { result: boolean; data: any }) => {
+      .then((res: { result: boolean; data: Array<Bean> }) => {
         if (res.result) return res.data;
       })
       .catch((e: { response: { message: string } }) => {
