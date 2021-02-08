@@ -1,30 +1,37 @@
 # HiGaDBAPP
+
 ## このアプリケーションは?
+
 - [HiGaCoffee](https://sites.google.com/view/higa-coffee)のコーヒーデータベースのモックアップです。
-- Nuxt.js + Firebaseで作られています。
+- Nuxt.js + Firebase で作られています。
 
 ### *HiGaCoffee*とは
-「自分好みのコーヒー」を吟味できる環境づくりを目指す筑波大学の公認学生団体。コーヒーに関するデータ（抽出レシピとレビュー）を都度記録し活用している。
 
+「自分好みのコーヒー」を吟味できる環境づくりを目指す筑波大学の公認学生団体。コーヒーに関するデータ（抽出レシピとレビュー）を都度記録し活用している。
 
 ## 実行方法
 
+`.env`ファイルにバックエンドの URI を入力してください  
+(例:`API_URL="http://localhost:5000"`)
+
 ```bash
-# install dependencies
+# 依存関係インストール
 $ yarn install
 
-# serve with hot reload at localhost:3000
+# ホットリロードありのローカルサーバー立ち上げ
 $ yarn dev
 
-# build for production and launch server
+# プロダクション用ビルドとホスティング
 $ yarn build
 $ yarn start
 
-# generate static project
-$ yarn generate
+# リント
+$ yarn lint
+$ yarn lint-fix
 ```
 
 ## ステージング環境
-stagingブランチは
-https://staging--higa-database.netlify.app/
+
+staging ブランチは
+[https://staging--higa-database.netlify.app/](https://staging--higa-database.netlify.app/)
 に自動デプロイされます。
