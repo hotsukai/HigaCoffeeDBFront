@@ -7,7 +7,13 @@
     >
       <ReviewCard :key="'reviewCard-' + review.id" :review="review" />
     </li>
-    <a class="view-more"><i class="fas fa-angle-double-right"></i></a>
+    <li v-show="existMore" class="view-more-box horizonal-item">
+      <div class="view-more">
+        <a @click="viewMore">
+          <i class="fas fa-angle-double-right"></i>
+        </a>
+      </div>
+    </li>
   </ul>
 </template>
       
@@ -18,23 +24,43 @@ export default Vue.extend({
   props: {
     reviews: { type: Array as PropType<Review[]>, default: () => [] },
     isHorizonal: { type: Boolean, default: false },
+    existMore: { type: Boolean, default: false },
+  },
+  methods: {
+    viewMore(): void {
+      this.$emit("view-more-button-click");
+    },
   },
 });
 </script>
       
-<style scoped>
+<style lang="scss" scoped>
 .horizonal-list {
   overflow-x: auto;
   white-space: nowrap;
   -webkit-overflow-scrolling: touch;
-}
-.horizonal-item {
-  /* 横スクロール用 */
-  display: inline-block;
-  vertical-align: top;
-  width: 80%;
-  max-width: 25em;
-  margin: 0em 2em 1em 0em;
+  .horizonal-item {
+    /* 横スクロール用 */
+    display: inline-block;
+    vertical-align: top;
+    width: 80%;
+    max-width: 25em;
+    margin: 0em 2em 1em 0em;
+  }
+  .view-more-box {
+    margin: 0;
+    position: relative;
+    height: 400px;
+    width: 30px;
+    .view-more {
+      position: absolute;
+      font-size: 5rem;
+      top: 50%;
+      left: 50%;
+      transform: translateY(-50%) translateX(-50%);
+      -webkit-transform: translateY(-50%) translateX(-50%);
+    }
+  }
 }
 
 .view-more {
