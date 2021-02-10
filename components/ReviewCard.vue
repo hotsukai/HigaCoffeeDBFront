@@ -69,10 +69,7 @@
           </div>
         </template>
       </modal-with-button>
-      <div
-        v-if="review.reviewer && currentUser.id === review.reviewer.id"
-        class="card-footer-item"
-      >
+      <div v-show="canEditReview(review)" class="card-footer-item">
         <button
           class="button"
           @click="$router.push('/reviews/update/' + review.id)"
@@ -115,6 +112,11 @@ export default Vue.extend({
   methods: {
     toggleViewMore(): void {
       this.viewMore = !this.viewMore;
+    },
+    canEditReview(review: Review): boolean {
+      if (!review.createdAt) return false;
+      const diff = Date.now() - new Date(review.createdAt).getTime()
+      return diff<=60*30*1000&& review.reviewer && this.currentUser?.id === review.reviewer.id
     },
   },
 });
