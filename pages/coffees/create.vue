@@ -163,7 +163,7 @@
 <script lang="ts">
 import Vue from "vue";
 import BeanSelector from "~/components/BeanSelector.vue";
-import { ExtractionMethod, User, Bean, Mesh } from "~/types/models";
+import { ExtractionMethod, User, Bean, Mesh, Coffee } from "~/types/models";
 export default Vue.extend({
   components: { BeanSelector },
   data(): {
@@ -312,7 +312,7 @@ export default Vue.extend({
           waterAmount: this.selectedWaterAmount,
           waterTemperature: this.selectedWaterTemperature,
         })
-        .then((res: { result: boolean; data: any; message: string }) => {
+        .then((res: { result: boolean; data: Coffee; message: string }) => {
           if (res.result) {
             console.log(res.data);
             this.$toast.success("コーヒーを登録しました。");
