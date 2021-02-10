@@ -49,7 +49,7 @@ export type Review = {
   bitterness: number;
   coffee: Coffee;
   feeling: string;
-  reviewer: User;
+  reviewer: User | null;
   situation: number;
   strongness: number;
   wantRepeat: number;
