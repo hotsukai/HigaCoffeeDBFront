@@ -6,8 +6,7 @@
         >Reviewer :
       </UsersName>
     </p>
-    <div class="columns">
-      <div class="column">
+    <div>
         <ul>
           <li class="date">
             記入日 : <ConvertTime :time="review.createdAt" />
@@ -18,7 +17,6 @@
           <li>役割 : {{ review.situation }}</li>
           <li v-if="review.feeling">備考・感想 : {{ review.feeling }}</li>
         </ul>
-      </div>
     </div>
   </div>
 </template>

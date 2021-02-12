@@ -43,6 +43,7 @@
                 v-for="(review, index) in coffee.reviews"
                 :key="'c-' + coffee.id + 'r-' + index"
                 :review="review"
+                class="column"
               ></review-card-body>
             </div>
           </template>

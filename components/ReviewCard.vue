@@ -20,18 +20,6 @@
           <div class="columns">
             <div class="column">
               <ul>
-                <li class="date">
-                  記入日 : <ConvertTime :time="review.createdAt" />
-                </li>
-                <li>苦さ : {{ review.bitterness }}</li>
-                <li>濃さ : {{ review.strongness }}</li>
-                <li>また飲みたいか : {{ review.wantRepeat }}</li>
-                <li>役割 : {{ review.situation }}</li>
-                <li v-if="review.feeling">備考・感想 : {{ review.feeling }}</li>
-              </ul>
-            </div>
-            <div class="column">
-              <ul>
                 <li>Coffee-ID : {{ coffee.id }}</li>
                 <li class="date">
                   抽出日 : <ConvertTime :time="coffee.createdAt" />
