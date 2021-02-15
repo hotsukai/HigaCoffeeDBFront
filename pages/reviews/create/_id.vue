@@ -51,7 +51,7 @@ export default Vue.extend({
           feeling: review.feeling,
           situation: review.situation,
           strongness: review.strongness,
-          reviewerId: review.reviewer.id,
+          reviewerId: review.reviewer?.id,
           wantRepeat: review.wantRepeat,
         })
         .then((res) => {

@@ -31,16 +31,23 @@
             >
           </span>
         </p>
-        <p
+        <modal-with-button
           v-show="showReview && coffee.reviewId.length > 0"
+          :modal-key="'coffee-' + coffee.id"
           class="card-footer-item"
         >
-          <span>
-            <nuxt-link :to="'reviews?coffeeId=' + coffee.id" class="button"
-              >レビューを見る</nuxt-link
-            >
-          </span>
-        </p>
+          <template #open-button> <span> レビューを見る </span></template>
+          <template #modal-inner-content>
+            <div class="columns">
+              <review-card-body
+                v-for="(review, index) in coffee.reviews"
+                :key="'c-' + coffee.id + 'r-' + index"
+                :review="review"
+                class="column"
+              ></review-card-body>
+            </div>
+          </template>
+        </modal-with-button>
       </footer>
     </slot>
   </div>
@@ -50,15 +57,16 @@
 
 <script lang="ts">
 import Vue, { PropType } from "vue";
-import { Coffee } from "~/types/models";
+import ReviewCardBody from "./ReviewCardBody.vue";
+import { Coffee, Review } from "~/types/models";
 export default Vue.extend({
+  components: { ReviewCardBody },
   props: {
     coffee: { type: Object as PropType<Coffee>, default: null },
     showReview: Boolean,
     createReview: Boolean,
     showDetails: { type: Boolean, default: true },
   },
-
   computed: {
     fullPath: function (): string {
       return "/reviews/create/" + this.coffee.id;
