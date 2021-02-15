@@ -72,27 +72,23 @@ export default Vue.extend(
   },
 
   async created() {
-    let user: User = await this.$axios
-      .$get("/users/" + this.$route.params.id)
-      .then((res) => {
-        return res.data;
-      });
-    this.user = user;
-    this.isCurrentUser = user.id == this.$store.state.currentUser.id;
-
+    const userId=this.$route.params.id
+    const getUser=await this.$axios
+      .$get("/users/" + userId)
     const getReviews = await this.$axios.$get("/reviews", {
-      params: { reviewer: user.id },
+      params: { reviewer: userId },
     });
-
     const getCoffees = await this.$axios.$get("/coffees", {
-      params: { dripper_id: user.id },
+      params: { dripper_id: userId },
     });
-    await Promise.all([getReviews, getCoffees])
+    await Promise.all([getReviews, getCoffees,getUser])
       .then((result) => {
         this.reviews = result[0].data;
         this.coffees = result[1].data;
+        this.user=result[2].data
         this.reviewExistMore = result[0].existMore;
         this.coffeeExistMore = result[1].existMore;
+        this.isCurrentUser = this.user?.id == this.$store.state.currentUser.id;
       })
       .catch((e: { response: { message: string } }) => {
         this.$toast.error("エラーが発生しました。" + e.response.message);

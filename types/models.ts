@@ -40,6 +40,7 @@ export type Coffee = {
   memo: string;
   powderAmount: number;
   reviewId: Array<number>;
+  reviews: Array<Review> | null;
   waterAmount: number;
   waterTemperature: number;
 };
