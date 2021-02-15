@@ -2,8 +2,8 @@ export type User = {
   id: number;
   name: string;
   profile: string;
-  createdAt: Date;
-  updatedAt: Date;
+  createdAt: string;
+  updatedAt: string;
 };
 export type ExtractionMethod = {
   id: number;
@@ -30,7 +30,7 @@ export type Mesh = {
 
 export type Coffee = {
   id: number;
-  createdAt: Date;
+  createdAt: string;
   bean: Bean;
   dripper: User | null;
   drinkers: Array<User> | null;
@@ -49,10 +49,10 @@ export type Review = {
   bitterness: number;
   coffee: Coffee;
   feeling: string;
-  reviewer: User;
+  reviewer: User | null;
   situation: number;
   strongness: number;
   wantRepeat: number;
-  createdAt: Date | null;
-  updatedAt: Date | null;
+  createdAt: string | null;
+  updatedAt: string | null;
 };

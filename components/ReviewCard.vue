@@ -70,13 +70,21 @@
         </template>
       </modal-with-button>
       <div
-        v-if="review.reviewer && currentUser.id === review.reviewer.id"
+        v-show="isReviewMine(review) && isEditTimeOK(review)"
         class="card-footer-item"
       >
         <button
           class="button"
           @click="$router.push('/reviews/update/' + review.id)"
         >
+          <i class="fas fa-edit"></i>
+        </button>
+      </div>
+      <div
+        v-show="isReviewMine(review) && !isEditTimeOK(review)"
+        class="card-footer-item"
+      >
+        <button class="button" disabled>
           <i class="fas fa-edit"></i>
         </button>
       </div>
@@ -115,6 +123,16 @@ export default Vue.extend({
   methods: {
     toggleViewMore(): void {
       this.viewMore = !this.viewMore;
+    },
+    isEditTimeOK(review: Review): boolean {
+      if (!review.createdAt) return false;
+      const diff = Date.now() - new Date(review.createdAt).getTime();
+      return diff <= 60 * 30 * 1000;
+    },
+    isReviewMine(review: Review): boolean {
+      return (
+        this.currentUser != null && this.currentUser?.id === review.reviewer?.id
+      );
     },
   },
 });
