@@ -3,6 +3,9 @@
     <h1 v-show="!isCurrentUser" class="title">{{ user.name }}</h1>
     <h1 v-show="isCurrentUser" class="title">{{ user.name }}(マイページ)</h1>
     <p class="subtitle">User-ID : {{ user.id }}</p>
+    <button type="button" class="button" @click="$router.push('/changeUsername')">
+        ユーザー名を変更
+    </button>
     <p class="subtitle">レビュー</p>
     <div v-show="isReviewExist">
       <review-cards
