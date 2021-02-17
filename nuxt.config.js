@@ -118,4 +118,8 @@ export default {
   router: {
     middleware: ["auth", "logined", "notLogin"],
   },
+
+  generate: {
+    fallback: true,
+  },
 };
