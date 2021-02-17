@@ -29,11 +29,11 @@ export default Vue.extend({
     showDetails: Boolean,
     existMore: { type: Boolean, default: false },
   },
-  methods:{
-    viewMore():void{
-      this.$emit("view-more-button-click")
-    }
-  }
+  methods: {
+    viewMore(): void {
+      this.$emit("view-more-button-click");
+    },
+  },
 });
 </script>
 
@@ -45,10 +45,11 @@ export default Vue.extend({
 
   .horizonal-item {
     display: inline-block;
-    width: 80%;
+    width: 90%;
     max-width: 25em;
-    margin: 0em 2em 1em 0em;
+    padding-right: 10%;
     vertical-align: top;
+    white-space: normal;
   }
   .view-more-box {
     margin: 0;
