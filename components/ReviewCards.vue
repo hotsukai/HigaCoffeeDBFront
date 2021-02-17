@@ -43,9 +43,10 @@ export default Vue.extend({
     /* 横スクロール用 */
     display: inline-block;
     vertical-align: top;
-    width: 80%;
+    width: 90%;
     max-width: 25em;
-    margin: 0em 2em 1em 0em;
+    padding-right: 10%;
+    white-space: normal;
   }
   .view-more-box {
     margin: 0;
@@ -61,11 +62,5 @@ export default Vue.extend({
       -webkit-transform: translateY(-50%) translateX(-50%);
     }
   }
-}
-
-.view-more {
-  display: inline-block;
-  margin-top: 2%;
-  font-size: 3em;
 }
 </style>

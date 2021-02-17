@@ -81,6 +81,7 @@ export default Vue.extend({
   height: 400px;
   .card-content {
     height: 340px;
+    overflow-y: scroll;
   }
   .card-footer-item {
     height: 60px;

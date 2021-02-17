@@ -6,9 +6,7 @@
           {{ review.coffee.bean.fullName }}
         </nuxt-link>
       </p>
-      <review-card-body
-        :review="review"
-      ></review-card-body>
+      <review-card-body :review="review"></review-card-body>
     </div>
     <footer class="card-footer">
       <modal-with-button
@@ -117,6 +115,7 @@ export default Vue.extend({
   height: 400px;
   .card-content {
     height: 340px;
+    overflow-y: scroll;
   }
   .card-footer {
     height: 60px;
