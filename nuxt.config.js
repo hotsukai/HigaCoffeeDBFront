@@ -5,7 +5,11 @@ export default {
    ** Nuxt rendering mode
    ** See https://nuxtjs.org/api/configuration-mode
    */
-  mode: "spa",
+  ssr: false,
+
+  // Target (https://go.nuxtjs.dev/config-target)
+  target: "static",
+
   /*
    ** Nuxt target
    ** See https://nuxtjs.org/api/configuration-target
@@ -113,5 +117,9 @@ export default {
   },
   router: {
     middleware: ["auth", "logined", "notLogin"],
+  },
+
+  generate: {
+    fallback: true,
   },
 };
