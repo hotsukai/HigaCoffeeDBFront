@@ -45,9 +45,9 @@ export default Vue.extend({
 
   .horizonal-item {
     display: inline-block;
-    width: 90%;
+    width: 80%;
     max-width: 25em;
-    padding-right: 10%;
+    margin-right: 3em;
     vertical-align: top;
     white-space: normal;
   }
