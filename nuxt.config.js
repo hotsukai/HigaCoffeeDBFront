@@ -30,6 +30,31 @@ export default {
         content:
           'Higa Coffeeではデータを活用して、あなたの"ぴったりな一杯" を探すお手伝いをします。',
       },
+      { hid: 'twitter:card', name: 'twitter:card', content: 'summary_large_image' }, 
+      { hid: 'twitter:site', name: 'twitter:site', content: '@HigaCoffee' },
+      { hid: 'twitter:image', name: 'twitter:image', content: 'https://higa-database.netlify.app/ogp.jpg'}, 
+      { hid: 'og:type', property: 'og:type', content: 'website' },
+      {
+        hid: 'og:title',
+        property: 'og:title',
+        content: 'Higa Coffee データベース'
+      },
+      {
+        hid: 'og:url',
+        property: 'og:url',
+        content: 'https://higa-database.netlify.app/ogp.jpg' 
+      },
+      {
+        hid: 'og:description',
+        property: 'og:description',
+        content: 'Higa Coffeeではデータを活用して、あなたの"ぴったりな一杯" を探すお手伝いをします。'
+      },
+      {
+        hid: 'og:image',
+        property: 'og:image',
+        content: 'https://higa-database.netlify.app/ogp.jpg'
+      },
+      { hid: 'og:site_name', name: 'og:site_name', content: 'Higa Coffee データベース' }
     ],
     link: [
       { rel: "icon", type: "image/x-icon", href: "/favicon.ico" },
