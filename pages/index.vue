@@ -52,7 +52,10 @@
 
           <div class="column">
             <p class="sub-title coffees-create">いれる</p>
-            <p>なんとなくいれるじゃもったいない!<br>※現在、HigaCoffeeメンバーのみの提供になっております。</p>
+            <p>
+              なんとなくいれるじゃもったいない!
+              <br />※現在、HigaCoffeeメンバーのみの提供になっております。
+            </p>
           </div>
         </div>
       </div>
@@ -111,38 +114,20 @@ export default Vue.extend({
       bottom: 0;
       height: 100%;
     }
+    div {
+      z-index: 1;
+      position: relative;
+    }
     .title {
       font-size: 5rem;
+      margin-bottom: 2rem;
       color: $white;
-      position: relative;
-      z-index: 1;
-    }
-  }
-  &#bg2 {
-    background-image: url("/images/coffee2.jpg");
-    min-height: 60vh;
-    position: relative;
-    &::after {
-      content: "";
-      background-color: rgba(0, 0, 0, 0.5);
-      position: absolute;
-      left: 0;
-      right: 0;
-      top: 0;
-      bottom: 0;
-      height: 100%;
     }
     p {
       margin-bottom: 2rem;
-      position: relative;
-      z-index: 1;
-    }
-    button {
-      margin-bottom: 2rem;
-      position: relative;
-      z-index: 1;
     }
   }
+
   background-attachment: fixed;
   background-position: center;
   background-size: cover;
