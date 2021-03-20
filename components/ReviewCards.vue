@@ -40,12 +40,11 @@ export default Vue.extend({
   white-space: nowrap;
   -webkit-overflow-scrolling: touch;
   .horizonal-item {
-    /* 横スクロール用 */
     display: inline-block;
-    vertical-align: top;
-    width: 90%;
+    width: 80%;
     max-width: 25em;
-    padding-right: 10%;
+    margin-right: 3em;
+    vertical-align: top;
     white-space: normal;
   }
   .view-more-box {
