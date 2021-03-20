@@ -1,57 +1,38 @@
 <template>
   <Slide :close-on-navigation="true">
-    <nuxt-link to="/" :class="{ isSelected: isDataSelected }" class="top">
-      トップ</nuxt-link
-    >
-    <nuxt-link to="/data" :class="{ isSelected: isDataSelected }" class="data">
-      みる</nuxt-link
-    >
-
-    <nuxt-link
-      to="/reviews/"
-      :class="{ isSelected: isReadReviewSelected }"
-      class="reviews"
-    >
-      よむ</nuxt-link
-    >
-
+    <nuxt-link to="/" :class="{ isSelected: isTopSelected }" class="top">トップ</nuxt-link>
+    <nuxt-link to="/data" :class="{ isSelected: isDataSelected }" class="data">みる</nuxt-link>
+    <nuxt-link to="/reviews/" :class="{ isSelected: isReadReviewSelected }" class="reviews">よむ</nuxt-link>
     <nuxt-link
       to="/reviews/create"
       :class="{ isSelected: isCreateReviewSelected, notActive: !isLogin }"
       class="reviews-create"
-    >
-      かく</nuxt-link
-    >
-
+    >かく</nuxt-link>
     <nuxt-link
       to="/coffees/create"
       :class="{ isSelected: isCreateCoffeeSelected, notActive: !isLogin }"
       class="coffees-create"
-    >
-      いれる</nuxt-link
-    >
-
+    >いれる</nuxt-link>
     <a
       :class="{ isSelected: isMypageSelected, notActive: !isLogin }"
       class="mypage"
       @click="toMypage"
-    >
-      マイページ</a
-    >
+    >マイページ</a>
     <LoginButton />
     <div v-show="!isLogin">
-      <button type="button" class="button" @click="$router.push('/signup')">
-        サインアップ
-      </button>
+      <button type="button" class="button" @click="$router.push('/signup')">サインアップ</button>
     </div>
   </Slide>
 </template>
 
 <script lang="ts">
 import Vue from "vue";
+import { Slide } from "~/plugins/vue-burger-menu";
 import { User } from "~/types/models";
 export default Vue.extend({
+  components: { Slide },
   data(): {
+    isTopSelected: boolean;
     isMenuActive: boolean;
     isDataSelected: boolean;
     isMypageSelected: boolean;
@@ -61,6 +42,7 @@ export default Vue.extend({
     isLogin: boolean;
   } {
     return {
+      isTopSelected: false,
       isMenuActive: false,
       isDataSelected: false,
       isMypageSelected: false,
@@ -69,6 +51,9 @@ export default Vue.extend({
       isReadReviewSelected: false,
       isLogin: false,
     };
+  },
+  props: {
+    isBgWhite: Boolean,
   },
   computed: {
     user(): User {
@@ -97,16 +82,21 @@ export default Vue.extend({
     },
 
     changeSelectedPage(): void {
+      this.isTopSelected = false;
       this.isDataSelected = false;
       this.isMypageSelected = false;
       this.isCreateReviewSelected = false;
       this.isCreateCoffeeSelected = false;
       this.isReadReviewSelected = false;
       switch (this.$route.name) {
+        case "/":
+        case "":
+          this.isTopSelected = true;
+          break;
         case "data":
           this.isDataSelected = true;
           break;
-        case "'users/' + this.$store.state.currentUser.id":
+        case "users/" + this.$store.state.currentUser?.id:
           this.isMypageSelected = true;
           break;
         case "reviews-create":

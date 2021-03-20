@@ -8,7 +8,8 @@
   </div>
 </template>
 
-<style>
+<style scoped>
+
 .section{
   padding-top: 70px;
 }
