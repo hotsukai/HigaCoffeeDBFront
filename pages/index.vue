@@ -1,6 +1,6 @@
 <template>
   <div>
-    <div id="bg1" class="parallax-bg overlay">
+    <div id="bg1" class="parallax-bg overlay" :style="'height:'+windowHeight+'px;'">
       <div class="section">
         <h1 class="title is-size-mobile is-size-2-mobile">Higa = 彼我</h1>
         <div class="columns">
@@ -23,6 +23,8 @@
         </div>
       </div>
     </div>
+    <div class="shade" :style="'height:'+windowHeight+'px;'"></div>
+    <!-- <div class="shade" :style="'height:'+innerHeight+'px;'"></div> -->
     <div class="container">
       <div class="section what-is-this">
         <div class="columns">
@@ -96,6 +98,12 @@
 import Vue from "vue";
 export default Vue.extend({
   layout: "toppage",
+  data() {
+    return { windowHeight: 0 };
+  },
+  mounted() {
+    this.windowHeight = window.innerHeight;
+  },
 });
 </script>
 
@@ -103,17 +111,6 @@ export default Vue.extend({
 .parallax-bg {
   &#bg1 {
     background-image: url("/images/coffee1.jpg");
-    min-height: 100vh;
-    &::after {
-      content: "";
-      background-color: rgba(0, 0, 0, 0.2);
-      position: absolute;
-      left: 0;
-      right: 0;
-      top: 0;
-      bottom: 0;
-      height: 100%;
-    }
     div {
       z-index: 1;
       position: relative;
@@ -138,6 +135,16 @@ export default Vue.extend({
   align-items: center;
   justify-content: center;
   padding: 5%;
+}
+.shade {
+  content: "";
+  background-color: rgba(0, 0, 0, 0.2);
+  position: absolute;
+  left: 0;
+  right: 0;
+  top: 0;
+  bottom: 0;
+  width: 100%;
 }
 .section {
   padding: 5rem 2rem 0 2rem;
