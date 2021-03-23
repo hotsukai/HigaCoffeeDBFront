@@ -99,10 +99,7 @@ import Vue from "vue";
 export default Vue.extend({
   layout: "toppage",
   data() {
-    return { windowHeight: 0 };
-  },
-  mounted() {
-    this.windowHeight = window.innerHeight;
+    return { windowHeight: window.innerHeight};
   },
 });
 </script>
